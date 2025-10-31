@@ -1,0 +1,36 @@
+<div class="bank-container">
+  <h2>Banks</h2>
+  <button (click)="addBank()" class="btn btn-primary mb-2">Add Bank</button>
+
+  <div *ngIf="loading">Loading banks...</div>
+
+  <table *ngIf="!loading" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Branch</th>
+        <th>IFSC</th>
+        <th>Contact</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bank of banks">
+        <td>{{ bank.bankId }}</td>
+        <td>{{ bank.bankName }}</td>
+        <td>{{ bank.branch }}</td>
+        <td>{{ bank.ifscCode }}</td>
+        <td>{{ bank.contactNumber }}</td>
+        <td>{{ bank.emailId }}</td>
+        <td>{{ bank.isActive ? 'Active' : 'Inactive' }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning" (click)="editBank(bank.bankId)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteBank(bank.bankId)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

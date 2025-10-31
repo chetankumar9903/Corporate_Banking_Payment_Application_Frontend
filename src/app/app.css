@@ -1,0 +1,68 @@
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f6f8fa;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #004e92;
+  color: white;
+  padding: 12px 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.nav-left h2 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 22px;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.role-badge {
+  background: #0074e4;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.welcome {
+  font-weight: 500;
+}
+
+button {
+  background: #e74c3c;
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #c0392b;
+}
+
+main {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+footer {
+  text-align: center;
+  padding: 12px;
+  background: #eee;
+  color: #333;
+  font-size: 14px;
+  border-top: 1px solid #ccc;
+}

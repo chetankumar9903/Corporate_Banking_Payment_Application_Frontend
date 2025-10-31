@@ -1,0 +1,46 @@
+<div class="bank-form">
+  <h2>{{ isEditMode ? 'Edit' : 'Add' }} Bank</h2>
+  <form [formGroup]="bankForm" (ngSubmit)="submit()">
+    <div class="mb-2">
+      <label>Bank Name</label>
+      <input formControlName="bankName" class="form-control" />
+    </div>
+
+    <div class="mb-2">
+      <label>Branch</label>
+      <input formControlName="branch" class="form-control" />
+    </div>
+
+    <div class="mb-2">
+      <label>IFSC Code</label>
+      <input formControlName="ifscCode" class="form-control" />
+    </div>
+
+    <div class="mb-2">
+      <label>Contact Number</label>
+      <input formControlName="contactNumber" class="form-control" />
+    </div>
+
+    <div class="mb-2">
+      <label>Email</label>
+      <input formControlName="emailId" class="form-control" />
+    </div>
+
+    <div class="mb-2">
+      <label>Assign Bank User</label>
+     <select formControlName="userId" class="form-control">
+  <option value="" disabled selected>-- Select User --</option>
+  <option *ngFor="let user of bankUsers" [ngValue]="user.userId">{{ user.userName }}</option>
+</select>
+    </div>
+
+    <div *ngIf="isEditMode" class="mb-2">
+      <label>Active</label>
+      <input type="checkbox" formControlName="isActive" />
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="loading">
+      {{ isEditMode ? 'Update' : 'Add' }}
+    </button>
+  </form>
+</div>
