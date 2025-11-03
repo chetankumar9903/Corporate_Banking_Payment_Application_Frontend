@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LoginSvc } from '../services/login-svc';
 import { LoginViewModel } from '../models/LoginViewModel';
 import { AuthResponseViewModel } from '../models/auth-response';
@@ -11,7 +11,7 @@ import { Role } from '../models/Role';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,RouterLink],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
@@ -21,6 +21,7 @@ export class Login implements OnInit {
   errorMessage = '';
   loading = false;
 
+  
   constructor(private fb: FormBuilder, private svc: LoginSvc, private router: Router) {}
 
   ngOnInit(): void {

@@ -24,8 +24,28 @@ export class BankSvc {
   //   return this.http.get<Bank[]>(this.baseUrl, this.getHeaders());
   // }
 
-  getAllBanks(): Observable<{ items: Bank[]; totalCount: number }> {
-  return this.http.get<{ items: Bank[]; totalCount: number }>(this.baseUrl);
+//   getAllBanks(): Observable<{ items: Bank[]; totalCount: number }> {
+//   return this.http.get<{ items: Bank[]; totalCount: number }>(this.baseUrl);
+// }
+
+getAllBanks(
+  searchTerm: string = '',
+  sortColumn: string = '',
+  sortOrder: 'asc' | 'desc' | '' = '',
+  pageNumber: number = 1,
+  pageSize: number = 5
+): Observable<{ items: Bank[]; totalCount: number }> {
+  const params = new URLSearchParams();
+
+  if (searchTerm) params.append('searchTerm', searchTerm);
+  if (sortColumn) params.append('sortColumn', sortColumn);
+  if (sortOrder) params.append('sortOrder', sortOrder);
+  params.append('pageNumber', pageNumber.toString());
+  params.append('pageSize', pageSize.toString());
+
+  return this.http.get<{ items: Bank[]; totalCount: number }>(
+    `${this.baseUrl}?${params.toString()}`
+  );
 }
 
 

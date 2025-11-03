@@ -5,12 +5,15 @@ import { BankDashboard } from './bank-dashboard/bank-dashboard';
 import { ClientDashboard } from './client-dashboard/client-dashboard';
 import { BankList } from './bank-list/bank-list';
 import { BankForm } from './bank-form/bank-form';
+import { Register } from './register/register';
 
 export const routes: Routes = [
 //      { path: 'login', component: Login },
 //   { path: '', redirectTo: 'login', pathMatch: 'full' },
 
 { path: '', component: Login },
+{ path: 'login', component: Login },
+ { path: 'register', component: Register },
 //   { path: 'superadmin-dashboard', component: SuperadminDashboard },
  { path: 'superadmin-dashboard', component: SuperadminDashboard, children: [
     //   { path: '', redirectTo: 'banks', pathMatch: 'full' },

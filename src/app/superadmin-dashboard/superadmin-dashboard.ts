@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-superadmin-dashboard',
@@ -9,5 +9,5 @@ import { RouterLink, RouterModule } from '@angular/router';
   styleUrl: './superadmin-dashboard.css',
 })
 export class SuperadminDashboard {
-
+ 
 }
