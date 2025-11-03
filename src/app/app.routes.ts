@@ -9,6 +9,7 @@ import { BankForm } from './bank-form/bank-form';
 export const routes: Routes = [
 //      { path: 'login', component: Login },
 //   { path: '', redirectTo: 'login', pathMatch: 'full' },
+
 { path: '', component: Login },
 //   { path: 'superadmin-dashboard', component: SuperadminDashboard },
  { path: 'superadmin-dashboard', component: SuperadminDashboard, children: [

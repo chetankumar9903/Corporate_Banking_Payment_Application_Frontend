@@ -1,18 +1,18 @@
-import { Component } from '@angular/core';
-import { BankSvc } from '../services/bank-svc';
-import { Router } from '@angular/router';
-import { Bank } from '../models/Bank';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { BankSvc } from '../services/bank-svc';
+import { Bank } from '../models/Bank';
 
 @Component({
   selector: 'app-bank-list',
-  imports: [CommonModule,ReactiveFormsModule],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './bank-list.html',
-  styleUrl: './bank-list.css',
+  styleUrls: ['./bank-list.css'],
 })
-export class BankList {
- banks: Bank[] = [];
+export class BankList implements OnInit {
+  banks: Bank[] = [];
   loading = false;
 
   constructor(private bankService: BankSvc, private router: Router) {}
@@ -21,19 +21,55 @@ export class BankList {
     this.fetchBanks();
   }
 
-  fetchBanks(): void {
-    this.loading = true;
-    this.bankService.getAllBanks().subscribe({
-      next: (data) => {
-        this.banks = data;
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Failed to fetch banks', err);
-        this.loading = false;
-      }
-    });
-  }
+  // fetchBanks() {
+  //   this.loading = true;
+  //   this.bankService.getAllBanks().subscribe({
+  //     next: (data) => {
+  //       this.banks = data;
+  //       this.loading = false;
+  //     },
+  //     error: (err) => {
+  //       console.error('Failed to fetch banks', err);
+  //       this.loading = false;
+  //     },
+  //   });
+  // }
+
+
+//   fetchBanks() {
+//   this.loading = true;
+//   this.bankService.getAllBanks().subscribe({
+//     next: (response) => {
+//       // If backend returns paginated object (with data property)
+//       this.banks = Array.isArray(response) ? response : response.data;
+//       this.loading = false;
+//       console.log('Banks loaded:', this.banks);
+//     },
+//     error: (err) => {
+//       console.error('Failed to fetch banks', err);
+//       this.loading = false;
+//     },
+//   });
+// }
+
+totalCount = 0;
+
+fetchBanks(): void {
+  this.loading = true;
+  this.bankService.getAllBanks().subscribe({
+    next: (response) => {
+      this.banks = response.items;
+      this.totalCount = response.totalCount;
+      this.loading = false;
+    },
+    error: (err) => {
+      console.error('Failed to fetch banks', err);
+      this.loading = false;
+    }
+  });
+}
+
+
 
   addBank() {
     this.router.navigate(['/superadmin-dashboard/banks/add']);
@@ -47,10 +83,10 @@ export class BankList {
     if (confirm('Are you sure you want to delete this bank?')) {
       this.bankService.deleteBank(id).subscribe({
         next: () => {
-          // Refresh list after deletion
+          alert('Bank deleted successfully');
           this.fetchBanks();
         },
-        error: (err) => console.error('Failed to delete bank', err)
+        error: (err) => console.error('Delete failed', err),
       });
     }
   }
