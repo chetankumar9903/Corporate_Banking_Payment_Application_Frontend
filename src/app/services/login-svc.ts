@@ -65,4 +65,28 @@ export class LoginSvc {
   logout(): void {
     localStorage.clear();
   }
+
+   // decode token payload (no validation) to extract user info
+  private decodePayload(token: string) {
+    try {
+      const payload = token.split('.')[1];
+      return JSON.parse(atob(payload));
+    } catch {
+      return null;
+    }
+  }
+
+  getUserIdFromToken(): number | null {
+    const token = this.getToken();
+    const payload = token ? this.decodePayload(token) : null;
+    if (!payload) return null;
+    // adjust key used in your token (you used "userid")
+    return payload['userid'] ? Number(payload['userid']) : null;
+  }
+
+  getRoleFromToken(): string | null {
+    const token = this.getToken();
+    const payload = token ? this.decodePayload(token) : null;
+    return payload ? payload['role'] : null;
+  }
 }
