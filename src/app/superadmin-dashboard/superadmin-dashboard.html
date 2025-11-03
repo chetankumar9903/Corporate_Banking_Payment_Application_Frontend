@@ -1,12 +1,24 @@
-<div class="dashboard">
-  <h1>Super Admin Dashboard</h1>
-  <nav>
-    <ul>
-      <li><a routerLink="banks">Manage Banks</a></li>
-      <!-- Future: <li><a routerLink="users">Manage Users</a></li> -->
-    </ul>
-  </nav>
+<!-- superadmin-dashboard.html -->
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h3>Super Admin</h3>
+      <p>Welcome back!</p>
+    </div>
 
-  <!-- Child components will render here -->
-  <router-outlet></router-outlet>
+    <nav class="nav-menu">
+      <a routerLink="banks" routerLinkActive="active-link">
+        <i class="bi bi-bank"></i> Manage Banks
+      </a>
+      <a routerLink="reports" routerLinkActive="active-link">
+        <i class="bi bi-graph-up"></i> Reports
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Section -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
 </div>
