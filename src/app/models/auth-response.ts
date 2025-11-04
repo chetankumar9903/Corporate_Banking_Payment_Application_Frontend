@@ -4,5 +4,6 @@ export interface AuthResponseViewModel {
   role: string;
   emailId: string;
   fullName: string;
+  bankId: number | null;
   clientId?:string;
 }

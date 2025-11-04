@@ -1,0 +1,85 @@
+<div class="client-container">
+  <h2>Client Management</h2>
+  <p>View, search, and manage your bank's clients.</p>
+
+  <div class="filter-bar">
+    <div class="form-group">
+      <label for="search">Search Clients:</label>
+      <input 
+        type="text" 
+        id="search" 
+        class="form-control" 
+        placeholder="Search by name, account #, etc..."
+        [(ngModel)]="clientSearchTerm"
+        (ngModelChange)="onFilterChange()">
+    </div>
+  </div>
+  <div *ngIf="loading && clients.length === 0" class="loading-full">
+    Loading clients...
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div class="table-container" *ngIf="clients.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th (click)="onSort('companyName')" class="sortable">
+            Company Name
+            <span *ngIf="sortColumn === 'companyName'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+          </th>
+          <th (click)="onSort('customerName')" class="sortable">
+            Contact Person
+            <span *ngIf="sortColumn === 'customerName'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+          </th>
+          <th (click)="onSort('accountNumber')" class="sortable">
+            Account Number
+            <span *ngIf="sortColumn === 'accountNumber'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+          </th>
+          <th (click)="onSort('balance')" class="sortable">
+            Balance
+            <span *ngIf="sortColumn === 'balance'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+          </th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of clients">
+          <td>{{ client.companyName }}</td>
+          <td>{{ client.customerName }}</td>
+          <td>{{ client.accountNumber }}</td>
+          <td>{{ client.balance | currency:'INR' }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="client.isActive ? 'status-approved' : 'status-rejected'">
+              {{ client.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+          <td class="action-buttons">
+            <button (click)="onDelete(client)" class="btn btn-danger" [disabled]="loading">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!loading && clients.length === 0 && !errorMessage" class="no-data">
+    No clients found matching your criteria.
+  </div>
+
+  <div class="pagination-controls" *ngIf="filteredClients.length > 0">
+    <button (click)="prevPage()" [disabled]="currentPage === 1 || loading">
+      &laquo; Previous
+    </button>
+    <span>
+      Page {{ currentPage }} of {{ Math.ceil(filteredClients.length / pageSize) }}
+    </span>
+    <button (click)="nextPage()" [disabled]="(currentPage * pageSize) >= filteredClients.length || loading">
+      Next &raquo;
+    </button>
+  </div>
+</div>

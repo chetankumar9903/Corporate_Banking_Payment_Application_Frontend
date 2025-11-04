@@ -1,1 +1,62 @@
-<p>bank-dashboard works!</p>
+<div *ngIf="isLoadingBankId" class="full-page-status">
+  <h2>Loading Account Information...</h2>
+</div>
+
+<div *ngIf="!isLoadingBankId && errorMessage" class="full-page-status error">
+  <h2>Error</h2>
+  <p>{{ errorMessage }}</p>
+  <button (click)="findAndSaveBankId()" class="btn">Try Again</button>
+</div>
+
+<div *ngIf="!isLoadingBankId && !errorMessage" class="dashboard-layout">
+  
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <h3>Bank Menu</h3>
+    </div>
+    <ul class="nav-links">
+  <li>
+    <a routerLink="verification" routerLinkActive="active-link">
+      <span class="icon">&#10003;</span> Customer Verification
+    </a>
+  </li>
+  <li>
+    <a routerLink="onboarding" routerLinkActive="active-link">
+      <span class="icon">&#43;</span> New Onboarding
+    </a>
+  </li>
+  <li>
+    <a routerLink="manage-clients" routerLinkActive="active-link">
+      <span class="icon">&#128100;</span> Manage Clients
+    </a>
+  </li>
+  <li>
+    <a routerLink="payment-approval" routerLinkActive="active-link">
+      <span class="icon">&#128182;</span> Payment Approval
+    </a>
+  </li>
+  <li>
+    <a routerLink="all-transactions" routerLinkActive="active-link">
+      <span class="icon">&#128203;</span> All Transactions
+    </a>
+  </li>
+  <li>
+    <a routerLink="reports" routerLinkActive="active-link">
+      <span class="icon">&#128202;</span> Generate Reports
+    </a>
+  </li>
+</ul>
+  </nav>
+
+  <main class="content-area">
+    
+    <div *ngIf="!isChildRouteActive" class="welcome-message">
+      <h2>Welcome, {{ username }}!</h2>
+      <p>Please select a feature from the menu to get started.</p>
+    </div>
+
+    <router-outlet (activate)="onChildActivate($event)" (deactivate)="onChildDeactivate($event)"></router-outlet>
+    
+  </main>
+
+</div>

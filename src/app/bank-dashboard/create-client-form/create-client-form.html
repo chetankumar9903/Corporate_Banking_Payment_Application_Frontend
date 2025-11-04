@@ -1,0 +1,47 @@
+<div class="create-client-container">
+  <h2>Create Client Account</h2>
+  <p>Please enter the company details for the approved customer.</p>
+
+  <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="client-form">
+
+    <div class="form-group">
+      <label for="companyName">Company Name</label>
+      <input 
+        type="text" 
+        id="companyName" 
+        formControlName="companyName" 
+        class="form-control"
+        placeholder="Enter company name">
+      <div *ngIf="clientForm.get('companyName')?.touched && clientForm.get('companyName')?.invalid" class="error-text">
+        Company name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="initialBalance">Initial Balance</label>
+      <input 
+        type="number" 
+        id="initialBalance" 
+        formControlName="initialBalance" 
+        class="form-control"
+        placeholder="0.00">
+      <div *ngIf="clientForm.get('initialBalance')?.touched && clientForm.get('initialBalance')?.invalid" class="error-text">
+        Initial balance is required and must be 0 or more.
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="loading || clientForm.invalid || clientForm.disabled" class="btn btn-primary">
+        {{ loading ? 'Creating Account...' : 'Create Client' }}
+      </button>
+    </div>
+
+  </form>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    <strong>Error:</strong> {{ errorMessage }}
+  </div>
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+</div>

@@ -4,11 +4,46 @@ import { Observable } from 'rxjs';
 import { Bank, CreateBankDto, UpdateBankDto } from '../models/Bank';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root',
 })
 export class BankSvc {
-  private baseUrl = 'https://localhost:7257/api/Bank';
+  private baseUrl = 'https://localhost:7257/api/Bank';
 
+  constructor(private http: HttpClient) { }
+
+  getAllBanks(): Observable<Bank[]> {
+    return this.http.get<Bank[]>(this.baseUrl);
+  }
+
+  getBankById(id: number): Observable<Bank> {
+    return this.http.get<Bank>(`${this.baseUrl}/${id}`);
+  }
+
+  createBank(dto: CreateBankDto): Observable<Bank> {
+    return this.http.post<Bank>(this.baseUrl, dto);
+  }
+
+  updateBank(id: number, dto: UpdateBankDto): Observable<Bank> {
+    return this.http.put<Bank>(`${this.baseUrl}/${id}`, dto);
+  }
+
+  deleteBank(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
+  getBankUsers() {
+    return this.http.get<{ userId: number; userName: string }[]>('https://localhost:7257/api/User/bankusers');
+  }
+
+  // --- ADD THIS NEW METHOD ---
+  /**
+   * Gets a bank's details by the associated user's username.
+   */
+  getBankByUsername(username: string): Observable<Bank> {
+    return this.http.get<Bank>(`${this.baseUrl}/by-username/${username}`);
+  }
+  // --- END OF ADDED METHOD ---
+}
   constructor(private http: HttpClient) {}
 
   private getHeaders() {
