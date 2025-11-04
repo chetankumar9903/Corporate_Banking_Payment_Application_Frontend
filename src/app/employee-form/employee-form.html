@@ -1,0 +1,79 @@
+<div class="employee-form-container">
+  <div class="card form-card shadow-sm p-4">
+    <h2 class="form-title text-center mb-4">{{ isEditMode ? 'Edit' : 'Add' }} Employee</h2>
+
+    <form [formGroup]="employeeForm" (ngSubmit)="submit()">
+      <div class="form-grid">
+        <!-- First Name -->
+        <div class="form-group">
+          <label>First Name <span class="text-danger">*</span></label>
+          <input formControlName="firstName" class="form-control" placeholder="Enter first name" />
+          <div class="text-danger small mt-1" *ngIf="employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched">
+            First Name is required.
+          </div>
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group">
+          <label>Last Name</label>
+          <input formControlName="lastName" class="form-control" placeholder="Enter last name" />
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label>Email <span class="text-danger">*</span></label>
+          <input formControlName="emailId" type="email" class="form-control" placeholder="Enter email" />
+          <div class="text-danger small mt-1" *ngIf="employeeForm.get('emailId')?.touched">
+            <span *ngIf="employeeForm.get('emailId')?.errors?.['required']">Email is required.</span>
+            <span *ngIf="employeeForm.get('emailId')?.errors?.['email']">Enter a valid email.</span>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group">
+          <label>Phone Number <span class="text-danger">*</span></label>
+          <input formControlName="phoneNumber" type="tel" class="form-control" placeholder="Enter 10-digit phone number" />
+          <div class="text-danger small mt-1" *ngIf="employeeForm.get('phoneNumber')?.touched">
+            <span *ngIf="employeeForm.get('phoneNumber')?.errors?.['required']">Phone number is required.</span>
+            <span *ngIf="employeeForm.get('phoneNumber')?.errors?.['pattern']">Enter a valid 10-digit phone number.</span>
+          </div>
+        </div>
+
+        <!-- Position -->
+        <div class="form-group">
+          <label>Position</label>
+          <input formControlName="position" class="form-control" placeholder="Enter position" />
+        </div>
+
+        <!-- Department -->
+        <div class="form-group">
+          <label>Department</label>
+          <input formControlName="department" class="form-control" placeholder="Enter department" />
+        </div>
+
+        <!-- Salary -->
+        <div class="form-group">
+          <label>Salary <span class="text-danger">*</span></label>
+          <input formControlName="salary" type="number" class="form-control" placeholder="Enter salary" />
+          <div class="text-danger small mt-1" *ngIf="employeeForm.get('salary')?.invalid && employeeForm.get('salary')?.touched">
+            Salary is required.
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="form-group">
+          <label>Status</label>
+          <select formControlName="isActive" class="form-select">
+            <option [ngValue]="true">Active</option>
+            <option [ngValue]="false">Inactive</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-success w-100 mt-3" [disabled]="employeeForm.invalid || loading">
+        {{ loading ? (isEditMode ? 'Updating...' : 'Adding...') : (isEditMode ? 'Update' : 'Add') }}
+      </button>
+    </form>
+  </div>
+</div>

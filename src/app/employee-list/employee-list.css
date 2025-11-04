@@ -1,0 +1,27 @@
+.employee-list-container {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.header-section h2 {
+  margin: 0;
+}
+
+.actions .search-input {
+  width: 250px;
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+.badge {
+  font-size: 0.9rem;
+  padding: 0.4em 0.6em;
+}
+
+.btn-outline-warning, .btn-outline-danger {
+  padding: 0.25rem 0.5rem;
+}

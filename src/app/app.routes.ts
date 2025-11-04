@@ -9,6 +9,12 @@ import { Register } from './register/register';
 import { ReportGenerate } from './report-generate/report-generate';
 import { ReportHistory } from './report-history/report-history';
 import { Report } from './report/report';
+import { BeneficiaryList } from './beneficiary-list/beneficiary-list';
+import { BeneficiaryForm } from './beneficiary-form/beneficiary-form';
+import { PaymentList } from './payment-list/payment-list';
+import { PaymentForm } from './payment-form/payment-form';
+import { EmployeeList } from './employee-list/employee-list';
+import { EmployeeForm } from './employee-form/employee-form';
 
 export const routes: Routes = [
 //      { path: 'login', component: Login },
@@ -38,5 +44,24 @@ export const routes: Routes = [
     ]
   },
   { path: 'bank-dashboard', component: BankDashboard },
-  { path: 'client-dashboard', component: ClientDashboard }
+  // { path: 'client-dashboard', component: ClientDashboard }
+  {
+  path: 'client-dashboard',
+  component: ClientDashboard,
+  children: [
+    { path: 'beneficiaries', component: BeneficiaryList },
+    { path: 'beneficiaries/add', component: BeneficiaryForm },
+    { path: 'beneficiaries/edit/:id', component: BeneficiaryForm },
+    { path: 'payments',component: PaymentList },
+    { path: 'payments/add', component: PaymentForm},
+     { path: 'employees', component: EmployeeList },
+   { path: 'employees/add', component: EmployeeForm },
+  { path: 'employees/edit/:id', component: EmployeeForm },
+
+
+   
+
+    // later: { path: 'reports', component: ClientReports },
+  ],
+}
 ];

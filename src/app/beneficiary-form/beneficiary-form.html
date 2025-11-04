@@ -1,0 +1,84 @@
+
+
+<div class="beneficiary-form card p-3 shadow-sm">
+  <h3 class="mb-4 text-center">{{ isEditMode ? 'Edit Beneficiary' : 'Add New Beneficiary' }}</h3>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-grid">
+      <!-- Name -->
+      <div class="form-group">
+        <label>Beneficiary Name <span class="text-danger">*</span></label>
+        <input formControlName="beneficiaryName" class="form-control" placeholder="Enter full name" />
+        <div class="text-danger small mt-1" *ngIf="form.get('beneficiaryName')?.touched && form.get('beneficiaryName')?.invalid">
+          <span *ngIf="form.get('beneficiaryName')?.errors?.['required']">Name is required.</span>
+          <span *ngIf="form.get('beneficiaryName')?.errors?.['maxlength']">Max 100 characters allowed.</span>
+        </div>
+      </div>
+
+      <!-- Account Number -->
+      <div class="form-group">
+        <label>Account Number <span class="text-danger">*</span></label>
+        <input formControlName="accountNumber" class="form-control" [readonly]="isEditMode" placeholder="Enter account number" />
+        <div class="text-danger small mt-1" *ngIf="form.get('accountNumber')?.touched && form.get('accountNumber')?.invalid">
+          <span *ngIf="form.get('accountNumber')?.errors?.['required']">Account number is required.</span>
+          <span *ngIf="form.get('accountNumber')?.errors?.['maxlength']">Max 20 characters allowed.</span>
+        </div>
+      </div>
+
+      <!-- Bank Name -->
+      <div class="form-group">
+        <label>Bank Name <span class="text-danger">*</span></label>
+        <input formControlName="bankName" class="form-control" placeholder="Enter bank name" />
+        <div class="text-danger small mt-1" *ngIf="form.get('bankName')?.touched && form.get('bankName')?.invalid">
+          <span *ngIf="form.get('bankName')?.errors?.['required']">Bank name is required.</span>
+          <span *ngIf="form.get('bankName')?.errors?.['maxlength']">Max 50 characters allowed.</span>
+        </div>
+      </div>
+
+      <!-- Branch -->
+      <div class="form-group">
+        <label>Branch</label>
+        <input formControlName="branch" class="form-control" placeholder="Enter branch name" />
+      </div>
+
+      <!-- IFSC Code -->
+      <div class="form-group">
+        <label>IFSC Code</label>
+        <input formControlName="ifscCode" class="form-control" placeholder="Enter IFSC code" />
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label>Email</label>
+        <input formControlName="email" class="form-control" placeholder="Enter email" />
+        <div class="text-danger small mt-1" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+          <span *ngIf="form.get('email')?.errors?.['email']">Enter a valid email.</span>
+        </div>
+      </div>
+
+      <!-- Phone Number -->
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input formControlName="phoneNumber" class="form-control" placeholder="Enter 10-digit phone" />
+        <div class="text-danger small mt-1" *ngIf="form.get('phoneNumber')?.touched && form.get('phoneNumber')?.invalid">
+          <span *ngIf="form.get('phoneNumber')?.errors?.['pattern']">Enter a valid 10-digit phone number.</span>
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div class="form-group full-width">
+        <label>Address</label>
+        <textarea formControlName="address" class="form-control" placeholder="Enter address"></textarea>
+      </div>
+
+      <!-- Active Checkbox -->
+      <div *ngIf="isEditMode" class="form-group full-width">
+        <label><input type="checkbox" formControlName="isActive" /> Active</label>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100 mt-3" [disabled]="form.invalid || loading">
+      {{ isEditMode ? 'Update' : 'Add' }}
+    </button>
+  </form>
+</div>

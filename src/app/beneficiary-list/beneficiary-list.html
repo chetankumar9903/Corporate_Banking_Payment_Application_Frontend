@@ -1,0 +1,57 @@
+<div class="beneficiary-container card p-4 shadow-sm">
+  <h2 class="mb-4">Manage Beneficiaries</h2>
+
+  <div class="controls d-flex flex-wrap gap-2 mb-3">
+    <input [(ngModel)]="searchTerm" (keyup.enter)="search()" placeholder="Search..." class="form-control flex-grow-1" />
+    <button class="btn btn-primary" (click)="search()">Search</button>
+   
+    <button class="btn btn-outline-secondary" (click)="clearFilter()">Clear</button>
+     <button class="btn btn-success" (click)="add()">Add Beneficiary</button>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead class="table-primary">
+        <tr>
+          <th (click)="sort('beneficiaryName')" style="cursor:pointer">Name</th>
+          <th (click)="sort('bankName')" style="cursor:pointer">Bank</th>
+          <th>Account</th>
+          <th>IFSC</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!loading && beneficiaries.length > 0">
+        <tr *ngFor="let b of beneficiaries">
+          <td>{{ b.beneficiaryName }}</td>
+          <td>{{ b.bankName }}</td>
+          <td>{{ b.accountNumber }}</td>
+          <td>{{ b.ifscCode }}</td>
+          <td>{{ b.email }}</td>
+          <td>{{ b.phoneNumber }}</td>
+          <td>
+            <span class="badge" [ngClass]="b.isActive ? 'bg-success' : 'bg-secondary'">
+              {{ b.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-warning me-1" (click)="edit(b.beneficiaryId)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="delete(b.beneficiaryId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="!loading && beneficiaries.length === 0">
+        <tr>
+          <td colspan="8" class="text-center text-muted">No beneficiaries found.</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="loading">
+        <tr>
+          <td colspan="8" class="text-center text-primary">Loading...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
