@@ -12,15 +12,35 @@ export class SalarySvc {
   constructor(private http: HttpClient) {}
 
   // List (supports query params for paging/filtering)
-  getAll(searchTerm?: string, sortColumn?: string, sortOrder?: 'asc'|'desc', pageNumber = 1, pageSize = 10) {
-    let params = new HttpParams()
-      .set('pageNumber', pageNumber.toString())
-      .set('pageSize', pageSize.toString());
-    if (searchTerm) params = params.set('searchTerm', searchTerm);
-    if (sortColumn) params = params.set('sortColumn', sortColumn);
-    if (sortOrder) params = params.set('sortOrder', sortOrder.toUpperCase());
-    return this.http.get<{ items: SalaryDisbursementDto[]; total: number }>(this.base, { params });
-  }
+  // getAll(searchTerm?: string, sortColumn?: string, sortOrder?: 'asc'|'desc', pageNumber = 1, pageSize = 10) {
+  //   let params = new HttpParams()
+  //     .set('pageNumber', pageNumber.toString())
+  //     .set('pageSize', pageSize.toString());
+  //   if (searchTerm) params = params.set('searchTerm', searchTerm);
+  //   if (sortColumn) params = params.set('sortColumn', sortColumn);
+  //   if (sortOrder) params = params.set('sortOrder', sortOrder.toUpperCase());
+  //   return this.http.get<{ items: SalaryDisbursementDto[]; total: number }>(this.base, { params });
+  // }
+
+
+  getAll(
+  clientId?: number,
+  searchTerm?: string,
+  sortColumn?: string,
+  sortOrder?: 'asc'|'desc',
+  pageNumber = 1,
+  pageSize = 10
+) {
+  let params = new HttpParams()
+    .set('pageNumber', pageNumber.toString())
+    .set('pageSize', pageSize.toString());
+  if (clientId) params = params.set('clientId', clientId.toString());
+  if (searchTerm) params = params.set('searchTerm', searchTerm);
+  if (sortColumn) params = params.set('sortColumn', sortColumn);
+  if (sortOrder) params = params.set('sortOrder', sortOrder.toUpperCase());
+  return this.http.get<{ items: SalaryDisbursementDto[]; totalCount: number }>(this.base, { params });
+}
+
 
   getByClientId(clientId: number) {
     return this.http.get<SalaryDisbursementDto[]>(`${this.base}/client/${clientId}`);
@@ -54,4 +74,5 @@ export class SalarySvc {
   deleteBatch(id: number) {
     return this.http.delete(`${this.batchBase}/${id}`);
   }
+
 }

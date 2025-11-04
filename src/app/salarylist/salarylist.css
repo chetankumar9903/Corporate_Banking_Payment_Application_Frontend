@@ -6,8 +6,26 @@
   border-radius: 10px;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
   font-family: "Segoe UI", sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 150px); /* leave space for header/footer */
 }
 
+/* Make table scrollable */
+.table-container {
+  flex-grow: 1; /* take remaining space */
+  overflow-y: auto; /* vertical scroll */
+  overflow-x: auto; /* horizontal scroll if table too wide */
+  margin-top: 0.5rem;
+}
+
+/* Optional: sticky header */
+.salary-table thead th {
+  position: sticky;
+  top: 0;
+  background: #f8f9fa;
+  z-index: 1;
+}
 /* Header */
 .header-row {
   display: flex;
