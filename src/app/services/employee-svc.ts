@@ -35,4 +35,13 @@ export class EmployeeSvc {
   getEmployeeById(id: number): Observable<EmployeeDto> {
     return this.http.get<EmployeeDto>(`${this.apiUrl}/${id}`);
   }
+
+   getByClientId(clientId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/byclient/${clientId}`);
+  }
+
+  getById(employeeId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${employeeId}`);
+  }
+  
 }

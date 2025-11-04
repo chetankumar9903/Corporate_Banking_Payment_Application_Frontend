@@ -15,6 +15,10 @@ import { PaymentList } from './payment-list/payment-list';
 import { PaymentForm } from './payment-form/payment-form';
 import { EmployeeList } from './employee-list/employee-list';
 import { EmployeeForm } from './employee-form/employee-form';
+import { Profile } from './profile/profile';
+import { Salarylist } from './salarylist/salarylist';
+import { SalaryCreate } from './salary-create/salary-create';
+import { BatchCreate } from './batch-create/batch-create';
 
 export const routes: Routes = [
 //      { path: 'login', component: Login },
@@ -49,6 +53,7 @@ export const routes: Routes = [
   path: 'client-dashboard',
   component: ClientDashboard,
   children: [
+     { path: 'profile', component: Profile },
     { path: 'beneficiaries', component: BeneficiaryList },
     { path: 'beneficiaries/add', component: BeneficiaryForm },
     { path: 'beneficiaries/edit/:id', component: BeneficiaryForm },
@@ -57,6 +62,9 @@ export const routes: Routes = [
      { path: 'employees', component: EmployeeList },
    { path: 'employees/add', component: EmployeeForm },
   { path: 'employees/edit/:id', component: EmployeeForm },
+  { path: 'salaries', component: Salarylist },
+{ path: 'salaries/create', component: SalaryCreate},
+{ path: 'salaries/batch', component: BatchCreate },
 
 
    
