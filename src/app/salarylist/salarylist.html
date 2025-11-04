@@ -7,6 +7,23 @@
     </div>
   </div>
 
+  <!-- Search -->
+  <!-- <div class="mb-2">
+    <input [(ngModel)]="searchTerm" placeholder="Search by employeeName, description,batch ID..." class="form-control" (keyup.enter)="onSearch(searchTerm)" />
+    <button class="btn btn-sm primary ms-2" (click)="onSearch(searchTerm)">Search</button>
+  </div> -->
+
+  <div class="mb-2 d-flex align-items-center gap-2">
+  <input
+    [(ngModel)]="searchTerm"
+    placeholder="Search by employee, description, batch ID.."
+    class="form-control flex-grow-1"
+    (keyup.enter)="onSearch(searchTerm)"
+  />
+  <button class="btn btn-sm primary" (click)="onSearch(searchTerm)">Search</button>
+  <button class="btn btn-sm secondary" (click)="clearSearch()">Clear</button>
+</div>
+
   <div *ngIf="loading" class="loading">Loading...</div>
 
   <div class="table-container" *ngIf="!loading && salaries.length">
@@ -14,17 +31,17 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Date</th>
-          <th>Employee</th>
+          <th (click)="setSort('date')">Date</th>
+          <th (click)="setSort('lastname')">Employee</th>
           <th>Description</th>
-          <th>Amount</th>
+          <th (click)="setSort('amount')">Amount</th>
           <th>Batch</th>
-          <th></th>
+          <!-- <th></th> -->
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let s of salaries; let i = index">
-          <td>{{ i + 1 }}</td>
+          <td>{{ (pageNumber-1)*pageSize + i + 1 }}</td>
           <td>{{ s.date | date: 'MMM d, y, h:mm a' }}</td>
           <td>{{ s.employeeName || 'Employee #' + s.employeeId }}</td>
           <td>{{ s.description || '-' }}</td>
@@ -34,6 +51,9 @@
               {{ s.batchId ? 'Batch ' + s.batchId : 'Single' }}
             </span>
           </td>
+          <!-- <td>
+            <button class="btn-link" (click)="onDelete(s.salaryDisbursementId)">Delete</button>
+          </td> -->
         </tr>
       </tbody>
     </table>
@@ -41,5 +61,12 @@
 
   <div *ngIf="!loading && !salaries.length" class="empty-state">
     No salary disbursements found.
+  </div>
+
+  <!-- Pagination -->
+  <div class="mt-2" *ngIf="totalCount > pageSize">
+    <button class="btn btn-sm secondary me-1" (click)="goToPage(pageNumber-1)">Prev</button>
+    <span>Page {{ pageNumber }} of {{ totalPages }}</span>
+    <button class="btn btn-sm secondary ms-1" (click)="goToPage(pageNumber+1)">Next</button>
   </div>
 </div>
