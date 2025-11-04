@@ -1,0 +1,49 @@
+<div class="form-card">
+  <h3>Create Batch Payment</h3>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label class="section-label">Select Employees (check multiple)</label>
+
+    <div class="employee-list">
+      <div class="employee-item" *ngFor="let e of employees">
+        <label class="checkbox">
+          <input type="checkbox" (change)="onToggle(e.employeeId, $event.target.checked)" />
+        </label>
+        <div class="employee-info">
+          <div class="emp-header">
+            <span class="emp-name">{{ e.firstName }} {{ e.lastName || '' }}</span>
+            <span class="emp-salary">₹{{ e.salary | number: '1.0-2' }}</span>
+          </div>
+          <div class="emp-meta">
+            <span>{{ e.position || '—' }}</span> | 
+            <span>{{ e.department || '—' }}</span>
+          </div>
+          <div class="emp-details">
+            <small>{{ e.emailId }}</small> | 
+            <small>{{ e.phoneNumber }}</small>
+          </div>
+          <div class="emp-account">
+            <small>Account: {{ e.accountNumber }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label>Total Amount</label>
+      <input type="number" formControlName="totalAmount" class="form-control" readonly />
+
+      <label>Description (optional)</label>
+      <input type="text" formControlName="description" class="form-control" />
+    </div>
+
+    <div class="actions">
+      <button class="btn" type="submit" [disabled]="selected.length === 0 || submitting">
+        Create Batch
+      </button>
+      <button class="btn-ghost" type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+
+  <div *ngIf="message" class="message">{{ message }}</div>
+</div>

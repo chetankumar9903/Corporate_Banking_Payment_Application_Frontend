@@ -1,0 +1,51 @@
+<div class="salaries-wrapper">
+  <div class="header-row">
+    <h3>Salary Disbursements</h3>
+    <div class="actions">
+      <a routerLink="/client-dashboard/salaries/create" class="btn btn-sm primary">+ Pay Employee</a>
+      <a routerLink="/client-dashboard/salaries/batch" class="btn btn-sm secondary">+ Pay All</a>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading...</div>
+
+  <table *ngIf="!loading && salaries.length" class="salary-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Date</th>
+        <th>Employee</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Batch</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let s of salaries ; let i = index">
+        
+          <td>{{ i + 1 }}</td> 
+        
+        <td>{{ s.date | date: 'MMM d, y, h:mm a' }}</td>
+        <td>{{ s.employeeName || 'Employee #' + s.employeeId }}</td>
+        <td>{{ s.description || '-' }}</td>
+        <td class="amount">₹{{ s.amount }}</td>
+        <td>
+          <span class="badge" [class.batch]="s.batchId" [class.single]="!s.batchId">
+            {{ s.batchId ? 'Batch ' + s.batchId : 'Single' }}
+          </span>
+        </td>
+        
+        <!-- <td>
+          <button class="btn-link" (click)="onDelete(s.salaryDisbursementId)">
+            Delete
+          </button>
+        </td> -->
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && !salaries.length" class="empty-state">
+    No salary disbursements found.
+  </div>
+</div>

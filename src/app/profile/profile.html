@@ -1,0 +1,68 @@
+<div class="profile-wrapper">
+  <!-- Profile Header -->
+  <div class="profile-header">
+    <div class="avatar">
+      <span>{{ clientName.charAt(0) | uppercase }}</span>
+    </div>
+    <div class="info">
+      <h2>{{ clientName }}</h2>
+      <p class="company">Company Name : {{ companyName }}</p>
+      <p class="bank">Bank Name : {{ bankName }}</p>
+      <p class="status" [ngClass]="{ active: isActive, inactive: !isActive }">
+        {{ isActive ? 'Active' : 'Inactive' }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Account Details -->
+  <div class="card account-details">
+    <h3>Account Information</h3>
+    <div class="detail-row">
+      <label>Account Number:</label>
+      <span>{{ accountNumber }}</span>
+    </div>
+    <div class="detail-row">
+      <label>Client ID:</label>
+      <span>{{ clientId }}</span>
+    </div>
+    <!-- <div class="detail-row">
+      <label>Customer ID:</label>
+      <span>{{ customerId }}</span>
+    </div>
+    <div class="detail-row">
+      <label>Bank ID:</label>
+      <span>{{ bankId }}</span>
+    </div> -->
+  </div>
+
+  <!-- Balance Update Section -->
+  <div class="card balance-card">
+    <h3>Balance</h3>
+    <p class="current-balance">₹{{ balance }}</p>
+
+    <form [formGroup]="balanceForm" (ngSubmit)="onUpdateBalance()">
+      <div class="form-group">
+        <label>Enter amount to Add</label>
+        <input
+          type="number"
+          formControlName="amount"
+          class="form-control"
+          placeholder="e.g. 100"
+         
+        />
+        <div
+          class="error"
+          *ngIf="balanceForm.get('amount')?.invalid && balanceForm.get('amount')?.touched"
+        >
+          Please enter a valid number.
+        </div>
+      </div>
+      <button class="btn btn-primary" type="submit" [disabled]="balanceForm.invalid">
+        Update Balance
+      </button>
+    </form>
+
+    <div class="success-message" *ngIf="balanceSuccess">{{ balanceSuccess }}</div>
+    <div class="error-message" *ngIf="balanceError">{{ balanceError }}</div>
+  </div>
+</div>

@@ -13,4 +13,11 @@ export class ClientSvc {
   getBalance(clientId: number): Observable<{ balance: number }> {
     return this.http.get<{ balance: number }>(`${this.apiUrl}/Client/${clientId}/balance`);
   }
+  updateBalance(clientId: number, dto: { amount: number }) {
+  return this.http.patch(`${this.apiUrl}/Client/${clientId}/balance`,dto);
+}
+
+getClientProfile(clientId: number) {
+  return this.http.get<ClientProfile>(`${this.apiUrl}/Client/${clientId}`);
+}
 }

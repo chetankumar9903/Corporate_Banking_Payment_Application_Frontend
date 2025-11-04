@@ -1,0 +1,148 @@
+.profile-wrapper {
+  max-width: 750px;
+  margin: 1.2rem auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* Profile header */
+.profile-header {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  padding: 1rem 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+}
+
+.avatar {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: white;
+  color: #007bff;
+  font-size: 1.4rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+}
+
+.info h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.info .company {
+  font-size: 0.9rem;
+  margin: 1px 0;
+  opacity: 0.9;
+}
+
+.info .bank {
+  font-size: 0.85rem;
+  color: #dfe9ff;
+}
+
+.status {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.status.active {
+  color: #3be07b;
+}
+.status.inactive {
+  color: #ff6961;
+}
+
+/* Cards */
+.card {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+
+.card h3 {
+  border-bottom: 1px solid #007bff;
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.8rem;
+  color: #007bff;
+  font-size: 1.1rem;
+}
+
+/* Details section */
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+.detail-row label {
+  font-weight: 600;
+  color: #333;
+}
+.detail-row span {
+  color: #555;
+}
+
+/* Balance section */
+.balance-card {
+  text-align: center;
+}
+.current-balance {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  color: #007bff;
+}
+.form-group {
+  margin-bottom: 0.8rem;
+  text-align: left;
+}
+.form-control {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  font-size: 0.9rem;
+}
+.form-control:focus {
+  border-color: #007bff;
+}
+.btn-primary {
+  background: #007bff;
+  color: white;
+  padding: 0.45rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.btn-primary:hover {
+  background: #0056b3;
+}
+
+.success-message {
+  color: #28a745;
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.error-message {
+  color: #dc3545;
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.error {
+  color: red;
+  font-size: 0.8rem;
+}

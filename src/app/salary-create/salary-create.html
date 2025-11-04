@@ -1,0 +1,72 @@
+<div class="form-card">
+  <h3>💸 Pay Single Employee</h3>
+  <p class="subtitle">Select an employee and confirm or modify the payment amount.</p>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <!-- Employee Selection -->
+    <div class="form-group">
+      <label>Employee</label>
+      <select formControlName="employeeId" class="form-control" (change)="onEmployeeSelect($event)">
+        <option [ngValue]="null">-- Select Employee --</option>
+        <option *ngFor="let e of employees" [value]="e.employeeId">
+          {{ e.firstName }} {{ e.lastName }} — ₹{{ e.salary }}
+        </option>
+      </select>
+      <div *ngIf="form.get('employeeId')?.invalid && form.get('employeeId')?.touched" class="error">
+        Please select an employee.
+      </div>
+    </div>
+
+    <!-- Auto-filled Salary Info -->
+    <div *ngIf="selectedEmployee" class="info-box">
+      <p><strong>Position:</strong> {{ selectedEmployee.position || '—' }}</p>
+      <p><strong>Department:</strong> {{ selectedEmployee.department || '—' }}</p>
+      <p><strong>Default Salary:</strong> ₹{{ selectedEmployee.salary }}</p>
+    </div>
+
+    <!-- Allow custom payment -->
+    <div class="toggle-container">
+      <label>
+        <input type="checkbox" [(ngModel)]="allowCustom" name="allowCustom" />
+        Pay different amount
+      </label>
+    </div>
+
+    <!-- Amount -->
+    <div class="form-group">
+      <label>Amount (₹)</label>
+      <input
+        type="number"
+        formControlName="amount"
+        class="form-control"
+        [readonly]="!allowCustom"
+      />
+      <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="error">
+        Please enter a valid amount greater than 0.
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label>Description (optional)</label>
+      <input
+        type="text"
+        formControlName="description"
+        class="form-control"
+        placeholder="e.g. October Salary / Bonus"
+      />
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button class="btn primary" type="submit" [disabled]="form.invalid || submitting">
+        {{ submitting ? 'Processing...' : 'Pay Now' }}
+      </button>
+      <button class="btn ghost" type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+
+  <div *ngIf="message" class="message" [ngClass]="{'success': message.includes('success'), 'error': message.includes('Failed')}">
+    {{ message }}
+  </div>
+</div>
