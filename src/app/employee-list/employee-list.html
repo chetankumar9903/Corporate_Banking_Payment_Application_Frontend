@@ -1,0 +1,58 @@
+<div class="employee-list-container p-3">
+  <div class="header-section d-flex justify-content-between align-items-center mb-3">
+    <h2>Employees</h2>
+    <div class="actions d-flex gap-2">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="🔍 Search employees..."
+        class="form-control search-input"
+      />
+      <button class="btn btn-primary" (click)="searchEmployees()">Search</button>
+       <button class="btn btn-secondary" (click)="clearFilter()">Clear Filter</button>
+      <button class="btn btn-success" (click)="addEmployee()">+ Add Employee</button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center p-3">Loading employees...</div>
+
+  <table *ngIf="filteredEmployees.length > 0" class="table table-hover table-striped align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Position</th>
+        <th>Department</th>
+        <th>Salary</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of filteredEmployees">
+        <td>{{ emp.employeeCode }}</td>
+        <td>{{ emp.firstName }} {{ emp.lastName }}</td>
+        <td>{{ emp.emailId }}</td>
+        <td>{{ emp.phoneNumber }}</td>
+        <td>{{ emp.position }}</td>
+        <td>{{ emp.department }}</td>
+        <td>₹{{ emp.salary | number }}</td>
+        <td>
+          <span [ngClass]="emp.isActive ? 'badge bg-success' : 'badge bg-secondary'">
+            {{ emp.isActive ? 'Active' : 'Inactive' }}
+          </span>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-outline-warning me-1" (click)="editEmployee(emp.employeeId)">Edit</button>
+          <button class="btn btn-sm btn-outline-danger" (click)="deleteEmployee(emp.employeeId)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && filteredEmployees.length === 0" class="text-center mt-3">
+    No employees found.
+  </div>
+</div>

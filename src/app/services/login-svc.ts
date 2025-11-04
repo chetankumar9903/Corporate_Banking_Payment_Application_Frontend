@@ -40,6 +40,12 @@ export class LoginSvc {
     localStorage.setItem('username', authResponse.userName);
     localStorage.setItem('email', authResponse.emailId);
     localStorage.setItem('fullname', authResponse.fullName);
+
+     if (authResponse.clientId !== undefined && authResponse.clientId !== null) {
+    localStorage.setItem('clientId', authResponse.clientId.toString());
+  } else {
+    localStorage.removeItem('clientId');
+  }
   }
 
 
@@ -89,4 +95,9 @@ export class LoginSvc {
     const payload = token ? this.decodePayload(token) : null;
     return payload ? payload['role'] : null;
   }
+
+  getClientId(): number | null {
+  const v = localStorage.getItem('clientId');
+  return v ? Number(v) : null;
+}
 }

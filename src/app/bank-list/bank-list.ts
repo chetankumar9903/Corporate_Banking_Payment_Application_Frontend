@@ -117,7 +117,7 @@ export class BankList implements OnInit {
       this.fetchBanks();
     }
   }
-
+ 
 
 
   addBank() {

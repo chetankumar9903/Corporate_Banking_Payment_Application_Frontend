@@ -1,0 +1,35 @@
+<div class="payment-container">
+  <h2>My Payments</h2>
+  <button class="btn btn-success" (click)="add()">+ New Payment</button>
+
+  <table class="table table-striped mt-3" *ngIf="!loading">
+    <thead>
+      <tr>
+        <th>Beneficiary</th>
+        <th>Amount</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Description</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of payments">
+        <td>{{ p.beneficiaryId }}</td>
+        <td>{{ p.amount | currency:'INR' }}</td>
+        <td>{{ p.requestDate | date:'short' }}</td>
+        <td>{{ getStatusLabel(p.paymentStatus) }}</td>
+        <td>{{ p.description }}</td>
+        <td>
+          <button
+            class="btn btn-danger btn-sm"
+            *ngIf="p.paymentStatus === Status.PENDING"
+            (click)="delete(p.paymentId)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
