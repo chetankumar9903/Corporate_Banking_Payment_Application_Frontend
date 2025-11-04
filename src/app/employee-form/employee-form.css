@@ -40,3 +40,16 @@
 .text-danger {
   font-size: 12px;
 }
+.actions button {
+  min-width: 120px; /* ensures buttons are not too small */
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.btn-success {
+  flex-shrink: 0; /* prevents shrinking if container is narrow */
+}
+
+.btn-outline-secondary {
+  flex-shrink: 0;
+}

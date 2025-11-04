@@ -1,7 +1,9 @@
 .beneficiary-container {
   background-color: #fff;
-  border-radius: 10px;
-  margin-top: 15px;
+  border-radius: 12px;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
 }
 
 .controls input.form-control {
@@ -27,5 +29,10 @@
 
 .badge {
   font-size: 0.85rem;
-  padding: 0.4em 0.6em;
+  padding: 0.35em 0.55em;
+}
+
+.pagination span {
+  font-size: 0.9rem;
+  margin: 0 0.5rem;
 }

@@ -1,6 +1,7 @@
 
 
 <div class="beneficiary-form card p-3 shadow-sm">
+  
   <h3 class="mb-4 text-center">{{ isEditMode ? 'Edit Beneficiary' : 'Add New Beneficiary' }}</h3>
 
   <form [formGroup]="form" (ngSubmit)="submit()">
@@ -77,8 +78,18 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-success w-100 mt-3" [disabled]="form.invalid || loading">
+    <!-- <button type="submit" class="btn btn-success w-100 mt-3" [disabled]="form.invalid || loading">
       {{ isEditMode ? 'Update' : 'Add' }}
-    </button>
+    </button> -->
+
+     <!-- Buttons at the bottom -->
+    <div class="actions mt-3 d-flex justify-content-between">
+      <button type="button" class="btn btn-outline-secondary" (click)="back()">
+        Back
+      </button>
+      <button type="submit" class="btn btn-success" [disabled]="form.invalid || loading">
+        {{ isEditMode ? 'Update' : 'Add' }}
+      </button>
+    </div>
   </form>
 </div>

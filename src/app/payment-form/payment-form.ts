@@ -66,4 +66,7 @@ export class PaymentForm implements OnInit {
       }
     });
   }
+  goBack() {
+  this.router.navigate(['/client-dashboard/payments']);
+}
 }

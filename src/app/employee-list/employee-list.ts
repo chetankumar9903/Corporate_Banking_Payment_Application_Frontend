@@ -17,17 +17,35 @@ export class EmployeeList implements OnInit {
   loading = false;
   searchTerm = '';
 
+   // --- Sorting ---
+  sortColumn: string = '';
+  sortOrder: 'asc' | 'desc' = 'asc';
+
+  // --- Pagination ---
+  pageNumber: number = 1;
+  pageSize: number = 10;
+  totalPages: number = 1;
+
   constructor(private employeeService: EmployeeSvc, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchEmployees();
   }
 
+
+
   // fetchEmployees(): void {
   //   this.loading = true;
   //   this.employeeService.getEmployeesByClient().subscribe({
-  //     next: (res) => { this.employees = res; this.loading = false; },
-  //     error: (err) => { console.error(err); this.loading = false; }
+  //     next: (res) => {
+  //       this.employees = res;
+  //       this.filteredEmployees = res;
+  //       this.loading = false;
+  //     },
+  //     error: (err) => {
+  //       console.error(err);
+  //       this.loading = false;
+  //     }
   //   });
   // }
 
@@ -37,6 +55,7 @@ export class EmployeeList implements OnInit {
       next: (res) => {
         this.employees = res;
         this.filteredEmployees = res;
+        this.updatePagination();
         this.loading = false;
       },
       error: (err) => {
@@ -44,6 +63,49 @@ export class EmployeeList implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+   // --- Sorting function ---
+  sort(column: string) {
+    if (this.sortColumn === column) {
+      // toggle sort order
+      this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortOrder = 'asc';
+    }
+
+    this.filteredEmployees.sort((a: any, b: any) => {
+      const valA = a[column];
+      const valB = b[column];
+
+      if (valA == null) return 1;
+      if (valB == null) return -1;
+
+      if (typeof valA === 'string') {
+        return this.sortOrder === 'asc' 
+          ? valA.localeCompare(valB) 
+          : valB.localeCompare(valA);
+      } else {
+        return this.sortOrder === 'asc' 
+          ? valA - valB 
+          : valB - valA;
+      }
+    });
+  }
+
+  // --- Pagination functions ---
+  updatePagination() {
+    this.totalPages = Math.ceil(this.filteredEmployees.length / this.pageSize);
+    if (this.pageNumber > this.totalPages) this.pageNumber = this.totalPages;
+  }
+
+  prevPage() {
+    if (this.pageNumber > 1) this.pageNumber--;
+  }
+
+  nextPage() {
+    if (this.pageNumber < this.totalPages) this.pageNumber++;
   }
 
   addEmployee(): void {
@@ -71,9 +133,11 @@ export class EmployeeList implements OnInit {
       emp.position?.toLowerCase().includes(term) ||
       emp.department?.toLowerCase().includes(term)
     );
+      this.updatePagination();
   }
   clearFilter(): void {
   this.searchTerm = '';
   this.filteredEmployees = [...this.employees];
+   this.updatePagination();
 }
 }
