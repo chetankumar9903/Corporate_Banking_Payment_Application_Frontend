@@ -16,6 +16,8 @@ export class Salarylist implements OnInit {
   loading = false;
   clientId: number | null = null;
 
+  
+
   constructor(private svc: SalarySvc, private login: LoginSvc) {
     this.clientId = this.login.getClientId();
   }
