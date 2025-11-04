@@ -21,6 +21,11 @@ export class BeneficiaryList implements OnInit {
   loading = false;
   clientId!: number;
 
+   pageNumber = 1;
+  pageSize = 10;
+  totalCount = 0;
+
+
   constructor(private svc: BeneficiarySvc, private router: Router) {}
 
   // ngOnInit(): void {
@@ -53,6 +58,7 @@ export class BeneficiaryList implements OnInit {
     this.svc.getByClientId(this.clientId).subscribe({
       next: (data) => {
         this.beneficiaries = data;
+         this.totalCount = data.length;
         this.loading = false;
       },
       error: (err) => {
@@ -65,6 +71,7 @@ export class BeneficiaryList implements OnInit {
   search() {
     if (!this.searchTerm) {
     this.load();
+     this.pageNumber = 1;
     return;
   }
   this.beneficiaries = this.beneficiaries.filter(b =>
@@ -78,6 +85,7 @@ export class BeneficiaryList implements OnInit {
     this.searchTerm = '';
     this.sortColumn = 'beneficiaryName';
     this.sortOrder = 'asc';
+     this.pageNumber = 1;
     this.load();
   }
 
@@ -107,4 +115,19 @@ export class BeneficiaryList implements OnInit {
       });
     }
   }
+
+   // Pagination helpers
+  get totalPages() {
+    // return Math.ceil(this.totalCount / this.pageSize);
+    return Math.ceil(this.totalCount / this.pageSize) || 1;
+  }
+  prevPage() { if (this.pageNumber > 1) { this.pageNumber--; this.load(); } }
+  nextPage() { if (this.pageNumber < this.totalPages) { this.pageNumber++; this.load(); } }
+
+  // Update paged list if you want frontend pagination
+get pagedBeneficiaries() {
+  const start = (this.pageNumber - 1) * this.pageSize;
+  return this.beneficiaries.slice(start, start + this.pageSize);
+} 
+
 }

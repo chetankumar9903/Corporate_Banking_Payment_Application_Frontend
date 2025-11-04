@@ -71,9 +71,19 @@
       </div>
 
       <!-- Submit Button -->
-      <button type="submit" class="btn btn-success w-100 mt-3" [disabled]="employeeForm.invalid || loading">
+      <!-- <button type="submit" class="btn btn-success w-100 mt-3" [disabled]="employeeForm.invalid || loading">
         {{ loading ? (isEditMode ? 'Updating...' : 'Adding...') : (isEditMode ? 'Update' : 'Add') }}
-      </button>
+      </button> -->
+
+      <div class="actions mt-4 d-flex justify-content-between">
+  <button type="button" class="btn btn-outline-secondary" (click)="back()">
+    Back
+  </button>
+  <button type="submit" class="btn btn-success" [disabled]="employeeForm.invalid || loading">
+    {{ loading ? (isEditMode ? 'Updating...' : 'Adding...') : (isEditMode ? 'Update' : 'Add') }}
+  </button>
+</div>
+
     </form>
   </div>
 </div>

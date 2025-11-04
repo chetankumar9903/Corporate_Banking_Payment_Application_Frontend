@@ -88,4 +88,7 @@ export class BeneficiaryForm implements OnInit {
       });
     }
   }
+  back() {
+  this.router.navigate(['/client-dashboard/beneficiaries']);
+}
 }

@@ -5,6 +5,7 @@ export interface Payment {
   paymentId: number;
   clientId: number;
   beneficiaryId: number;
+  beneficiaryName:string; 
   amount: number;
   requestDate: string;
   processedDate?: string;

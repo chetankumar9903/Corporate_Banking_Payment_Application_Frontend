@@ -64,9 +64,21 @@
   </div>
 
   <!-- Pagination -->
-  <div class="mt-2" *ngIf="totalCount > pageSize">
+  <!-- <div class="mt-2" *ngIf="totalCount > pageSize">
     <button class="btn btn-sm secondary me-1" (click)="goToPage(pageNumber-1)">Prev</button>
     <span>Page {{ pageNumber }} of {{ totalPages }}</span>
     <button class="btn btn-sm secondary ms-1" (click)="goToPage(pageNumber+1)">Next</button>
-  </div>
+  </div> -->
+
+  <!-- Pagination -->
+<div class="d-flex justify-content-end align-items-center mt-3 gap-2" *ngIf="totalCount > pageSize">
+  <button class="btn btn-outline-secondary btn-sm" [disabled]="pageNumber === 1" (click)="goToPage(pageNumber - 1)">
+    Prev
+  </button>
+  <span>Page {{ pageNumber }} of {{ totalPages }}</span>
+  <button class="btn btn-outline-secondary btn-sm" [disabled]="pageNumber === totalPages" (click)="goToPage(pageNumber + 1)">
+    Next
+  </button>
+</div>
+
 </div>

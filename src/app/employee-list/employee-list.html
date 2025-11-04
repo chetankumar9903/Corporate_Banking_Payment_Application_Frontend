@@ -1,58 +1,69 @@
-<div class="employee-list-container p-3">
-  <div class="header-section d-flex justify-content-between align-items-center mb-3">
-    <h2>Employees</h2>
-    <div class="actions d-flex gap-2">
-      <input
-        type="text"
-        [(ngModel)]="searchTerm"
-        placeholder="🔍 Search employees..."
-        class="form-control search-input"
-      />
-      <button class="btn btn-primary" (click)="searchEmployees()">Search</button>
-       <button class="btn btn-secondary" (click)="clearFilter()">Clear Filter</button>
-      <button class="btn btn-success" (click)="addEmployee()">+ Add Employee</button>
-    </div>
+<div class="employee-container card p-4 shadow-sm">
+  <h2 class="mb-4">Manage Employees</h2>
+
+  <!-- Controls -->
+  <div class="controls d-flex flex-wrap align-items-center gap-2 mb-3">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (keyup.enter)="searchEmployees()"
+      placeholder="Search by Name, Position, Dept..."
+      class="form-control flex-grow-1"
+    />
+    <button class="btn btn-primary" (click)="searchEmployees()">Search</button>
+    <button class="btn btn-outline-secondary" (click)="clearFilter()">Clear</button>
+    <button class="btn btn-success ms-auto" (click)="addEmployee()">Add Employee</button>
   </div>
 
-  <div *ngIf="loading" class="text-center p-3">Loading employees...</div>
+  <!-- Scrollable Table -->
+  <div class="table-scroll">
+    <table class="table table-hover align-middle custom-table">
+      <thead>
+        <tr>
+          <th (click)="sort('employeeCode')" >Code <span *ngIf="sortColumn==='employeeCode'">{{ sortOrder==='asc' ? '▲' : '▼' }}</span></th>
+          <th (click)="sort('firstName')">Name <span *ngIf="sortColumn==='firstName'">{{ sortOrder==='asc' ? '▲' : '▼' }}</span></th>
+          <th>Position</th>
+          <th>Department</th>
+          <th (click)="sort('salary')">Salary <span *ngIf="sortColumn==='salary'">{{ sortOrder==='asc' ? '▲' : '▼' }}</span></th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!loading && filteredEmployees.length > 0">
+        <tr *ngFor="let emp of filteredEmployees.slice((pageNumber-1)*pageSize, pageNumber*pageSize)">
+          <td>{{ emp.employeeCode }}</td>
+          <td>{{ emp.firstName }} {{ emp.lastName }}</td>
+          <td>{{ emp.position || '—' }}</td>
+          <td>{{ emp.department || '—' }}</td>
+          <td>₹{{ emp.salary | number }}</td>
+          <td>
+            <span class="badge" [ngClass]="emp.isActive ? 'bg-success' : 'bg-secondary'">
+              {{ emp.isActive ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-outline-warning me-1" (click)="editEmployee(emp.employeeId)">Edit</button>
+            <button class="btn btn-sm btn-outline-danger" (click)="deleteEmployee(emp.employeeId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="!loading && filteredEmployees.length === 0">
+        <tr>
+          <td colspan="7" class="text-center text-muted">No employees found.</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="loading">
+        <tr>
+          <td colspan="7" class="text-center text-primary">Loading...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-  <table *ngIf="filteredEmployees.length > 0" class="table table-hover table-striped align-middle">
-    <thead class="table-dark">
-      <tr>
-        <th>Code</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Position</th>
-        <th>Department</th>
-        <th>Salary</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let emp of filteredEmployees">
-        <td>{{ emp.employeeCode }}</td>
-        <td>{{ emp.firstName }} {{ emp.lastName }}</td>
-        <td>{{ emp.emailId }}</td>
-        <td>{{ emp.phoneNumber }}</td>
-        <td>{{ emp.position }}</td>
-        <td>{{ emp.department }}</td>
-        <td>₹{{ emp.salary | number }}</td>
-        <td>
-          <span [ngClass]="emp.isActive ? 'badge bg-success' : 'badge bg-secondary'">
-            {{ emp.isActive ? 'Active' : 'Inactive' }}
-          </span>
-        </td>
-        <td>
-          <button class="btn btn-sm btn-outline-warning me-1" (click)="editEmployee(emp.employeeId)">Edit</button>
-          <button class="btn btn-sm btn-outline-danger" (click)="deleteEmployee(emp.employeeId)">Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div *ngIf="!loading && filteredEmployees.length === 0" class="text-center mt-3">
-    No employees found.
+  <!-- Pagination -->
+  <div class="pagination d-flex justify-content-end align-items-center mt-3">
+    <button class="btn btn-outline-secondary btn-sm me-2" [disabled]="pageNumber===1" (click)="prevPage()">Prev</button>
+    <span>Page {{ pageNumber }} of {{ totalPages }}</span>
+    <button class="btn btn-outline-secondary btn-sm ms-2" [disabled]="pageNumber===totalPages" (click)="nextPage()">Next</button>
   </div>
 </div>
