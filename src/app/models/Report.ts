@@ -43,9 +43,7 @@ export interface ReportDto {
   generatedBy: number;
   generatedDate: string; // ISO 8601 date string
   filePath: string; // This is the public Cloudinary URL
-}
-  generatedDate: string;
-  filePath: string;
+
 }
 
 export interface PagedResult<T> {

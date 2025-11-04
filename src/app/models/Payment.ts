@@ -7,7 +7,7 @@ export interface NestedBeneficiary {
   beneficiaryName: string;
   accountNumber: string;
 }
-import { Status } from "./Status";
+
 
 
 export interface Payment {
@@ -32,7 +32,7 @@ export interface UpdatePaymentDto {
   paymentStatus: Status;
   rejectReason?: string;
 }
-}
+
 
 export interface CreatePaymentDto {
   clientId: number;
@@ -41,7 +41,4 @@ export interface CreatePaymentDto {
   description?: string;
 }
 
-export interface UpdatePaymentDto {
-  paymentStatus?: Status;
-  rejectReason?: string;
-}
+
