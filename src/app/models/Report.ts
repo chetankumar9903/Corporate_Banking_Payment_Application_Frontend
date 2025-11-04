@@ -25,6 +25,16 @@ export interface GenerateReportRequestDto {
 }
 
 // Based on your C# ReportDto
+export interface GenerateReportRequest {
+  reportName: string;
+  reportType: ReportType;
+  outputFormat: ReportOutputFormat;
+  clientId?: number | null;
+  paymentStatusFilter?: string | null;
+  startDate?: string | null; // ISO
+  endDate?: string | null;
+}
+
 export interface ReportDto {
   reportId: number;
   reportName: string;
@@ -33,4 +43,12 @@ export interface ReportDto {
   generatedBy: number;
   generatedDate: string; // ISO 8601 date string
   filePath: string; // This is the public Cloudinary URL
+}
+  generatedDate: string;
+  filePath: string;
+}
+
+export interface PagedResult<T> {
+  items: T[];
+  totalCount: number;
 }

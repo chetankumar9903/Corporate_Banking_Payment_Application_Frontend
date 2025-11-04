@@ -1,0 +1,82 @@
+<div class="payment-container card p-4 shadow-sm">
+  <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+    <h2>My Payments</h2>
+    <button class="btn btn-success" (click)="add()">+ New Payment</button>
+  </div>
+
+  <!-- Search -->
+  <div class="mb-3 d-flex gap-2 flex-wrap">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (keyup.enter)="search()"
+      placeholder="Search by Beneficiary, Status..."
+      class="form-control flex-grow-1"
+    />
+    <button class="btn btn-primary" (click)="search()">Search</button>
+    <button class="btn btn-outline-secondary" (click)="clearFilter()">Clear</button>
+  </div>
+
+  <!-- Scrollable Table -->
+  <div class="table-wrapper">
+    <table class="table table-hover align-middle text-center">
+      <thead class="table-dark">
+        <tr>
+          <th (click)="sort('beneficiaryName')" style="cursor:pointer">
+            Beneficiary
+            <span *ngIf="sortColumn==='beneficiaryName'">{{ sortOrder==='asc' ? '▲' : '▼' }}</span>
+          </th>
+          <th (click)="sort('amount')" style="cursor:pointer">
+            Amount
+            <span *ngIf="sortColumn==='amount'">{{ sortOrder==='asc' ? '▲' : '▼' }}</span>
+          </th>
+          <th (click)="sort('requestDate')" style="cursor:pointer">
+            Date
+            <span *ngIf="sortColumn==='requestDate'">{{ sortOrder==='asc' ? '▲' : '▼' }}</span>
+          </th>
+          <th>Status</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!loading && filteredPayments.length > 0">
+        <tr *ngFor="let p of pagedPayments()">
+          <!-- <td>{{ p.beneficiaryId }}</td> -->
+           <td>{{ beneficiaryMap[p.beneficiaryId] || 'Loading...' }}</td>
+          <td>₹{{ p.amount | number }}</td>
+          <td>{{ p.requestDate | date:'short' }}</td>
+          <td>
+            <span class="badge" [ngClass]="getStatusClass(p.paymentStatus)">
+              {{ getStatusLabel(p.paymentStatus) }}
+            </span>
+          </td>
+          <td>{{ p.description || '—' }}</td>
+          <td>
+            <button
+              class="btn btn-danger btn-sm"
+              *ngIf="p.paymentStatus === Status.PENDING"
+              (click)="delete(p.paymentId)"
+            >Delete</button>
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="!loading && filteredPayments.length === 0">
+        <tr>
+          <td colspan="6" class="text-center text-muted">No payments found.</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="loading">
+        <tr>
+          <td colspan="6" class="text-center text-primary">Loading...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-end align-items-center mt-3 gap-2">
+    <button class="btn btn-outline-secondary btn-sm" [disabled]="pageNumber===1" (click)="prevPage()">Prev</button>
+    <span>Page {{ pageNumber }} of {{ totalPages }}</span>
+    <button class="btn btn-outline-secondary btn-sm" [disabled]="pageNumber===totalPages" (click)="nextPage()">Next</button>
+  </div>
+</div>

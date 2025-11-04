@@ -1,0 +1,143 @@
+.salaries-wrapper {
+  max-width: 900px;
+  margin: 1rem auto;
+  background: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 150px); /* leave space for header/footer */
+}
+
+/* Make table scrollable */
+.table-container {
+  flex-grow: 1; /* take remaining space */
+  overflow-y: auto; /* vertical scroll */
+  overflow-x: auto; /* horizontal scroll if table too wide */
+  margin-top: 0.5rem;
+}
+
+/* Optional: sticky header */
+.salary-table thead th {
+  position: sticky;
+  top: 0;
+  background: #f8f9fa;
+  z-index: 1;
+}
+/* Header */
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+.header-row h3 {
+  color: #007bff;
+  font-size: 1.2rem;
+  margin: 0;
+}
+.actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+/* Buttons */
+.btn {
+  padding: 0.35rem 0.8rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+.btn-sm.primary {
+  background: #007bff;
+  color: #fff;
+}
+.btn-sm.secondary {
+  background: #28a745;
+  color: #fff;
+}
+.btn-sm:hover {
+  opacity: 0.9;
+}
+
+/* Table */
+.salary-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.salary-table th {
+  text-align: left;
+  background: #f8f9fa;
+  padding: 0.6rem;
+  border-bottom: 2px solid #e0e0e0;
+  color: #555;
+  font-size: 0.95rem;
+}
+.salary-table td {
+  padding: 0.6rem;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9rem;
+  color: #333;
+}
+.salary-table tr:hover {
+  background-color: #f8fbff;
+}
+
+.amount {
+  color: #007bff;
+  font-weight: 600;
+}
+
+/* Badge */
+.badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.badge.batch {
+  background: #d1e7dd;
+  color: #0f5132;
+}
+.badge.single {
+  background: #f8d7da;
+  color: #842029;
+}
+
+/* Delete link */
+.btn-link {
+  background: none;
+  border: none;
+  color: #dc3545;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0;
+}
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+/* Misc */
+.loading {
+  text-align: center;
+  color: #666;
+  font-size: 0.95rem;
+  padding: 1rem 0;
+}
+.empty-state {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 1rem 0;
+}
+
+
+/* Pagination inside any container */
+.d-flex.justify-content-end.align-items-center.mt-3.gap-2 button {
+  border-radius: 8px;
+}
+

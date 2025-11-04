@@ -1,0 +1,89 @@
+.bank-list-container {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-section h2 {
+  color: #0d6efd;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.search-input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 220px;
+}
+
+.table-wrapper {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th {
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+th:hover {
+  background-color: #f1f5f9;
+}
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: white;
+}
+
+.badge.active {
+  background-color: #16a34a;
+}
+
+.badge.inactive {
+  background-color: #dc2626;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.loader {
+  text-align: center;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.actions .btn {
+  min-width: 110px;
+}
+
+.actions .btn-outline-secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+}
+
+.actions .btn-outline-secondary:hover {
+  background-color: #6c757d;
+  color: white;
+}

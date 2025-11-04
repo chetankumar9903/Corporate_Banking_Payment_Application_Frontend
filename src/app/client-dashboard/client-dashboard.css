@@ -1,0 +1,77 @@
+.client-dashboard {
+  display: flex;
+  height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.sidebar {
+  width: 250px;
+  background: #1e3a8a;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 10px 0;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  display: block;
+  border-radius: 6px;
+}
+
+.sidebar ul li a.active,
+.sidebar ul li a:hover {
+  background: #3b82f6;
+}
+
+.content {
+  flex: 1;
+  padding: 10px 20px;
+}
+
+
+.balance-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0f8ff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #1a1a1a;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.balance-display h4 {
+  font-size: 16px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.balance-display h4 span {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+.balance-display small {
+  font-size: 12px;
+  color: #555;
+}
+

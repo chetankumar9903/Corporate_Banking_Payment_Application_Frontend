@@ -1,1 +1,31 @@
-<p>client-dashboard works!</p>
+<div class="client-dashboard">
+  <aside class="sidebar">
+    <h3>Client Portal</h3>
+    <ul>
+      <li><a routerLink="profile" routerLinkActive="active">👤 Profile</a></li>
+      <li><a routerLink="beneficiaries" routerLinkActive="active">👥 Manage Beneficiaries</a></li>
+      <li><a routerLink="employees" routerLinkActive="active">👨‍💼 Manage Employees</a></li>
+      <li><a routerLink="payments" routerLinkActive="active">💸 Process Payments</a></li>
+      <li><a routerLink="salaries" routerLinkActive="active">💰 Salary Disbursement</a></li>
+      <li><a routerLink="reports" routerLinkActive="active">📊 Reports</a></li>
+      <!-- <li><a routerLink="update-balance" routerLinkActive="active">💳 Update Balance</a></li> -->
+    </ul>
+  </aside>
+
+  <!-- <main class="content">
+    <router-outlet></router-outlet>
+  </main> -->
+
+  <main class="content">
+        <div class="balance-display">
+          <h4>
+            Your Balance:
+            <span *ngIf="balance !== null">₹{{ balance }}</span>
+            <span *ngIf="balance === null">Loading...</span>
+          </h4>
+          <small *ngIf="lastUpdated">Last updated: {{ lastUpdated | date:'shortTime' }}</small>
+        </div>
+
+    <router-outlet></router-outlet>
+  </main>
+</div>

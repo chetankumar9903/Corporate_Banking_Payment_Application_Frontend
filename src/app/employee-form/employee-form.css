@@ -1,0 +1,55 @@
+.employee-form-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.form-card {
+  width: 900px; /* wider to accommodate 2 columns */
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 30px;
+}
+
+.form-title {
+  font-weight: 600;
+  color: #333;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 30px; /* row-gap column-gap */
+}
+
+.form-group label {
+  font-weight: 500;
+}
+
+.form-control, .form-select {
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.btn-success {
+  font-weight: 600;
+  padding: 10px;
+}
+
+.text-danger {
+  font-size: 12px;
+}
+.actions button {
+  min-width: 120px; /* ensures buttons are not too small */
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.btn-success {
+  flex-shrink: 0; /* prevents shrinking if container is narrow */
+}
+
+.btn-outline-secondary {
+  flex-shrink: 0;
+}

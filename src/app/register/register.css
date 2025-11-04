@@ -1,0 +1,170 @@
+/* Container for row */
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  flex-wrap: wrap; /* Wrap on small screens */
+}
+
+/* Each input takes 48% width by default */
+.form-row .form-group {
+  flex: 1 1 48%;
+  position: relative;
+}
+
+/* Full width for special fields */
+.form-row .form-group.full-width {
+  flex: 1 1 100%;
+}
+
+/* Inputs, textarea, select styling (same as before) */
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width: 100%;
+  padding: 12px 12px 12px 38px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.form-row textarea {
+  min-height: 60px;
+}
+
+.form-row select {
+  appearance: none;
+  background: url('data:image/svg+xml;utf8,<svg fill="%23999" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  border-color: #4b79a1;
+  outline: none;
+  box-shadow: 0 0 5px rgba(75, 121, 161, 0.5);
+}
+
+/* Responsive: stack columns on smaller screens */
+@media (max-width: 600px) {
+  .form-row .form-group {
+    flex: 1 1 100%;
+  }
+}
+/* Headings */
+.register-card h2 {
+  color: #004e92; /* same as login */
+}
+
+.register-card .subtitle {
+  color: gray;
+}
+
+/* Labels */
+.register-card label {
+  color: #333;
+  font-weight: 600;
+}
+
+/* Inputs, textarea, select */
+.register-card input,
+.register-card textarea,
+.register-card select {
+  border: 1px solid #ddd; /* same as login */
+}
+
+.register-card input:focus,
+.register-card textarea:focus,
+.register-card select:focus {
+  border-color: #004e92; /* focus color like login */
+  box-shadow: 0 0 5px rgba(0, 78, 146, 0.5);
+}
+
+/* Buttons */
+.register-card button {
+  background: #004e92;
+  color: white;
+}
+
+.register-card button:hover {
+  background: #0074e4;
+}
+
+/* Signup link */
+.register-card .signup-link a {
+  color: #004e92;
+}
+
+.register-card .signup-link a:hover {
+  text-decoration: underline;
+}
+
+.toast-message {
+  position: fixed;
+  top: 20px;
+  right: -400px;
+  min-width: 250px;
+  max-width: 350px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  color: white;
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: right 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+}
+
+/* Slide-in */
+.toast-message.show {
+  right: 20px;
+  opacity: 1;
+}
+
+.toast-message.success {
+  background-color: #28a745;
+}
+
+.toast-message.error {
+  background-color: #dc3545;
+}
+.error small {
+  color: red;
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+}
+
+input.ng-touched.ng-invalid,
+textarea.ng-touched.ng-invalid,
+select.ng-touched.ng-invalid {
+  border-color: red;
+}
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 70px; /* space for the button */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: #007bff;
+}
+
+.toggle-password:hover {
+  text-decoration: underline;
+}
+

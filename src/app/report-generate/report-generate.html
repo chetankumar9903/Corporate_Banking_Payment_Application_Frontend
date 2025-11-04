@@ -1,0 +1,52 @@
+<div class="card report-card shadow-sm p-4">
+  <h3 class="card-title mb-4 text-center">Generate Report</h3>
+  
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    
+    <div class="mb-3">
+      <label class="form-label">Report Name</label>
+      <input formControlName="reportName" class="form-control" placeholder="Enter report name" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Report Type</label>
+      <select formControlName="reportType" class="form-select">
+        <option [ngValue]="ReportType.TRANSACTION">Transaction</option>
+        <option [ngValue]="ReportType.PAYMENT">Payment</option>
+        <option [ngValue]="ReportType.SALARY">Salary</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Output Format</label>
+      <select formControlName="outputFormat" class="form-select">
+        <option [ngValue]="ReportOutputFormat.PDF">PDF</option>
+        <option [ngValue]="ReportOutputFormat.EXCEL">Excel</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Client ID</label>
+      <input type="number" formControlName="clientId" class="form-control" placeholder="Enter client ID" />
+    </div>
+
+    <div class="row mb-3">
+      <div class="col">
+        <label class="form-label">Start Date</label>
+        <input type="date" formControlName="startDate" class="form-control" />
+      </div>
+      <div class="col">
+        <label class="form-label">End Date</label>
+        <input type="date" formControlName="endDate" class="form-control" />
+      </div>
+    </div>
+
+    <div class="d-grid mt-4">
+      <button class="btn btn-primary btn-lg" type="submit" [disabled]="loading">
+        {{ loading ? 'Generating...' : 'Generate Report' }}
+      </button>
+    </div>
+
+    <p *ngIf="message" class="mt-3 text-center text-success">{{ message }}</p>
+  </form>
+</div>

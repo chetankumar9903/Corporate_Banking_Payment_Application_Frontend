@@ -1,0 +1,38 @@
+.beneficiary-container {
+  background-color: #fff;
+  border-radius: 12px;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.controls input.form-control {
+  min-width: 200px;
+}
+
+.controls button {
+  white-space: nowrap;
+}
+
+.table th {
+  font-weight: 600;
+  user-select: none;
+}
+
+.table th:hover {
+  color: #1e3a8a;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+}
+
+.badge {
+  font-size: 0.85rem;
+  padding: 0.35em 0.55em;
+}
+
+.pagination span {
+  font-size: 0.9rem;
+  margin: 0 0.5rem;
+}
