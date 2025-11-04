@@ -1,0 +1,139 @@
+<div class="transactions-container">
+  <h2>All Client Transactions</h2>
+  <p>View all payments and salary disbursements for clients of your bank.</p>
+
+  <div class="filter-bar">
+    <div class="toggle-group">
+      <button 
+        class="btn-toggle" 
+        [class.active]="activeView === 'payments'"
+        (click)="onToggleView('payments')">
+        Payments
+      </button>
+      <button 
+        class="btn-toggle" 
+        [class.active]="activeView === 'salaries'"
+        (click)="onToggleView('salaries')">
+        Salary Disbursements
+      </button>
+    </div>
+
+    <div class="form-group">
+      <label for="search">Search {{ activeView }}:</label>
+      <input 
+        type="text" 
+        id="search" 
+        class="form-control" 
+        placeholder="Search..."
+        [(ngModel)]="userSearchTerm"
+        (ngModelChange)="onSearchChange()">
+    </div>
+  </div>
+  <div *ngIf="loading && paymentList.length === 0 && salaryList.length === 0" class="loading-full">
+    Loading transactions...
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="activeView === 'payments'">
+    <div class="table-container" *ngIf="paymentList.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th (click)="onSort('companyName')" class="sortable">
+              Client
+              <span *ngIf="sortColumn === 'companyName'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="onSort('beneficiaryName')" class="sortable">
+              Beneficiary
+              <span *ngIf="sortColumn === 'beneficiaryName'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="onSort('amount')" class="sortable">
+              Amount
+              <span *ngIf="sortColumn === 'amount'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="onSort('requestDate')" class="sortable">
+              Request Date
+              <span *ngIf="sortColumn === 'requestDate'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="onSort('paymentStatus')" class="sortable">
+              Status
+              <span *ngIf="sortColumn === 'paymentStatus'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let payment of paymentList">
+            <td>{{ payment.client?.companyName || payment.clientId }}</td>
+            <td>{{ payment.beneficiary?.beneficiaryName || payment.beneficiaryId }}</td>
+            <td>{{ payment.amount | currency:'INR' }}</td>
+            <td>{{ payment.requestDate | date: 'yyyy-MM-dd h:mm a' }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="payment.paymentStatus">
+                {{ payment.paymentStatus }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="!loading && paymentList.length === 0 && !errorMessage" class="no-data">
+      No payments found matching your criteria.
+    </div>
+  </div>
+
+  <div *ngIf="activeView === 'salaries'">
+    <div class="table-container" *ngIf="salaryList.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th (click)="onSort('companyName')" class="sortable">
+              Client
+              <span *ngIf="sortColumn === 'companyName'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="onSort('lastName')" class="sortable">
+              Employee
+              <span *ngIf="sortColumn === 'lastName'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="onSort('amount')" class="sortable">
+              Amount
+              <span *ngIf="sortColumn === 'amount'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+            </th>
+            <th (click)="onSort('date')" class="sortable">
+              Date
+              <span *ngIf="sortColumn === 'date'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+            </th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let salary of salaryList">
+            <td>{{ salary.clientCompanyName || salary.clientId }}</td>
+            <td>{{ salary.employeeName || salary.employeeId }}</td>
+            <td>{{ salary.amount | currency:'INR' }}</td>
+            <td>{{ salary.date | date: 'yyyy-MM-dd h:mm a' }}</td>
+            <td>{{ salary.description || 'N/A' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="!loading && salaryList.length === 0 && !errorMessage" class="no-data">
+      No salary disbursements found matching your criteria.
+    </div>
+  </div>
+
+
+  <div class="pagination-controls" *ngIf="totalItemCount > 0">
+    <button (click)="prevPage()" [disabled]="currentPage === 1 || loading">
+      &laquo; Previous
+    </button>
+    <span>
+      Page {{ currentPage }} of {{ Math.ceil(totalItemCount / pageSize) }}
+    </span>
+    <button (click)="nextPage()" [disabled]="(currentPage * pageSize) >= totalItemCount || loading">
+      Next &raquo;
+    </button>
+  </div>
+</div>

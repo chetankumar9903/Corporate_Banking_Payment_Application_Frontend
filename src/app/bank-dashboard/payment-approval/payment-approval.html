@@ -1,0 +1,122 @@
+<div class="payment-container">
+  <h2>Payment Approval Queue</h2>
+  <p>Review and process pending payment requests from your clients.</p>
+
+  <div class="filter-bar">
+    <div class="form-group">
+      <label for="search">Search Payments:</label>
+      <input 
+        type="text" 
+        id="search" 
+        class="form-control" 
+        placeholder="Search by client, beneficiary, amount..."
+        [(ngModel)]="userSearchTerm"
+        (ngModelChange)="onSearchChange()">
+    </div>
+  </div>
+  <div *ngIf="loading && payments.length === 0" class="loading-full">
+    Loading pending payments...
+  </div>
+
+  <div *ngIf="errorMessage && !isRejectModalVisible" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div class="table-container" *ngIf="payments.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th (click)="onSort('companyName')" class="sortable">
+            Client
+            <span *ngIf="sortColumn === 'companyName'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+          </th>
+          <th (click)="onSort('beneficiaryName')" class="sortable">
+            Beneficiary
+            <span *ngIf="sortColumn === 'beneficiaryName'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+          </th>
+          <th (click)="onSort('amount')" class="sortable">
+            Amount
+            <span *ngIf="sortColumn === 'amount'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+          </th>
+          <th (click)="onSort('requestDate')" class="sortable">
+            Request Date
+            <span *ngIf="sortColumn === 'requestDate'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+          </th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let payment of payments">
+          <td>{{ payment.client?.companyName || payment.clientId }}</td>
+          <td>{{ payment.beneficiary?.beneficiaryName || payment.beneficiaryId }}</td>
+          <td>{{ payment.amount | currency:'INR' }}</td>
+          <td>{{ payment.requestDate | date: 'yyyy-MM-dd h:mm a' }}</td>
+          <td>{{ payment.description || 'N/A' }}</td>
+          <td class="action-buttons">
+            <button (click)="onApprove(payment)" class="btn btn-success" [disabled]="loading">
+              Approve
+            </button>
+            <button (click)="openRejectModal(payment)" class="btn btn-danger" [disabled]="loading">
+              Reject
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!loading && payments.length === 0 && !errorMessage" class="no-data">
+    No pending payments found matching your criteria.
+  </div>
+
+  <div class="pagination-controls" *ngIf="filteredPayments.length > 0">
+    <button (click)="prevPage()" [disabled]="currentPage === 1 || loading">
+      &laquo; Previous
+    </button>
+    <span>
+      Page {{ currentPage }} of {{ Math.ceil(filteredPayments.length / pageSize) }}
+    </span>
+    <button (click)="nextPage()" [disabled]="(currentPage * pageSize) >= filteredPayments.length || loading">
+      Next &raquo;
+    </button>
+  </div>
+</div>
+
+<div *ngIf="isRejectModalVisible" class="modal-backdrop" (click)="closeRejectModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>Reason for Rejection</h3>
+    <p>Please provide a reason for rejecting the payment to <strong>{{ currentPaymentToReject?.beneficiary?.beneficiaryName || currentPaymentToReject?.beneficiaryId }}</strong>.</p>
+    
+    <form [formGroup]="rejectionForm" (ngSubmit)="submitRejection()">
+      <div class="form-group">
+        <label for="rejectReason">Rejection Reason:</label>
+        <textarea 
+          id="rejectReason" 
+          class="form-control" 
+          rows="4"
+          formControlName="rejectReason"
+          placeholder="e.g., Insufficient funds, invalid beneficiary details..."></textarea>
+        
+        <div *ngIf="rejectionForm.get('rejectReason')?.touched && rejectionForm.get('rejectReason')?.hasError('required')" 
+             class="error-text">
+          A reason is required to reject a payment.
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage && isRejectModalVisible" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" (click)="closeRejectModal()">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-danger" [disabled]="rejectionForm.invalid || loading">
+          {{ loading ? 'Rejecting...' : 'Submit Rejection' }}
+        </button>
+      </div>
+    </form>
+    
+  </div>
+</div>

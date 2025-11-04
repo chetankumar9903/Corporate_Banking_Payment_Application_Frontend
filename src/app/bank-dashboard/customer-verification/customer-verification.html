@@ -1,0 +1,146 @@
+<div class="verification-container">
+  <h2>Customer Verification</h2>
+  <p>Review new customer applications. Approve to create a client account or Reject to decline.</p>
+
+  <div class="filter-bar">
+    <div class="form-group">
+      <label for="search">Search by Name:</label>
+      <input 
+        type="text" 
+        id="search" 
+        class="form-control" 
+        placeholder="Enter customer name..."
+        [(ngModel)]="userSearchTerm"
+        (ngModelChange)="onFilterChange()">
+    </div>
+    
+    <div class="form-group">
+      <label for="statusFilter">Filter by Status:</label>
+      <select 
+        id="statusFilter" 
+        class="form-control"
+        [(ngModel)]="statusFilter"
+        (ngModelChange)="onFilterChange()">
+        <option value="ALL">All Statuses</option>
+        <option value="PENDING">Pending</option>
+        <option value="APPROVED">Approved</option>
+        <option value="REJECTED">Rejected</option>
+      </select>
+    </div>
+  </div>
+  <div *ngIf="loading && customers.length === 0" class="loading-full">
+    Loading customers...
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div class="table-container" *ngIf="customers.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th (click)="onSort('userName')" class="sortable">
+            Customer Name
+            <span *ngIf="sortColumn === 'userName'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+          </th>
+          <th (click)="onSort('bankName')" class="sortable">
+            Bank
+            <span *ngIf="sortColumn === 'bankName'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+          </th>
+          <th (click)="onSort('onboardingDate')" class="sortable">
+            Onboarded
+            <span *ngIf="sortColumn === 'onboardingDate'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+          </th>
+          <th (click)="onSort('verificationStatus')" class="sortable">
+            Status
+            <span *ngIf="sortColumn === 'verificationStatus'">{{ sortOrder === 'ASC' ? '▲' : '▼' }}</span>
+          </th>
+          <th>Documents</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of customers">
+          <td>{{ customer.userName }}</td>
+          <td>{{ customer.bankName }}</td>
+          <td>{{ customer.onboardingDate | date: 'yyyy-MM-dd' }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="getStatusClass(customer.verificationStatus)">
+              {{ getStatusText(customer.verificationStatus) }}
+            </span>
+          </td>
+          <td>
+            <button (click)="viewDocuments(customer)" class="btn btn-view">
+              View
+            </button>
+          </td>
+          <td class="action-buttons">
+            <ng-container *ngIf="customer.verificationStatus === statusEnum.PENDING">
+              <button (click)="onApprove(customer)" class="btn btn-success" [disabled]="loading">
+                Approve
+              </button>
+              <button (click)="onReject(customer)" class="btn btn-danger" [disabled]="loading">
+                Reject
+              </button>
+            </ng-container>
+            <span *ngIf="customer.verificationStatus === statusEnum.APPROVED" class="text-success">
+              Approved
+            </span>
+            <span *ngIf="customer.verificationStatus === statusEnum.REJECTED" class="text-danger">
+              Rejected
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!loading && customers.length === 0 && !errorMessage" class="no-data">
+    No customers found matching your criteria.
+  </div>
+
+  <div class="pagination-controls" *ngIf="filteredCustomers.length > 0">
+    <button (click)="prevPage()" [disabled]="currentPage === 1 || loading">
+      &laquo; Previous
+    </button>
+    <span>
+      Page {{ currentPage }} of {{ Math.ceil(filteredCustomers.length / pageSize) }}
+    </span>
+    <button (click)="nextPage()" [disabled]="(currentPage * pageSize) >= filteredCustomers.length || loading">
+      Next &raquo;
+    </button>
+  </div>
+</div>
+
+<div *ngIf="isModalVisible" class="modal-backdrop" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>Documents for {{ selectedCustomer?.userName }}</h3>
+    
+    <div *ngIf="modalLoading" class="modal-loading">
+      Loading documents...
+    </div>
+
+    <div *ngIf="modalError" class="alert alert-danger">
+      {{ modalError }}
+    </div>
+
+    <div *ngIf="!modalLoading && !modalError">
+      <ul *ngIf="loadedDocuments.length > 0; else noDocuments" class="document-list">
+        <li *ngFor="let doc of loadedDocuments">
+          <a class="doc-link-button" [href]="doc.fileUrl" target="_blank" rel="noopener noreferrer">
+            {{ doc.documentName }}
+          </a>
+          <span>({{ doc.documentType }})</span>
+        </li>
+      </ul>
+      <ng-template #noDocuments>
+        <p>No documents have been uploaded for this customer.</p>
+      </ng-template>
+    </div>
+
+    <button (click)="closeModal()" class="btn btn-primary modal-close-btn">
+      Close
+    </button>
+  </div>
+</div>
