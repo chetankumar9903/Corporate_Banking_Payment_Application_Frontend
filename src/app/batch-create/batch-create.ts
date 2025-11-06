@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SalarySvc } from '../services/salary-svc';
 import { LoginSvc } from '../services/login-svc';
 import { EmployeeSvc } from '../services/employee-svc';
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-batch-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,FormsModule],
   templateUrl: './batch-create.html',
   styleUrl: './batch-create.css',
 })
@@ -21,6 +21,16 @@ export class BatchCreate implements OnInit {
   submitting = false;
   message = '';
 
+  
+  selectAll = false;
+  selectedCsvFile: File | null = null;
+
+onCsvSelected(event: any) {
+  this.selectedCsvFile = event.target.files[0] ?? null;
+}
+
+
+
   constructor(private svc: SalarySvc, private login: LoginSvc, private empSvc: EmployeeSvc, private router: Router) {
     this.clientId = this.login.getClientId();
     this.form = new FormGroup({
@@ -29,16 +39,54 @@ export class BatchCreate implements OnInit {
     });
   }
 
+  // ngOnInit(): void {
+  //   if (!this.clientId) return;
+  //   this.empSvc.getByClientId(this.clientId).subscribe({ next: res => this.employees = res, error: () => {} });
+  // }
+
   ngOnInit(): void {
-    if (!this.clientId) return;
-    this.empSvc.getByClientId(this.clientId).subscribe({ next: res => this.employees = res, error: () => {} });
-  }
+  if (!this.clientId) return;
+  this.empSvc.getByClientId(this.clientId).subscribe({
+    // next: res => {
+    //   this.employees = res.map(e => ({ ...e, checked: false }));
+    // }
+     next: res => {
+      this.employees = res
+        .filter(e => e.isActive)
+        .map(e => ({ ...e, checked: false }));
+    }
+  });
+}
+
+
+  // onToggle(employeeId: number, checked: boolean) {
+  //   if (checked) this.selected.push(employeeId); else this.selected = this.selected.filter(id => id !== employeeId);
+  //   const total = this.calculateTotal();
+  //   this.form.get('totalAmount')!.setValue(total);
+  // }
 
   onToggle(employeeId: number, checked: boolean) {
-    if (checked) this.selected.push(employeeId); else this.selected = this.selected.filter(id => id !== employeeId);
-    const total = this.calculateTotal();
-    this.form.get('totalAmount')!.setValue(total);
+  if (checked && !this.selected.includes(employeeId)) {
+    this.selected.push(employeeId);
+  } else if (!checked) {
+    this.selected = this.selected.filter(id => id !== employeeId);
+    this.selectAll = false; // if user unchecks anyone, remove "select all"
   }
+
+  this.form.get('totalAmount')!.setValue(this.calculateTotal());
+}
+onToggleAll() {
+  this.selected = [];
+
+  this.employees = this.employees.map(e => {
+    e.checked = this.selectAll; // set all checkboxes
+    if (this.selectAll) this.selected.push(e.employeeId);
+    return e;
+  });
+
+  this.form.get('totalAmount')!.setValue(this.calculateTotal());
+}
+
 
   calculateTotal() {
     // If employee salary available use it, otherwise 0
@@ -86,5 +134,62 @@ export class BatchCreate implements OnInit {
   }
 
   cancel() { this.router.navigate(['/client-dashboard/salaries']); }
+
+//   uploadCsv(event: any) {
+//   const file = event.target.files[0];
+//   if (!file) return;
+
+//   const form = new FormData();
+//   form.append("file", file);
+
+//   this.svc.uploadCsv(form, this.clientId!).subscribe({
+//     next: res => alert(`✅ Created: ${res.created}, Skipped: ${res.skipped}`),
+//     error: err => alert(err.error.message || "Error uploading CSV")
+//   });
+// }
+
+// uploadCsv(event: any) {
+//   const file = event.target.files[0];
+//   if (!file) return;
+
+//   const form = new FormData();
+//   form.append("file", file);
+
+//   this.svc.uploadCsv(form, this.clientId!).subscribe({
+//   //   next: res => alert(`✅ Created: ${res.created}, Skipped: ${res.skipped}`),
+//   //   error: err => alert(err.error.message || "Error uploading CSV")
+//   // });
+
+//    next: res => {
+//       alert(`✅ Created: ${res.created}, Skipped: ${res.skipped}`);
+
+//       // ✅ Redirect after success
+//       this.router.navigate(['/client-dashboard/salaries']);
+//     },
+//     error: err => {
+//       const msg = err?.error?.message || "Error uploading CSV";
+//       alert("❌ " + msg);
+//     }
+//   });
+// }
+
+
+uploadSelectedCsv() {
+  if (!this.selectedCsvFile) return;
+
+  const form = new FormData();
+  form.append("file", this.selectedCsvFile);
+
+  this.svc.uploadCsv(form, this.clientId!).subscribe({
+    next: res => {
+      alert(`✅ Created: ${res.created}, Skipped: ${res.skipped}`);
+      this.router.navigate(['/client-dashboard/salaries']); // redirect after success
+    },
+    error: err => {
+      const msg = err?.error?.message || "❌ Error uploading CSV";
+      alert(msg);
+    }
+  });
+}
 
 }
