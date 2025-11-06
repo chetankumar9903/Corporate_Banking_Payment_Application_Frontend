@@ -15,6 +15,7 @@ h2 {
 /* --- Filter Bar Styles --- */
 .filter-bar {
   display: flex;
+  gap: 20px; /* Adds spacing between search and filter */
   margin-bottom: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid #eee;
@@ -201,4 +202,37 @@ tr:nth-child(even) {
   justify-content: flex-end;
   gap: 10px;
   margin-top: 20px;
+}
+
+/* --- Status Badge Styles --- */
+.status-badge {
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #333;
+}
+
+.status-pending {
+  background-color: #ffc107; /* Yellow */
+}
+
+.status-approved {
+  background-color: #28a745; /* Green */
+  color: white;
+}
+
+.status-rejected {
+  background-color: #dc3545; /* Red */
+  color: white;
+}
+
+.text-success {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.text-danger {
+  color: #dc3545;
+  font-weight: bold;
 }
