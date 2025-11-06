@@ -4,6 +4,7 @@ import { EmployeeSvc } from '../services/employee-svc';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginSvc } from '../services/login-svc';
 
 @Component({
   selector: 'app-employee-list',
@@ -26,7 +27,7 @@ export class EmployeeList implements OnInit {
   pageSize: number = 10;
   totalPages: number = 1;
 
-  constructor(private employeeService: EmployeeSvc, private router: Router) {}
+  constructor(private employeeService: EmployeeSvc, private router: Router, private loginSvc : LoginSvc) {}
 
   ngOnInit(): void {
     this.fetchEmployees();
@@ -140,4 +141,49 @@ export class EmployeeList implements OnInit {
   this.filteredEmployees = [...this.employees];
    this.updatePagination();
 }
+selectedFile: File | null = null;
+
+onFileSelected(event: any) {
+  this.selectedFile = event.target.files[0] ?? null;
+}
+
+
+uploadResult: any = null;
+showUploadSummary: boolean = false;
+
+uploadCsv() {
+  if (!this.selectedFile) return;
+
+  const clientId = this.employeeService.getClientId();
+   if (clientId === null) {
+    alert("Client session expired. Please login again.");
+    this.router.navigate(['/login']);
+    return;
+  }
+  const formData = new FormData();
+  formData.append('file', this.selectedFile);
+
+  this.loading = true;
+
+  this.employeeService.uploadCsv(formData, clientId).subscribe({
+    next: (res) => {
+      // alert(`✅ Employees Added: ${res.created}\n⚠️ Skipped (duplicates): ${res.skipped}`);
+      // this.fetchEmployees();
+      // this.selectedFile = null;
+
+      
+  this.selectedFile = null;
+
+  // Store response to display UI summary
+  this.uploadResult = res;
+  this.showUploadSummary = true;
+  this.fetchEmployees();
+    },
+    error: (err) => {
+      alert(err.error?.message || "Upload failed.");
+    },
+    complete: () => this.loading = false
+  });
+}
+
 }

@@ -43,5 +43,15 @@ export class EmployeeSvc {
   getById(employeeId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${employeeId}`);
   }
+
+
+  uploadCsv(formData: FormData, clientId: number): Observable<any> {
+  return this.http.post(`${this.apiUrl}/upload-csv?clientId=${clientId}`, formData);
+}
+
+ getClientId(): number | null {
+    const v = localStorage.getItem('clientId');
+    return v ? Number(v) : null;
+  }
   
 }
