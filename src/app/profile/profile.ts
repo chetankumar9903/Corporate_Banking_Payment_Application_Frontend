@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientSvc } from '../services/client-svc';
 import { LoginSvc } from '../services/login-svc';
 import { CommonModule } from '@angular/common';
@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
 })
@@ -25,6 +25,11 @@ export class Profile implements OnInit {
   balanceForm: FormGroup;
   balanceSuccess = '';
   balanceError = '';
+
+
+    editMode = false;
+  originalCompanyName = '';
+
 
   constructor(private clientService: ClientSvc, private loginService: LoginSvc) {
     this.clientId = this.loginService.getClientId();
@@ -48,6 +53,7 @@ export class Profile implements OnInit {
       next: (res) => {
         this.clientName = res.customerName;
         this.companyName = res.companyName;
+        this.originalCompanyName = res.companyName; // new one
         this.accountNumber = res.accountNumber;
         this.balance = res.balance;
         this.isActive = res.isActive;
@@ -59,6 +65,32 @@ export class Profile implements OnInit {
     });
   }
 
+
+   saveCompanyName() {
+    if (!this.clientId) return;
+
+    const dto = {
+      companyName: this.companyName,
+      isActive: this.isActive // keep same status when updating
+    };
+
+    this.clientService.updateClient(this.clientId, dto).subscribe({
+      next: () => {
+        this.editMode = false;
+        this.originalCompanyName = this.companyName;
+      },
+      error: (err) => {
+        alert(err.error?.message || 'Error updating company name');
+        this.companyName = this.originalCompanyName;
+        this.editMode = false;
+      }
+    });
+  }
+
+  cancelEdit() {
+    this.companyName = this.originalCompanyName;
+    this.editMode = false;
+  }
   onUpdateBalance() {
     if (!this.balanceForm.valid || !this.clientId) return;
 
@@ -78,4 +110,8 @@ export class Profile implements OnInit {
       },
     });
   }
+
+
+
+  
 }
