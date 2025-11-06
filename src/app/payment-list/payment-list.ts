@@ -39,7 +39,7 @@ export class PaymentList implements OnInit {
     if (id) this.clientId = +id;
     this.load();
   }
-
+ 
   // load() {
   //   if (!this.clientId) return;
   //   this.loading = true;
@@ -197,4 +197,15 @@ export class PaymentList implements OnInit {
       default: return 'bg-secondary';
     }
   }
+
+  selectedRejectReason: string | null = null;
+
+showRejectReason(reason?: string) {
+  this.selectedRejectReason = reason || 'No reason was provided.';
+  const modal: any = new (window as any).bootstrap.Modal(
+    document.getElementById('rejectReasonModal')
+  );
+  modal.show();
+}
+
 }

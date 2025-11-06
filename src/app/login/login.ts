@@ -73,6 +73,10 @@ export class Login implements OnInit {
             this.router.navigate(['/']);
             break;
         }
+        if (!role) {
+  this.errorMessage = "Unable to detect role. Contact administrator.";
+  return;
+}
       },
       error: (err) => {
         console.error('Login error:', err);
