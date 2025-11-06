@@ -263,6 +263,7 @@ import { Salarylist } from './salarylist/salarylist';
 import { SalaryCreate } from './salary-create/salary-create';
 import { BatchCreate } from './batch-create/batch-create';
 import { ClientReportsComponent } from './client-reports/client-reports';
+import { authGuard } from './guards/auth-guard';
 
 
 export const routes: Routes = [
@@ -279,15 +280,14 @@ export const routes: Routes = [
   {
     path: 'superadmin-dashboard',
     component: SuperadminDashboard,
+canActivate: [authGuard],
+  data: { roles: ['SUPERADMIN'] },
     children: [
       { path: '', redirectTo: 'banks', pathMatch: 'full' },
       { path: 'banks', component: BankList },
       { path: 'banks/add', component: BankForm },
       { path: 'banks/edit/:id', component: BankForm },
       
-      // --- THIS IS THE FIX ---
-      // The empty, commented-out block was removed from here.
-      // --- END OF FIX ---
       
       { path: 'reports', component: SuperadminReportsComponent }
     ],
@@ -299,6 +299,8 @@ export const routes: Routes = [
   {
     path: 'bank-dashboard',
     component: BankDashboard,
+ canActivate: [authGuard],
+  data: { roles: ['BANKUSER'] },
     children: [
       { path: '', redirectTo: 'onboarding', pathMatch: 'full' },
       { path: 'onboarding', component: CustomerOnboardingComponent },
@@ -317,6 +319,8 @@ export const routes: Routes = [
   {
     path: 'client-dashboard',
     component: ClientDashboard,
+ canActivate: [authGuard],
+  data: { roles: ['CLIENTUSER'] },
     children: [
       { path: '', redirectTo: 'profile', pathMatch: 'full' },
       { path: 'profile', component: Profile },

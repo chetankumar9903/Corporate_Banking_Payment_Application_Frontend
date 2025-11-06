@@ -49,6 +49,12 @@
             <span class="badge" [ngClass]="getStatusClass(p.paymentStatus)">
               {{ getStatusLabel(p.paymentStatus) }}
             </span>
+             <!-- Show icon only if rejected -->
+  <i *ngIf="p.paymentStatus === Status.REJECTED"
+     class="bi bi-info-circle-fill text-danger ms-1"
+     style="cursor:pointer"
+     (click)="showRejectReason(p.rejectReason)">
+  </i>
           </td>
           <td>{{ p.description || '—' }}</td>
           <td>
@@ -80,3 +86,26 @@
     <button class="btn btn-outline-secondary btn-sm" [disabled]="pageNumber===totalPages" (click)="nextPage()">Next</button>
   </div>
 </div>
+
+<!-- Reject Reason Modal -->
+<div class="modal fade" id="rejectReasonModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title">Rejection Reason</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        {{ selectedRejectReason || 'No reason provided.' }}
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
