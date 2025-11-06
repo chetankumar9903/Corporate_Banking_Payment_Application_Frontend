@@ -1,77 +1,89 @@
 .client-dashboard {
   display: flex;
-  height: 100vh;
-  background-color: #f8f9fa;
+  /* Calculates the height of the dashboard to be 100% of the screen 
+    minus your header (approx 60px) and footer (approx 60px).
+    Adjust 120px if your header/footer are a different size.
+  */
+  height: calc(100vh - 120px);
+  min-height: 600px;
+  background-color: #f8f9fa; /* Light gray background for the content area */
 }
 
 .sidebar {
-  width: 250px;
-  background: #1e3a8a;
-  color: white;
-  padding: 20px;
+  width: 240px;
+  flex-shrink: 0; /* Prevents the sidebar from shrinking */
+  background-color: #1a2b4d; /* Dark blue from your bank dashboard */
+  padding: 15px;
+  box-sizing: border-box;
+  overflow-y: hidden; /* Removes the sidebar scrollbar */
 }
 
 .sidebar h3 {
-  text-align: center;
-  margin-bottom: 20px;
+  color: #ffffff;
+  margin: 0 0 20px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #3a4b6f; /* Lighter border for dark theme */
 }
 
 .sidebar ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.sidebar ul li {
-  margin: 10px 0;
-}
-
-.sidebar ul li a {
-  color: white;
+.sidebar li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 10px;
   text-decoration: none;
-  padding: 8px 12px;
-  display: block;
-  border-radius: 6px;
+  color: #f0f0f0; /* Light gray text */
+  border-radius: 5px;
+  font-weight: 500;
+  transition: background-color 0.2s;
 }
 
-.sidebar ul li a.active,
-.sidebar ul li a:hover {
-  background: #3b82f6;
+.sidebar li a:hover {
+  background-color: #2a3c5f; /* A slightly lighter hover */
+}
+
+/* This matches the light blue active state in your screenshot */
+.sidebar li a.active {
+  background-color: #0d6efd; 
+  color: white;
+  font-weight: bold;
 }
 
 .content {
-  flex: 1;
-  padding: 10px 20px;
+  flex-grow: 1; /* Takes up the remaining horizontal space */
+  overflow-y: auto; /* Makes this area scrollable */
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-
 .balance-display {
+  background-color: #fff;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f0f8ff;
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 20px;
-  color: #1a1a1a;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .balance-display h4 {
-  font-size: 16px;
   margin: 0;
-  font-weight: 600;
+  color: #333;
+  font-size: 1.2em;
 }
 
 .balance-display h4 span {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1e3a8a;
+  font-weight: 600;
+  color: #28a745; /* Green for balance */
 }
 
 .balance-display small {
-  font-size: 12px;
-  color: #555;
+  color: #6c757d;
 }
-

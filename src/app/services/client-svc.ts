@@ -19,6 +19,31 @@ export class ClientSvc {
     return this.http.post<Client>(this.baseUrl, dto);
   }
 
+  // getAllClients(
+  //   page: number, 
+  //   size: number, 
+  //   sort: string, 
+  //   order: 'ASC' | 'DESC', 
+  //   searchTerm: string = ''
+  // ): Observable<PagedResult<Client>> {
+  //    let params = new HttpParams()
+  //     .set('pageNumber', page.toString())
+  //     .set('pageSize', size.toString())
+  //     .set('sortColumn', sort)
+  //     .set('sortOrder', order)
+  //     .set('searchTerm', searchTerm);
+
+  //   return this.http.get<PagedResult<Client>>(this.baseUrl, { params }).pipe(
+  //     map(result => {
+  //       // Ensure balance is always a number
+  //       result.items.forEach(item => {
+  //         item.balance = +item.balance;
+  //       });
+  //       return result;
+  //     })
+  //   );
+  // }
+
   getAllClients(
     page: number, 
     size: number, 
@@ -31,7 +56,7 @@ export class ClientSvc {
       .set('pageSize', size.toString())
       .set('sortColumn', sort)
       .set('sortOrder', order)
-      .set('searchTerm', searchTerm);
+      .set('searchTerm', searchTerm); // <-- This now correctly passes the search term
 
     return this.http.get<PagedResult<Client>>(this.baseUrl, { params }).pipe(
       map(result => {

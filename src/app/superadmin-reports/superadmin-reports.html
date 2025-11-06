@@ -1,0 +1,151 @@
+<div class="reports-container">
+  
+  <div class="form-container">
+    <h2>Generate New Report</h2>
+    <p>Select your criteria to generate a new report file.</p>
+    
+    <form [formGroup]="reportForm" (ngSubmit)="onGenerateReport()" class="report-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="reportName">Report Name</label>
+          <input type="text" id="reportName" class="form-control" formControlName="reportName" placeholder="e.g., Q4 Client Payments">
+          <div *ngIf="reportForm.get('reportName')?.touched && reportForm.get('reportName')?.invalid" class="error-text">
+            Report Name is required.
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="clientId">Client</label>
+          <select id="clientId" class="form-control" formControlName="clientId">
+            <option [ngValue]="null">-- All Clients --</option>
+            <option *ngFor="let client of allClients" [value]="client.clientId">
+              {{ client.companyName }} (Bank: {{ client.bankName }})
+            </option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="reportType">Report Type</label>
+          <select id="reportType" class="form-control" formControlName="reportType">
+            <option [value]="reportTypeEnum.PAYMENT">Payments</option>
+            <option [value]="reportTypeEnum.SALARY">Salary Disbursements</option>
+            <option [value]="reportTypeEnum.TRANSACTION">All Transactions</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="outputFormat">Format</label>
+          <select id="outputFormat" class="form-control" formControlName="outputFormat">
+            <option [value]="reportFormatEnum.PDF">PDF</option>
+            <option [value]="reportFormatEnum.EXCEL">Excel (.xlsx)</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="form-row" *ngIf="reportForm.get('reportType')?.value === reportTypeEnum.PAYMENT || reportForm.get('reportType')?.value === reportTypeEnum.TRANSACTION">
+        <div class="form-group">
+          <label for="paymentStatusFilter">Payment Status (Optional)</label>
+          <select id="paymentStatusFilter" class="form-control" formControlName="paymentStatusFilter">
+            <option [ngValue]="null">-- All Statuses --</option>
+            <option [value]="statusEnum.PENDING">Pending</option>
+            <option [value]="statusEnum.APPROVED">Approved</option>
+            <option [value]="statusEnum.REJECTED">Rejected</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="startDate">Start Date (Optional)</label>
+          <input type="date" id="startDate" class="form-control" formControlName="startDate">
+        </div>
+        <div class="form-group">
+          <label for="endDate">End Date (Optional)</label>
+          <input type="date" id="endDate" class="form-control" formControlName="endDate">
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="formLoading">
+          {{ formLoading ? 'Generating...' : 'Generate Report' }}
+        </button>
+      </div>
+      
+      <div *ngIf="formErrorMessage" class="alert alert-danger">
+        {{ formErrorMessage }}
+      </div>
+      <div *ngIf="formSuccessMessage" class="alert alert-success">
+        {{ formSuccessMessage }}
+      </div>
+    </form>
+  </div>
+
+  <div class="history-container">
+    <h2>Generated Reports</h2>
+    
+    <div class="filter-bar">
+      <div class="form-group">
+        <label for="search">Search History:</label>
+        <input 
+          type="text" 
+          id="search" 
+          class="form-control" 
+          placeholder="Search by name, type, format, or client..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange()">
+      </div>
+    </div>
+    
+    <div *ngIf="historyLoading && generatedReports.length === 0" class="loading-full">
+      Loading report history...
+    </div>
+    <div *ngIf="historyErrorMessage" class="alert alert-danger">
+      {{ historyErrorMessage }}
+    </div>
+
+    <div class="table-container" *ngIf="generatedReports.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th (click)="onSort('reportName')" class="sortable">Report Name</th>
+            <th (click)="onSort('reportType')" class="sortable">Type</th>
+            <th (click)="onSort('outputFormat')" class="sortable">Format</th>
+            <th (click)="onSort('generatedDate')" class="sortable">Date Generated</th>
+            <th>Download</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let report of generatedReports">
+            <td>{{ report.reportName }}</td>
+            <td>{{ report.reportType }}</td>
+            <td>{{ report.outputFormat }}</td>
+            <td>{{ report.generatedDate | date: 'yyyy-MM-dd h:mm a' }}</td>
+            <td>
+              <a [href]="report.filePath" target="_blank" class="btn btn-view">
+                View
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div *ngIf="!historyLoading && generatedReports.length === 0 && !historyErrorMessage" class="no-data">
+      No reports found in your history.
+    </div>
+    
+    <div class="pagination-controls" *ngIf="pagedResult && pagedResult.totalCount > 0">
+      <button (click)="prevPage()" [disabled]="!pagedResult || currentPage === 1 || historyLoading">
+        &laquo; Previous
+      </button>
+      <span>
+        Page {{ currentPage }} of {{ pagedResult ? Math.ceil(pagedResult.totalCount / pageSize) : 1 }}
+      </span>
+      <button (click)="nextPage()" [disabled]="!pagedResult || (currentPage * pageSize) >= pagedResult.totalCount || historyLoading">
+        Next &raquo;
+      </button>
+    </div>
+  </div>
+</div>
