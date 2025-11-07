@@ -174,6 +174,24 @@ onToggleAll() {
 // }
 
 
+// uploadSelectedCsv() {
+//   if (!this.selectedCsvFile) return;
+
+//   const form = new FormData();
+//   form.append("file", this.selectedCsvFile);
+
+//   this.svc.uploadCsv(form, this.clientId!).subscribe({
+//     next: res => {
+//       alert(`✅ Created: ${res.created}, Skipped: ${res.skipped}`);
+//       this.router.navigate(['/client-dashboard/salaries']); // redirect after success
+//     },
+//     error: err => {
+//       const msg = err?.error?.message || "❌ Error uploading CSV";
+//       alert(msg);
+//     }
+//   });
+// }
+
 uploadSelectedCsv() {
   if (!this.selectedCsvFile) return;
 
@@ -182,14 +200,29 @@ uploadSelectedCsv() {
 
   this.svc.uploadCsv(form, this.clientId!).subscribe({
     next: res => {
-      alert(`✅ Created: ${res.created}, Skipped: ${res.skipped}`);
-      this.router.navigate(['/client-dashboard/salaries']); // redirect after success
+      let message = `✅ Batch Disbursement Completed\n\n`;
+      message += `✔ Successfully Paid: ${res.created}\n`;
+      message += `❌ Invalid Employees: ${res.skippedInvalid}\n`;
+      message += `⚠ Already Paid (Last 30 Days): ${res.skippedAlreadyPaid}\n\n`;
+
+      if (res.invalidEmployees?.length) {
+        message += `Invalid Employee Codes:\n- ${res.invalidEmployees.join("\n- ")}\n\n`;
+      }
+
+      if (res.alreadyPaid?.length) {
+        message += `Already Paid Employees:\n- ${res.alreadyPaid.join("\n- ")}\n`;
+      }
+
+      alert(message);
+      this.router.navigate(['/client-dashboard/salaries']);
     },
     error: err => {
       const msg = err?.error?.message || "❌ Error uploading CSV";
       alert(msg);
+      this.router.navigate(['/client-dashboard/salaries']);
     }
   });
 }
+
 
 }

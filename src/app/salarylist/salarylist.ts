@@ -29,7 +29,7 @@ export class Salarylist implements OnInit {
   constructor(private svc: SalarySvc, private login: LoginSvc) {
     this.clientId = this.login.getClientId();
   }
-
+ 
   ngOnInit(): void {
     if (!this.clientId) return;
     this.load();
