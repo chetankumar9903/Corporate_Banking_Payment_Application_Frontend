@@ -1,65 +1,65 @@
-<div class="form-card">
-  <h3>Create Batch Payment</h3>
+  <div class="form-card">
+    <h3>Create Batch Payment</h3>
 
-  <form [formGroup]="form" (ngSubmit)="submit()">
+    <form [formGroup]="form" (ngSubmit)="submit()">
 
-    <label class="section-label">Select Employees</label>
+      <label class="section-label">Select Employees</label>
 
-    <div class="select-all">
-      <input type="checkbox" [(ngModel)]="selectAll" [ngModelOptions]="{standalone: true}" (change)="onToggleAll()" />
-      <span>Select All</span>
-    </div>
+      <div class="select-all">
+        <input type="checkbox" [(ngModel)]="selectAll" [ngModelOptions]="{standalone: true}" (change)="onToggleAll()" />
+        <span>Select All</span>
+      </div>
 
-    <div class="employee-list">
-      <div class="employee-item" *ngFor="let e of employees">
-        <input type="checkbox" class="emp-check" [(ngModel)]="e.checked" [ngModelOptions]="{standalone: true}"
-          (change)="onToggle(e.employeeId, $event.target.checked)" />
+      <div class="employee-list">
+        <div class="employee-item" *ngFor="let e of employees">
+          <input type="checkbox" class="emp-check" [(ngModel)]="e.checked" [ngModelOptions]="{standalone: true}"
+            (change)="onToggle(e.employeeId, $event.target.checked)" />
 
-        <div class="employee-info">
-          <div class="emp-header">
-            <span class="emp-name">{{ e.firstName }} {{ e.lastName || '' }}</span>
-            <span class="emp-salary">₹{{ e.salary | number: '1.0-2' }}</span>
-          </div>
-          <div class="emp-account">
-            <small>Account: {{ e.accountNumber }}</small>
+          <div class="employee-info">
+            <div class="emp-header">
+              <span class="emp-name">{{ e.firstName }} {{ e.lastName || '' }}</span>
+              <span class="emp-salary">₹{{ e.salary | number: '1.0-2' }}</span>
+            </div>
+            <div class="emp-account">
+              <small>Account: {{ e.accountNumber }}</small>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-section">
-      <label>Total Amount</label>
-      <input type="number" formControlName="totalAmount" class="form-control" readonly />
+      <div class="form-section">
+        <label>Total Amount</label>
+        <input type="number" formControlName="totalAmount" class="form-control" readonly />
 
-      <label>Description (optional)</label>
-      <input type="text" formControlName="description" class="form-control" />
-    </div>
+        <label>Description (optional)</label>
+        <input type="text" formControlName="description" class="form-control" />
+      </div>
 
-   <div class="actions">
+    <div class="actions">
 
-  <button class="btn primary" type="submit" [disabled]="selected.length === 0 || submitting">
-    Create Batch
-  </button>
+    <button class="btn primary" type="submit" [disabled]="selected.length === 0 || submitting">
+      Create Batch
+    </button>
 
-  <label class="btn file-btn">
-    Choose CSV
-    <input type="file" accept=".csv" (change)="onCsvSelected($event)" hidden />
-  </label>
+    <label class="btn file-btn">
+      Choose CSV
+      <input type="file" accept=".csv" (change)="onCsvSelected($event)" hidden />
+    </label>
 
-  <span class="file-name" *ngIf="selectedCsvFile">{{ selectedCsvFile.name }}</span>
+    <span class="file-name" *ngIf="selectedCsvFile">{{ selectedCsvFile.name }}</span>
 
-  <button class="btn outline" type="button" [disabled]="!selectedCsvFile" (click)="uploadSelectedCsv()">
-    Upload CSV
-  </button>
+    <button class="btn outline" type="button" [disabled]="!selectedCsvFile" (click)="uploadSelectedCsv()">
+      Upload CSV
+    </button>
 
-  <button class="btn ghost" type="button" (click)="cancel()">
-    Cancel
-  </button>
+    <button class="btn ghost" type="button" (click)="cancel()">
+      Cancel
+    </button>
 
-</div>
+  </div>
 
 
-  </form>
+    </form>
 
-  <div *ngIf="message" class="message">{{ message }}</div>
-</div>
+    <div *ngIf="message" class="message">{{ message }}</div>
+  </div>

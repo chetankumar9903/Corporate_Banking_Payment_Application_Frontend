@@ -1,74 +1,121 @@
-.login-container {
-  display: grid; /* Use grid for easy centering */
-  place-items: center;
- 
-  /* --- THIS IS THE FIX --- */
-  /* Calculate the available screen height *minus* the header/footer.
-    This assumes your header and footer are roughly 120px tall combined.
-    (Adjust 120px if your header/footer are taller or shorter).
-  */
-  min-height: calc(100vh - 120px);
-  /* --- END OF FIX --- */
- 
-  background: linear-gradient(120deg, #004e92, #000428);
+/* --- New Layout Styles --- */
+/* This is the new top-level container */
+.login-page-wrapper {
+  display: flex;
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  width: 100%;
   font-family: 'Poppins', sans-serif;
-  padding: 20px; /* For small screen padding */
   box-sizing: border-box;
 }
- 
+
+/* 1. Branding Panel (Left) */
+.branding-panel {
+  width: 45%; /* Adjust width as needed */
+  background: linear-gradient(120deg, #004e92, #000428); /* Your original gradient */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 50px;
+  box-sizing: border-box;
+}
+
+.branding-panel h1 {
+  font-size: 2.8rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.branding-panel p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 400px;
+}
+
+/* 2. Form Panel (Right) */
+.form-panel {
+  width: 55%; /* Adjust width as needed */
+  background: #f4f7f6; /* A clean, light corporate background */
+  display: grid;
+  place-items: center; /* This centers the login-card vertically and horizontally */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* --- Responsive Media Query --- */
+/* On smaller screens, stack the panels */
+@media (max-width: 900px) {
+  .login-page-wrapper {
+    flex-direction: column;
+  }
+
+  .branding-panel,
+  .form-panel {
+    width: 100%;
+  }
+
+  .branding-panel {
+    min-height: 200px; /* Give it some space */
+    text-align: center;
+    padding: 30px;
+  }
+}
+
+/* --- Modified Original Styles --- */
+/* Your .login-container is replaced by .form-panel 
+   We just need to style the .login-card itself
+*/
 .login-card {
   background: white;
   padding: 40px;
   border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
- 
-  /* Use max-width for responsiveness */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Softer shadow */
+  border: 1px solid #e0e0e0; /* Add a subtle border */
   width: 100%;
-  max-width: 400px;
-  /* Ensure it's wide enough for CAPTCHA */
+  max-width: 420px; /* Slightly wider */
   min-width: 320px;
   box-sizing: border-box;
   text-align: center;
 }
- 
+
+/* --- Unchanged Original Styles --- */
+/* All your styles for the form elements are preserved */
 h2 {
   color: #004e92;
   margin-bottom: 10px;
 }
- 
+
 .subtitle {
   color: gray;
   margin-bottom: 30px;
 }
- 
+
 .form-group {
   text-align: left;
   margin-bottom: 20px;
 }
- 
-/* This centers the CAPTCHA widget */
+
 .captcha-container {
   display: flex;
   justify-content: center;
-  flex-direction: column; /* Stack CAPTCHA and error */
-  align-items: center; /* Center horizontally */
+  flex-direction: column;
+  align-items: center;
 }
- 
-/* This styles the CAPTCHA's error message */
+
 .captcha-container .error-text {
   color: #e74c3c;
   font-size: 0.85em;
   margin-top: 4px;
   text-align: center;
 }
- 
+
 label {
   display: block;
   color: #333;
   font-weight: 600;
   margin-bottom: 8px;
 }
- 
+
 input {
   width: 100%;
   padding: 10px 12px;
@@ -78,12 +125,12 @@ input {
   transition: border 0.3s;
   box-sizing: border-box;
 }
- 
+
 input:focus {
   border-color: #004e92;
   outline: none;
 }
- 
+
 button {
   width: 100%;
   padding: 12px;
@@ -95,14 +142,29 @@ button {
   cursor: pointer;
   transition: background 0.3s;
 }
- 
+
 button:hover {
   background: #0074e4;
 }
- 
-/* This is the main login error (e.g., "Invalid password") */
+
 .error {
   color: #e74c3c;
   margin-top: 15px;
   font-weight: 500;
+}
+
+.signup-link {
+  margin-top: 25px;
+  color: #555;
+  font-size: 0.9em;
+}
+
+.signup-link a {
+  color: #004e92;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
 }
