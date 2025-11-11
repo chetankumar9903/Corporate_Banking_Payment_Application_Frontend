@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BatchTransactionDto, CreateBatchTransactionDto, CreateSalaryDisbursementDto, SalaryDisbursementDto } from '../models/salary';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -75,4 +76,7 @@ export class SalarySvc {
     return this.http.delete(`${this.batchBase}/${id}`);
   }
 
+   uploadCsv(formData: FormData, clientId: number): Observable<any> {
+    return this.http.post(`${this.batchBase}/upload-csv?clientId=${clientId}`, formData);
+  }
 }

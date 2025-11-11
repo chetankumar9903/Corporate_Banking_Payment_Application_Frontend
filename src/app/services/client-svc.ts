@@ -56,4 +56,9 @@ getClientProfile(clientId: number) {
   return this.http.get<ClientProfile>(`${this.baseUrl}/${clientId}`);
 }
 
+updateClient(clientId: number, dto: { companyName: string, isActive: boolean }) {
+  return this.http.put(`${this.baseUrl}/${clientId}`, dto);
+}
+
+
 }

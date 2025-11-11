@@ -39,7 +39,36 @@ export class PaymentList implements OnInit {
     if (id) this.clientId = +id;
     this.load();
   }
+ 
+  // load() {
+  //   if (!this.clientId) return;
+  //   this.loading = true;
+  //   this.svc.getByClientId(this.clientId).subscribe({
+  //     next: (data) => {
+  //       // this.payments = data;
+  //       // this.loading = false;
 
+  //        this.payments = data;
+  //       this.filteredPayments = [...data];
+
+  //        // Fetch beneficiary names
+  //     this.payments.forEach(p => {
+  //       if (!this.beneficiaryMap[p.beneficiaryId]) {
+  //         this.benSvc.getById(p.beneficiaryId).subscribe({
+  //           next: (b) => this.beneficiaryMap[p.beneficiaryId] = b.beneficiaryName,
+  //           error: () => this.beneficiaryMap[p.beneficiaryId] = '—'
+  //         });
+  //       }
+  //     });
+  //       this.updatePagination();
+  //       this.loading = false;
+  //     },
+  //     error: (err) => {
+  //       console.error('Error loading payments', err);
+  //       this.loading = false;
+  //     }
+  //   });
+  // }
 
   load() {
   if (!this.clientId) return;
@@ -163,4 +192,15 @@ export class PaymentList implements OnInit {
       default: return 'bg-secondary';
     }
   }
+
+  selectedRejectReason: string | null = null;
+
+showRejectReason(reason?: string) {
+  this.selectedRejectReason = reason || 'No reason was provided.';
+  const modal: any = new (window as any).bootstrap.Modal(
+    document.getElementById('rejectReasonModal')
+  );
+  modal.show();
+}
+
 }

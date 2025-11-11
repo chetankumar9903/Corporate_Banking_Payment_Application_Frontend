@@ -1,36 +1,58 @@
+
+
+/* Page Background */
+body {
+  background: #f2f6ff; /* soft blue tint */
+  font-family: 'Inter', sans-serif;
+}
+
+/* Main Card */
 .form-card {
   max-width: 650px;
-  margin: 2rem auto 3rem; /* more bottom margin for spacing from footer */
-  padding: 2rem 1.5rem;
-  background: #fff;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #ffffff, #f8fbff);
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border: 1px solid #dbe4f3;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
+/* Title */
 .form-card h3 {
   text-align: center;
-  margin-bottom: 1.2rem;
-  color: #1e3a8a; /* slightly darker blue for header */
+  margin-bottom: 1rem;
+  color: #1e3a8a;
   font-size: 1.5rem;
+  font-weight: 600;
 }
 
+/* Section Label */
 .section-label {
   font-weight: 600;
-  display: block;
-  margin-bottom: 0.6rem;
-  color: #1f2937;
+  color: #374151;
+  margin-bottom: 0.4rem;
 }
 
+/* Select All */
+.select-all {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+/* Employee Scrollable List */
 .employee-list {
-  max-height: 300px; /* slightly taller */
+  max-height: 300px; 
   overflow-y: auto;
   border: 1px solid #e5e7eb;
   border-radius: 10px;
   padding: 0.8rem;
-  background: #f9fafb;
+ background: #f0f4ff;
   margin-bottom: 1.2rem;
 }
 
@@ -52,10 +74,17 @@
   background: #eef2ff;
 }
 
+
 .checkbox {
   flex-shrink: 0;
-  margin-top: 0.4rem;
+  margin-top: 0.5rem;
 }
+
+.emp-check {
+  margin: 0; 
+  align-self: center;
+}
+
 
 .employee-info {
   flex-grow: 1;
@@ -76,84 +105,119 @@
   margin-top: 0.15rem;
 }
 
+
+/* Form Section Divider */
 .form-section {
-  margin-top: 1.2rem;
+  border-top: 1px solid #e1e7f5;
+  padding-top: 1rem;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.75rem;
 }
 
+/* Inputs */
 .form-control {
-  width: 100%;
-  padding: 0.55rem 0.8rem;
+  padding: 0.6rem 0.8rem;
   border-radius: 8px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #cbd5e1;
   font-size: 0.95rem;
-  transition: border 0.2s ease;
+  background: #ffffff;
 }
 
 .form-control:focus {
-  border-color: #2563eb;
+  border-color: #4f7bff;
   outline: none;
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 0 0 3px rgba(79, 123, 255, 0.25);
 }
 
+/* Action Button Section */
 .actions {
   display: flex;
-  justify-content: flex-end;
-  gap: 0.8rem;
+  align-items: center;
+  gap: 1rem;
+  background: #eef3ff;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #d5dcf5;
   margin-top: 1.5rem;
 }
 
+/* Buttons */
 .btn {
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 0.65rem 1.4rem;
+  padding: 0.6rem 1.3rem;
   border-radius: 8px;
+  font-size: 0.95rem;
   cursor: pointer;
   font-weight: 500;
-  font-size: 0.95rem;
-  transition: background 0.2s ease, transform 0.1s ease;
+  transition: 0.2s;
 }
 
-.btn:hover:not(:disabled) {
-  background: #1d4ed8;
-  transform: translateY(-1px);
+/* Primary Button */
+.btn.primary {
+  background: #4f7bff;
+  color: white;
+  border: none;
+}
+.btn.primary:hover:not(:disabled) {
+  background: #3b66e6;
 }
 
+/* Outline Button */
+.btn.outline {
+  background: transparent;
+  border: 1px solid #4f7bff;
+  color: #4f7bff;
+}
+.btn.outline:hover {
+  background: #4f7bff;
+  color: white;
+}
+
+/* Ghost Button */
+.btn.ghost {
+  border: none;
+  background: transparent;
+  color: #6b7280;
+}
+.btn.ghost:hover {
+  background: #eef2f7;
+}
+
+/* Disabled Button */
 .btn:disabled {
-  background: #9ca3af;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
-.btn-ghost {
-  background: transparent;
-  border: 1px solid #9ca3af;
-  padding: 0.65rem 1.2rem;
-  border-radius: 8px;
-  cursor: pointer;
+/* File Upload Button Styling */
+.file-btn {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
   color: #374151;
-  transition: all 0.2s ease;
-}
-
-.btn-ghost:hover {
-  background: #f3f4f6;
-}
-
-.message {
-  text-align: center;
-  margin-top: 1rem;
-  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.1rem;
+  border-radius: 8px;
   font-size: 0.95rem;
-  color: green;
+}
+.file-btn:hover {
+  background: #e9efff;
+  border-color: #4f7bff;
 }
 
-/* Optional: make card scrollable if viewport is small */
-@media (max-height: 650px) {
-  .form-card {
-    max-height: calc(100vh - 100px);
-    overflow-y: auto;
-    margin-bottom: 1rem;
+/* Show File Name */
+.file-name {
+  font-size: 0.88rem;
+  color: #475569;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .actions {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }

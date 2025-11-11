@@ -5,7 +5,39 @@
     </div>
     <div class="info">
       <h2>{{ clientName }}</h2>
-      <p class="company">Company Name : {{ companyName }}</p>
+      <!-- <p class="company">Company Name : {{ companyName }}</p> -->
+      <p class="company d-flex align-items-center gap-2">
+  <span>Company Name :</span>
+
+  <!-- Display Mode -->
+  <span *ngIf="!editMode">{{ companyName }}</span>
+
+  <!-- Edit Mode -->
+  <input
+    *ngIf="editMode"
+    type="text"
+    [(ngModel)]="companyName"
+    class="form-control"
+    style="width: 220px"
+  />
+
+  <!-- Edit Icon -->
+  <i
+    class="bi bi-pencil-square text-primary"
+    style="cursor: pointer; color: white!important;"
+    *ngIf="!editMode"
+    (click)="editMode = true"
+  ></i>
+
+  <!-- Save / Cancel Buttons -->
+  <button class="btn btn-sm btn-success" *ngIf="editMode" (click)="saveCompanyName()">
+    Save
+  </button>
+  <button class="btn btn-sm btn-secondary" *ngIf="editMode" (click)="cancelEdit()">
+    Cancel
+  </button>
+</p>
+
       <p class="bank">Bank Name : {{ bankName }}</p>
       <p class="status" [ngClass]="{ active: isActive, inactive: !isActive }">
         {{ isActive ? 'Active' : 'Inactive' }}
