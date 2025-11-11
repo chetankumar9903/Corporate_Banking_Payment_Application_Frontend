@@ -98,7 +98,7 @@ export class BeneficiaryList implements OnInit {
     }
   }
 
-   // Pagination helpers
+   
   get totalPages() {
     // return Math.ceil(this.totalCount / this.pageSize);
     return Math.ceil(this.totalCount / this.pageSize) || 1;
@@ -106,7 +106,7 @@ export class BeneficiaryList implements OnInit {
   prevPage() { if (this.pageNumber > 1) { this.pageNumber--; this.load(); } }
   nextPage() { if (this.pageNumber < this.totalPages) { this.pageNumber++; this.load(); } }
 
-  // Update paged list if you want frontend pagination
+ 
 get pagedBeneficiaries() {
   const start = (this.pageNumber - 1) * this.pageSize;
   return this.beneficiaries.slice(start, start + this.pageSize);

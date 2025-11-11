@@ -13,14 +13,8 @@ export class UserSvc {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * --- THIS METHOD IS NOW UPDATED ---
-   * It calls the new endpoint that only returns unassigned CLIENTUSERs.
-   * No client-side filtering is needed.
-   */
   getAvailableClientUsers(): Observable<UserDto[]> {
     return this.http.get<UserDto[]>(`${this.baseUrl}/available-client-users`);
   }
   
-  // Note: The old 'getUsers' method is no longer needed for this feature.
 }

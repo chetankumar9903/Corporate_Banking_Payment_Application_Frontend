@@ -46,7 +46,7 @@
             <span class="badge" [ngClass]="getStatusClass(p.paymentStatus)">
               {{ getStatusLabel(p.paymentStatus) }}
             </span>
-             <!-- Show icon only if rejected -->
+          
   <i *ngIf="p.paymentStatus === Status.REJECTED"
      class="bi bi-info-circle-fill text-danger ms-1"
      style="cursor:pointer"
@@ -78,7 +78,7 @@
   </div>
 </div>
 
-<!-- Reject Reason Modal -->
+
 <div class="modal fade" id="rejectReasonModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">

@@ -145,14 +145,14 @@ uploadCsv() {
 
   this.employeeService.uploadCsv(formData, clientId).subscribe({
     next: (res) => {
-      // alert(`✅ Employees Added: ${res.created}\n⚠️ Skipped (duplicates): ${res.skipped}`);
+      // alert(`Employees Added: ${res.created}\n & Skipped (duplicates): ${res.skipped}`);
       // this.fetchEmployees();
       // this.selectedFile = null;
 
       
   this.selectedFile = null;
 
-  // Store response to display UI summary
+
   this.uploadResult = res;
   this.showUploadSummary = true;
   this.fetchEmployees();

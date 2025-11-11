@@ -39,17 +39,12 @@ onCsvSelected(event: any) {
     });
   }
 
-  // ngOnInit(): void {
-  //   if (!this.clientId) return;
-  //   this.empSvc.getByClientId(this.clientId).subscribe({ next: res => this.employees = res, error: () => {} });
-  // }
+
 
   ngOnInit(): void {
   if (!this.clientId) return;
   this.empSvc.getByClientId(this.clientId).subscribe({
-    // next: res => {
-    //   this.employees = res.map(e => ({ ...e, checked: false }));
-    // }
+   
      next: res => {
       this.employees = res
         .filter(e => e.isActive)
@@ -59,18 +54,12 @@ onCsvSelected(event: any) {
 }
 
 
-  // onToggle(employeeId: number, checked: boolean) {
-  //   if (checked) this.selected.push(employeeId); else this.selected = this.selected.filter(id => id !== employeeId);
-  //   const total = this.calculateTotal();
-  //   this.form.get('totalAmount')!.setValue(total);
-  // }
-
   onToggle(employeeId: number, checked: boolean) {
   if (checked && !this.selected.includes(employeeId)) {
     this.selected.push(employeeId);
   } else if (!checked) {
     this.selected = this.selected.filter(id => id !== employeeId);
-    this.selectAll = false; // if user unchecks anyone, remove "select all"
+    this.selectAll = false; 
   }
 
   this.form.get('totalAmount')!.setValue(this.calculateTotal());
@@ -89,7 +78,7 @@ onToggleAll() {
 
 
   calculateTotal() {
-    // If employee salary available use it, otherwise 0
+    
     return this.employees
       .filter(e => this.selected.includes(e.employeeId))
       .reduce((sum, e) => sum + (Number(e.salary || 0)), 0);
@@ -106,28 +95,24 @@ onToggleAll() {
       totalAmount: Number(this.form.get('totalAmount')!.value),
       description: this.form.get('description')!.value || undefined
     };
-    // this.svc.createBatch(dto).subscribe({
-    //   next: () => { this.message = 'Batch created'; this.submitting = false; this.router.navigate(['/client/salaries']); },
-    //   error: (err) => { this.message = err.error?.message || 'Failed'; this.submitting = false; }
-    // });
-
+ 
      this.svc.createBatch(dto).subscribe({
     next: () => {
-      this.message = '✅ Batch created successfully!';
+      this.message = 'Batch created successfully!';
       this.submitting = false;
 
-      // Reset the form and selections
+      
       this.form.reset({ totalAmount: 0, description: '' });
       this.selected = [];
 
-      // Optional: uncheck all checkboxes visually
+      
       this.employees = this.employees.map(e => ({ ...e, checked: false }));
 
-      // Redirect after short delay (for success message)
+      
       setTimeout(() => this.router.navigate(['/client-dashboard/salaries']), 1000);
     },
     error: (err) => {
-      this.message = err.error?.message || '❌ Failed to create batch';
+      this.message = err.error?.message || 'Failed to create batch';
       this.submitting = false;
     }
   });
@@ -135,62 +120,6 @@ onToggleAll() {
 
   cancel() { this.router.navigate(['/client-dashboard/salaries']); }
 
-//   uploadCsv(event: any) {
-//   const file = event.target.files[0];
-//   if (!file) return;
-
-//   const form = new FormData();
-//   form.append("file", file);
-
-//   this.svc.uploadCsv(form, this.clientId!).subscribe({
-//     next: res => alert(`✅ Created: ${res.created}, Skipped: ${res.skipped}`),
-//     error: err => alert(err.error.message || "Error uploading CSV")
-//   });
-// }
-
-// uploadCsv(event: any) {
-//   const file = event.target.files[0];
-//   if (!file) return;
-
-//   const form = new FormData();
-//   form.append("file", file);
-
-//   this.svc.uploadCsv(form, this.clientId!).subscribe({
-//   //   next: res => alert(`✅ Created: ${res.created}, Skipped: ${res.skipped}`),
-//   //   error: err => alert(err.error.message || "Error uploading CSV")
-//   // });
-
-//    next: res => {
-//       alert(`✅ Created: ${res.created}, Skipped: ${res.skipped}`);
-
-//       // ✅ Redirect after success
-//       this.router.navigate(['/client-dashboard/salaries']);
-//     },
-//     error: err => {
-//       const msg = err?.error?.message || "Error uploading CSV";
-//       alert("❌ " + msg);
-//     }
-//   });
-// }
-
-
-// uploadSelectedCsv() {
-//   if (!this.selectedCsvFile) return;
-
-//   const form = new FormData();
-//   form.append("file", this.selectedCsvFile);
-
-//   this.svc.uploadCsv(form, this.clientId!).subscribe({
-//     next: res => {
-//       alert(`✅ Created: ${res.created}, Skipped: ${res.skipped}`);
-//       this.router.navigate(['/client-dashboard/salaries']); // redirect after success
-//     },
-//     error: err => {
-//       const msg = err?.error?.message || "❌ Error uploading CSV";
-//       alert(msg);
-//     }
-//   });
-// }
 
 uploadSelectedCsv() {
   if (!this.selectedCsvFile) return;
@@ -200,10 +129,10 @@ uploadSelectedCsv() {
 
   this.svc.uploadCsv(form, this.clientId!).subscribe({
     next: res => {
-      let message = `✅ Batch Disbursement Completed\n\n`;
-      message += `✔ Successfully Paid: ${res.created}\n`;
-      message += `❌ Invalid Employees: ${res.skippedInvalid}\n`;
-      message += `⚠ Already Paid (Last 30 Days): ${res.skippedAlreadyPaid}\n\n`;
+      let message = `Batch Disbursement Completed\n\n`;
+      message += `Successfully Paid: ${res.created}\n`;
+      message += `Invalid Employees: ${res.skippedInvalid}\n`;
+      message += `Already Paid (Last 30 Days): ${res.skippedAlreadyPaid}\n\n`;
 
       if (res.invalidEmployees?.length) {
         message += `Invalid Employee Codes:\n- ${res.invalidEmployees.join("\n- ")}\n\n`;
@@ -217,7 +146,7 @@ uploadSelectedCsv() {
       this.router.navigate(['/client-dashboard/salaries']);
     },
     error: err => {
-      const msg = err?.error?.message || "❌ Error uploading CSV";
+      const msg = err?.error?.message || "Error uploading CSV";
       alert(msg);
       this.router.navigate(['/client-dashboard/salaries']);
     }

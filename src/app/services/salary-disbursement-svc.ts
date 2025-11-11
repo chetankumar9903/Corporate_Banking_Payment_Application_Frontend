@@ -12,9 +12,7 @@ export class SalaryDisbursementSvc {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Gets a paged list of salary disbursements from the backend.
-   */
+ 
   getAllSalaryDisbursements(
     page: number, 
     size: number, 

@@ -6,7 +6,7 @@
 
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="form-grid">
-      <!-- Name -->
+      
       <div class="form-group">
         <label>Beneficiary Name <span class="text-danger">*</span></label>
         <input formControlName="beneficiaryName" class="form-control" placeholder="Enter full name" />
@@ -16,7 +16,7 @@
         </div>
       </div>
 
-      <!-- Account Number -->
+     
       <div class="form-group">
         <label>Account Number <span class="text-danger">*</span></label>
         <input formControlName="accountNumber" class="form-control" [readonly]="isEditMode" placeholder="Enter account number" />
@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <!-- Bank Name -->
+     
       <div class="form-group">
         <label>Bank Name <span class="text-danger">*</span></label>
         <input formControlName="bankName" class="form-control" placeholder="Enter bank name" />
@@ -36,19 +36,19 @@
         </div>
       </div>
 
-      <!-- Branch -->
+    
       <div class="form-group">
         <label>Branch</label>
         <input formControlName="branch" class="form-control" placeholder="Enter branch name" />
       </div>
 
-      <!-- IFSC Code -->
+    
       <div class="form-group">
         <label>IFSC Code</label>
         <input formControlName="ifscCode" class="form-control" placeholder="Enter IFSC code" />
       </div>
 
-      <!-- Email -->
+     
       <div class="form-group">
         <label>Email</label>
         <input formControlName="email" class="form-control" placeholder="Enter email" />
@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <!-- Phone Number -->
+      
       <div class="form-group">
         <label>Phone Number</label>
         <input formControlName="phoneNumber" class="form-control" placeholder="Enter 10-digit phone" />
@@ -66,23 +66,19 @@
         </div>
       </div>
 
-      <!-- Address -->
+    
       <div class="form-group full-width">
         <label>Address</label>
         <textarea formControlName="address" class="form-control" placeholder="Enter address"></textarea>
       </div>
 
-      <!-- Active Checkbox -->
+     
       <div *ngIf="isEditMode" class="form-group full-width">
         <label><input type="checkbox" formControlName="isActive" /> Active</label>
       </div>
     </div>
 
-    <!-- <button type="submit" class="btn btn-success w-100 mt-3" [disabled]="form.invalid || loading">
-      {{ isEditMode ? 'Update' : 'Add' }}
-    </button> -->
-
-     <!-- Buttons at the bottom -->
+   
     <div class="actions mt-3 d-flex justify-content-between">
       <button type="button" class="btn btn-outline-secondary" (click)="back()">
         Back

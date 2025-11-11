@@ -12,7 +12,7 @@ h2 {
   margin-bottom: 20px;
 }
 
-/* --- Filter Bar Styles --- */
+
 .filter-bar {
   display: flex;
   justify-content: space-between;
@@ -42,7 +42,7 @@ h2 {
   min-width: 200px;
 }
 
-/* --- Toggle Button Styles --- */
+
 .toggle-group {
   display: flex;
   border: 1px solid #007bff;
@@ -69,7 +69,7 @@ h2 {
   border-right: 1px solid #007bff;
 }
 
-/* --- Table Styles --- */
+
 .table-container {
   overflow-x: auto;
 }
@@ -110,7 +110,7 @@ tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-/* --- Other Styles --- */
+
 .status-badge {
   padding: 5px 10px;
   border-radius: 12px;
@@ -118,16 +118,16 @@ tr:nth-child(even) {
   font-weight: bold;
   color: #333;
 }
-/* Match status strings */
+
 .status-badge.PENDING {
-  background-color: #ffc107; /* Yellow */
+  background-color: #ffc107; 
 }
 .status-badge.APPROVED {
-  background-color: #28a745; /* Green */
+  background-color: #28a745; 
   color: white;
 }
 .status-badge.REJECTED {
-  background-color: #dc3545; /* Red */
+  background-color: #dc3545; 
   color: white;
 }
 

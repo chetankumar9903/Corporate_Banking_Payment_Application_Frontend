@@ -47,7 +47,7 @@ export class Login implements OnInit {
     const loginData: LoginViewModel = {
       userName: formValue.userName,
       password: formValue.password,
-      recaptchaToken: formValue.recaptcha // Map here
+      recaptchaToken: formValue.recaptcha 
     };
  
     this.svc.loginUser(loginData).subscribe({

@@ -12,7 +12,7 @@ h2 {
   margin-bottom: 20px;
 }
 
-/* --- Filter Bar Styles --- */
+
 .filter-bar {
   display: flex;
   gap: 20px;
@@ -40,7 +40,7 @@ h2 {
   min-width: 200px;
 }
 
-/* --- Table Styles --- */
+
 .table-container {
   overflow-x: auto;
 }
@@ -90,11 +90,11 @@ tr:nth-child(even) {
 }
 
 .status-approved {
-  background-color: #28a745; /* Green */
+  background-color: #28a745; 
 }
 
 .status-rejected {
-  background-color: #dc3545; /* Red */
+  background-color: #dc3545; 
 }
 
 .action-buttons button {
@@ -124,7 +124,7 @@ tr:nth-child(even) {
   background-color: #aaa;
 }
 
-/* --- Other Styles --- */
+
 .pagination-controls {
   margin-top: 20px;
   text-align: center;

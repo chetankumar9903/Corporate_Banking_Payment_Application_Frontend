@@ -9,10 +9,10 @@
       <p class="company d-flex align-items-center gap-2">
   <span>Company Name :</span>
 
-  <!-- Display Mode -->
+
   <span *ngIf="!editMode">{{ companyName }}</span>
 
-  <!-- Edit Mode -->
+
   <input
     *ngIf="editMode"
     type="text"
@@ -21,7 +21,7 @@
     style="width: 220px"
   />
 
-  <!-- Edit Icon -->
+  
   <i
     class="bi bi-pencil-square text-primary"
     style="cursor: pointer; color: white!important;"
@@ -29,7 +29,7 @@
     (click)="editMode = true"
   ></i>
 
-  <!-- Save / Cancel Buttons -->
+ 
   <button class="btn btn-sm btn-success" *ngIf="editMode" (click)="saveCompanyName()">
     Save
   </button>

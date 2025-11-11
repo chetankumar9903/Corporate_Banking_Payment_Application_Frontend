@@ -9,18 +9,18 @@ export const authGuard: CanActivateFn = (route, state) => {
   const token = loginSvc.getToken();
   const userRole = loginSvc.getRole();
 
-  // Not logged in - redirect
+  
   if (!token || !userRole) {
     router.navigate(['/login']);
     return false;
   }
 
-  // Get allowed roles from route data
+
   const allowedRoles = route.data?.['roles'] as Array<string>;
 
-  // If route has role restriction → check
+
   if (allowedRoles && !allowedRoles.includes(userRole)) {
-    // User logged in but wrong role → redirect to their dashboard
+   
     switch (userRole) {
       case 'SUPERADMIN':
         router.navigate(['/superadmin-dashboard']);
@@ -38,5 +38,5 @@ export const authGuard: CanActivateFn = (route, state) => {
     return false;
   }
 
-  return true; // Access granted
+  return true; 
 };
