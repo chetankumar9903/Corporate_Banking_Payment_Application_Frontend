@@ -6,7 +6,7 @@
 
 .sidebar {
   width: 220px;
-  background-color: #1e293b; /* Dark blue-gray */
+  background-color: #1e293b; 
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -21,7 +21,7 @@
 
 .sidebar-header p {
   font-size: 0.9rem;
-  color: #cbd5e1; /* lighter text */
+  color: #cbd5e1; 
   margin-bottom: 20px;
 }
 
@@ -42,11 +42,11 @@
 
 .nav-menu a:hover,
 .nav-menu a.active-link {
-  color: #38bdf8; /* sky blue highlight */
+  color: #38bdf8; 
 }
 
 .main-content {
   flex: 1;
-  background-color: #f1f5f9; /* light gray */
+  background-color: #f1f5f9; 
   padding: 20px;
 }

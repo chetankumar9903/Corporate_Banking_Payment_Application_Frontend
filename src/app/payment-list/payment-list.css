@@ -42,9 +42,8 @@ button {
   border-radius: 8px;
 }
 
-/* Scrollable table with fixed header */
 .table-wrapper {
-  max-height: 400px; /* adjust as needed */
+  max-height: 400px;
   overflow-y: auto;
   position: relative;
 }
@@ -57,13 +56,13 @@ button {
 .table-wrapper thead th {
   position: sticky;
   top: 0;
-  background-color: #343a40; /* dark header */
+  background-color: #343a40; 
   color: #fff;
   z-index: 1;
   box-shadow: 0 2px 2px -1px rgba(0,0,0,0.4);
 }
 
-/* Responsive for small screens */
+
 @media (max-width: 768px) {
   .payment-container .d-flex {
     flex-direction: column;

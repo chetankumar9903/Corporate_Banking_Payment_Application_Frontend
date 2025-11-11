@@ -1,23 +1,20 @@
-/* Container for row */
+
 .form-row {
   display: flex;
   gap: 15px;
   margin-bottom: 15px;
-  flex-wrap: wrap; /* Wrap on small screens */
+  flex-wrap: wrap;
 }
 
-/* Each input takes 48% width by default */
 .form-row .form-group {
   flex: 1 1 48%;
   position: relative;
 }
 
-/* Full width for special fields */
 .form-row .form-group.full-width {
   flex: 1 1 100%;
 }
 
-/* Inputs, textarea, select styling (same as before) */
 .form-row input,
 .form-row select,
 .form-row textarea {
@@ -48,42 +45,39 @@
   box-shadow: 0 0 5px rgba(75, 121, 161, 0.5);
 }
 
-/* Responsive: stack columns on smaller screens */
 @media (max-width: 600px) {
   .form-row .form-group {
     flex: 1 1 100%;
   }
 }
-/* Headings */
+
 .register-card h2 {
-  color: #004e92; /* same as login */
+  color: #004e92;
 }
 
 .register-card .subtitle {
   color: gray;
 }
 
-/* Labels */
 .register-card label {
   color: #333;
   font-weight: 600;
 }
 
-/* Inputs, textarea, select */
+
 .register-card input,
 .register-card textarea,
 .register-card select {
-  border: 1px solid #ddd; /* same as login */
+  border: 1px solid #ddd;
 }
 
 .register-card input:focus,
 .register-card textarea:focus,
 .register-card select:focus {
-  border-color: #004e92; /* focus color like login */
+  border-color: #004e92;
   box-shadow: 0 0 5px rgba(0, 78, 146, 0.5);
 }
 
-/* Buttons */
 .register-card button {
   background: #004e92;
   color: white;
@@ -93,7 +87,6 @@
   background: #0074e4;
 }
 
-/* Signup link */
 .register-card .signup-link a {
   color: #004e92;
 }
@@ -118,7 +111,6 @@
   opacity: 0;
 }
 
-/* Slide-in */
 .toast-message.show {
   right: 20px;
   opacity: 1;
@@ -149,7 +141,7 @@ select.ng-touched.ng-invalid {
 
 .password-wrapper input {
   width: 100%;
-  padding-right: 70px; /* space for the button */
+  padding-right: 70px; 
 }
 
 .toggle-password {

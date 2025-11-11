@@ -17,11 +17,9 @@ export class EmployeeList implements OnInit {
   loading = false;
   searchTerm = '';
 
-   // --- Sorting ---
   sortColumn: string = '';
   sortOrder: 'asc' | 'desc' = 'asc';
 
-  // --- Pagination ---
   pageNumber: number = 1;
   pageSize: number = 10;
   totalPages: number = 1;
@@ -32,22 +30,6 @@ export class EmployeeList implements OnInit {
     this.fetchEmployees();
   }
 
-
-
-  // fetchEmployees(): void {
-  //   this.loading = true;
-  //   this.employeeService.getEmployeesByClient().subscribe({
-  //     next: (res) => {
-  //       this.employees = res;
-  //       this.filteredEmployees = res;
-  //       this.loading = false;
-  //     },
-  //     error: (err) => {
-  //       console.error(err);
-  //       this.loading = false;
-  //     }
-  //   });
-  // }
 
   fetchEmployees(): void {
     this.loading = true;
@@ -65,10 +47,8 @@ export class EmployeeList implements OnInit {
     });
   }
 
-   // --- Sorting function ---
   sort(column: string) {
     if (this.sortColumn === column) {
-      // toggle sort order
       this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
     } else {
       this.sortColumn = column;
@@ -94,7 +74,6 @@ export class EmployeeList implements OnInit {
     });
   }
 
-  // --- Pagination functions ---
   updatePagination() {
     this.totalPages = Math.ceil(this.filteredEmployees.length / this.pageSize);
     if (this.pageNumber > this.totalPages) this.pageNumber = this.totalPages;
@@ -128,7 +107,6 @@ export class EmployeeList implements OnInit {
     const term = this.searchTerm.toLowerCase();
     this.filteredEmployees = this.employees.filter(emp =>
       emp.firstName.toLowerCase().includes(term) ||  
-      // emp.lastName.toLowerCase().includes(term) ||
       emp.emailId.toLowerCase().includes(term) ||
       emp.position?.toLowerCase().includes(term) ||
       emp.department?.toLowerCase().includes(term)

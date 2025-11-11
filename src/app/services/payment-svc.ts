@@ -1,80 +1,3 @@
-// import { Injectable } from '@angular/core';
-// import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-// import { Observable } from 'rxjs';
-// import { PagedResult } from '../models/PagedResult';
-// import { CreatePaymentDto, Payment, UpdatePaymentDto } from '../models/Payment';
-// import { Status } from '../models/Customer';
-// // We don't need 'map'
-// // import { map } from 'rxjs/operators'; 
-
-
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class PaymentSvc {
-//   private baseUrl = 'https://localhost:7257/api/Payment';
-
-//   constructor(private http: HttpClient) { }
-
-//   /**
-//    * Gets a paged list of payments from the backend.
-//    */
-//   getAllPayments(
-//     page: number, 
-//     size: number, 
-//     sort: string, 
-//     order: 'ASC' | 'DESC', 
-//     searchTerm: string = ''
-//   ): Observable<PagedResult<Payment>> {
-//      let params = new HttpParams()
-//       .set('pageNumber', page.toString())
-//       .set('pageSize', size.toString())
-//       .set('sortColumn', sort)
-//       .set('sortOrder', order)
-//       .set('searchTerm', searchTerm);
-
-//     // Remove the .pipe(map(...)) block, it was incorrect
-//     return this.http.get<PagedResult<Payment>>(this.baseUrl, { params });
-//   }
-
-//   /**
-//    * --- THIS IS THE FIX ---
-//    * Updates a payment by sending the DTO to the PUT endpoint.
-//    */
-//   updatePayment(id: number, dto: UpdatePaymentDto): Observable<Payment> {
-//     // This calls the [HttpPut("{id}")] endpoint on your PaymentController
-//     // which matches your C# PaymentService.UpdatePayment method.
-//     return this.http.put<Payment>(`${this.baseUrl}/${id}`, dto);
-//   }
-
-//   // private apiUrl = 'https://localhost:7257/api/Payment';
-
-//   // constructor(private http: HttpClient) {}
-
-//   getByClientId(clientId: number): Observable<Payment[]> {
-//     return this.http.get<Payment[]>(`${this.baseUrl}/client/${clientId}`);
-//   }
-
-//   create(dto: CreatePaymentDto): Observable<Payment> {
-//     return this.http.post<Payment>(this.baseUrl, dto);
-//   }
-
-//   delete(id: number): Observable<void> {
-//     return this.http.delete<void>(`${this.baseUrl}/${id}`);
-//   }
-
-//   getById(id: number): Observable<Payment> {
-//     return this.http.get<Payment>(`${this.baseUrl}/${id}`);
-//   }
-
-//   updateStatus(id: number, dto: UpdatePaymentDto): Observable<Payment> {
-
-//     return this.http.put<Payment>(`${this.baseUrl}/${id}`, dto);
-//   }
-// }
-
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -89,10 +12,6 @@ export class PaymentSvc {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Gets a paged list of payments from the backend.
-   * Used by Bank User for All Transactions and Payment Approval.
-   */
   getAllPayments(
     page: number, 
     size: number, 
@@ -110,42 +29,24 @@ export class PaymentSvc {
     return this.http.get<PagedResult<Payment>>(this.baseUrl, { params });
   }
 
-  /**
-   * Updates a payment's status (Approve/Reject).
-   * This calls the [HttpPut("{id}")] endpoint on your PaymentController.
-   */
   updatePayment(id: number, dto: UpdatePaymentDto): Observable<Payment> {
     return this.http.put<Payment>(`${this.baseUrl}/${id}`, dto);
   }
 
-  /**
-   * Gets a single payment by its ID.
-   * (Needed for Client User)
-   */
+
   getById(id: number): Observable<Payment> {
     return this.http.get<Payment>(`${this.baseUrl}/${id}`);
   }
 
-  /**
-   * Gets all payments for a specific client.
-   * (Needed for Client User)
-   */
+
   getByClientId(clientId: number): Observable<Payment[]> {
     return this.http.get<Payment[]>(`${this.baseUrl}/client/${clientId}`);
   }
 
-  /**
-   * Creates a new payment request.
-   * (Needed for Client User)
-   */
   create(dto: CreatePaymentDto): Observable<Payment> {
     return this.http.post<Payment>(this.baseUrl, dto);
   }
 
-  /**
-   * Deletes a payment.
-   * (Needed for Client User)
-   */
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }

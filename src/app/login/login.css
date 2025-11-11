@@ -1,18 +1,13 @@
 .login-container {
-  display: grid; /* Use grid for easy centering */
+  display: grid;
   place-items: center;
  
-  /* --- THIS IS THE FIX --- */
-  /* Calculate the available screen height *minus* the header/footer.
-    This assumes your header and footer are roughly 120px tall combined.
-    (Adjust 120px if your header/footer are taller or shorter).
-  */
+
   min-height: calc(100vh - 120px);
-  /* --- END OF FIX --- */
  
   background: linear-gradient(120deg, #004e92, #000428);
   font-family: 'Poppins', sans-serif;
-  padding: 20px; /* For small screen padding */
+  padding: 20px; 
   box-sizing: border-box;
 }
  
@@ -22,10 +17,9 @@
   border-radius: 15px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
  
-  /* Use max-width for responsiveness */
+  
   width: 100%;
   max-width: 400px;
-  /* Ensure it's wide enough for CAPTCHA */
   min-width: 320px;
   box-sizing: border-box;
   text-align: center;
@@ -46,15 +40,15 @@ h2 {
   margin-bottom: 20px;
 }
  
-/* This centers the CAPTCHA widget */
+
 .captcha-container {
   display: flex;
   justify-content: center;
-  flex-direction: column; /* Stack CAPTCHA and error */
-  align-items: center; /* Center horizontally */
+  flex-direction: column; 
+  align-items: center; 
 }
  
-/* This styles the CAPTCHA's error message */
+
 .captcha-container .error-text {
   color: #e74c3c;
   font-size: 0.85em;
@@ -99,8 +93,7 @@ button {
 button:hover {
   background: #0074e4;
 }
- 
-/* This is the main login error (e.g., "Invalid password") */
+
 .error {
   color: #e74c3c;
   margin-top: 15px;

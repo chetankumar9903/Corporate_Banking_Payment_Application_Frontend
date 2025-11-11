@@ -3,7 +3,6 @@
   <p class="subtitle">Select an employee and confirm or modify the payment amount.</p>
 
   <form [formGroup]="form" (ngSubmit)="submit()">
-    <!-- Employee Selection -->
     <div class="form-group">
       <label>Employee</label>
       <select formControlName="employeeId" class="form-control" (change)="onEmployeeSelect($event)">
@@ -17,22 +16,6 @@
       </div>
     </div>
 
-    <!-- Auto-filled Salary Info -->
-    <!-- <div *ngIf="selectedEmployee" class="info-box">
-      <p><strong>Position:</strong> {{ selectedEmployee.position || '—' }}</p>
-      <p><strong>Department:</strong> {{ selectedEmployee.department || '—' }}</p>
-      <p><strong>Default Salary:</strong> ₹{{ selectedEmployee.salary }}</p>
-    </div> -->
-
-    <!-- Allow custom payment -->
-    <!-- <div class="toggle-container">
-      <label>
-        <input type="checkbox" [(ngModel)]="allowCustom" name="allowCustom" />
-        Pay different amount
-      </label>
-    </div> -->
-
-    <!-- Amount -->
     <div class="form-group">
       <label>Amount (₹)</label>
       <input
@@ -46,7 +29,6 @@
       </div>
     </div>
 
-    <!-- Description -->
     <div class="form-group">
       <label>Description (optional)</label>
       <input
@@ -57,7 +39,6 @@
       />
     </div>
 
-    <!-- Actions -->
     <div class="actions">
       <button class="btn primary" type="submit" [disabled]="form.invalid || submitting">
         {{ submitting ? 'Processing...' : 'Pay Now' }}

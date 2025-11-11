@@ -40,18 +40,15 @@ export class Login implements OnInit {
     }
  
     this.loading = true;
-    this.errorMessage = ''; // Clear old errors
+    this.errorMessage = ''; 
     const formValue = this.loginForm.value;
  
-    // --- THIS IS THE FIX ---
-    // Manually map the form data to the view model
-    // The form control is 'recaptcha', but the DTO expects 'recaptchaToken'
+   
     const loginData: LoginViewModel = {
       userName: formValue.userName,
       password: formValue.password,
       recaptchaToken: formValue.recaptcha // Map here
     };
-    // --- END OF FIX ---
  
     this.svc.loginUser(loginData).subscribe({
       next: (res: AuthResponseViewModel) => {
@@ -79,10 +76,7 @@ export class Login implements OnInit {
         this.errorMessage = err.error?.message || 'Invalid username or password';
         this.loading = false;
        
-        // --- ADD THIS LINE ---
-        // Reset the CAPTCHA on a failed login
         this.loginForm.get('recaptcha')?.reset();
-        // --- END OF ADDITION ---
       },
       complete: () => (this.loading = false)
     });

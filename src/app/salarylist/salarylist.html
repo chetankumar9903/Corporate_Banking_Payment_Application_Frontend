@@ -7,12 +7,6 @@
     </div>
   </div>
 
-  <!-- Search -->
-  <!-- <div class="mb-2">
-    <input [(ngModel)]="searchTerm" placeholder="Search by employeeName, description,batch ID..." class="form-control" (keyup.enter)="onSearch(searchTerm)" />
-    <button class="btn btn-sm primary ms-2" (click)="onSearch(searchTerm)">Search</button>
-  </div> -->
-
   <div class="mb-2 d-flex align-items-center gap-2">
   <input
     [(ngModel)]="searchTerm"
@@ -36,7 +30,6 @@
           <th>Description</th>
           <th (click)="setSort('amount')">Amount</th>
           <th>Batch</th>
-          <!-- <th></th> -->
         </tr>
       </thead>
       <tbody>
@@ -51,9 +44,6 @@
               {{ s.batchId ? 'Batch ' + s.batchId : 'Single' }}
             </span>
           </td>
-          <!-- <td>
-            <button class="btn-link" (click)="onDelete(s.salaryDisbursementId)">Delete</button>
-          </td> -->
         </tr>
       </tbody>
     </table>
@@ -62,15 +52,7 @@
   <div *ngIf="!loading && !salaries.length" class="empty-state">
     No salary disbursements found.
   </div>
-
-  <!-- Pagination -->
-  <!-- <div class="mt-2" *ngIf="totalCount > pageSize">
-    <button class="btn btn-sm secondary me-1" (click)="goToPage(pageNumber-1)">Prev</button>
-    <span>Page {{ pageNumber }} of {{ totalPages }}</span>
-    <button class="btn btn-sm secondary ms-1" (click)="goToPage(pageNumber+1)">Next</button>
-  </div> -->
-
-  <!-- Pagination -->
+  
 <div class="d-flex justify-content-end align-items-center mt-3 gap-2" *ngIf="totalCount > pageSize">
   <button class="btn btn-outline-secondary btn-sm" [disabled]="pageNumber === 1" (click)="goToPage(pageNumber - 1)">
     Prev

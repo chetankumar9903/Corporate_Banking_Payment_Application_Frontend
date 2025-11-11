@@ -40,35 +40,6 @@ export class PaymentList implements OnInit {
     this.load();
   }
 
-  // load() {
-  //   if (!this.clientId) return;
-  //   this.loading = true;
-  //   this.svc.getByClientId(this.clientId).subscribe({
-  //     next: (data) => {
-  //       // this.payments = data;
-  //       // this.loading = false;
-
-  //        this.payments = data;
-  //       this.filteredPayments = [...data];
-
-  //        // Fetch beneficiary names
-  //     this.payments.forEach(p => {
-  //       if (!this.beneficiaryMap[p.beneficiaryId]) {
-  //         this.benSvc.getById(p.beneficiaryId).subscribe({
-  //           next: (b) => this.beneficiaryMap[p.beneficiaryId] = b.beneficiaryName,
-  //           error: () => this.beneficiaryMap[p.beneficiaryId] = '—'
-  //         });
-  //       }
-  //     });
-  //       this.updatePagination();
-  //       this.loading = false;
-  //     },
-  //     error: (err) => {
-  //       console.error('Error loading payments', err);
-  //       this.loading = false;
-  //     }
-  //   });
-  // }
 
   load() {
   if (!this.clientId) return;
@@ -79,15 +50,12 @@ export class PaymentList implements OnInit {
       this.payments = data;
       this.filteredPayments = [...data];
 
-      // Get unique beneficiary IDs
       const uniqueIds = Array.from(new Set(this.payments.map(p => p.beneficiaryId)));
 
-      // Build an array of observables
       const requests = uniqueIds.map(id =>
         this.benSvc.getById(id)
       );
 
-      // Execute all requests in parallel
       forkJoin(requests).subscribe({
         next: (beneficiaries) => {
           beneficiaries.forEach(b => {
@@ -125,7 +93,7 @@ export class PaymentList implements OnInit {
       });
     }
   }
- // --- Sorting ---
+
   sort(column: string) {
     if (this.sortColumn === column) {
       this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
@@ -146,7 +114,6 @@ export class PaymentList implements OnInit {
     });
   }
 
-  // --- Search / Filter ---
   search() {
     const term = this.searchTerm.toLowerCase();
 
@@ -166,7 +133,6 @@ export class PaymentList implements OnInit {
     this.updatePagination();
   }
 
-  // --- Pagination ---
   updatePagination() {
     this.totalPages = Math.ceil(this.filteredPayments.length / this.pageSize) || 1;
     if (this.pageNumber > this.totalPages) this.pageNumber = this.totalPages;

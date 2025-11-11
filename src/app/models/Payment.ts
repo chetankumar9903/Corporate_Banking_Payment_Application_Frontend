@@ -22,10 +22,9 @@ export interface Payment {
   description?: string;
   rejectReason?: string;
 
-  // --- THIS IS THE FIX ---
   client?: NestedClient;
   beneficiary?: NestedBeneficiary;
-  // --- END OF FIX ---
+
 }
 
 export interface UpdatePaymentDto {

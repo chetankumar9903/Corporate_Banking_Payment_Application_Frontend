@@ -61,7 +61,7 @@ export class PaymentForm implements OnInit {
       error: (err) => {
         console.error('Payment failed', err);
         this.loading = false;
-         console.log('Error body:', err.error); // 👈 add this line
+         console.log('Error body:', err.error); 
   alert(err.error?.message || 'Payment failed.');
       }
     });

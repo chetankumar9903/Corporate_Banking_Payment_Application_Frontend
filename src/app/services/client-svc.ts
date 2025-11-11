@@ -12,37 +12,10 @@ export class ClientSvc {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Creates the new Client record after customer approval
-   */
   createClient(dto: CreateClientDto): Observable<Client> {
     return this.http.post<Client>(this.baseUrl, dto);
   }
 
-  // getAllClients(
-  //   page: number, 
-  //   size: number, 
-  //   sort: string, 
-  //   order: 'ASC' | 'DESC', 
-  //   searchTerm: string = ''
-  // ): Observable<PagedResult<Client>> {
-  //    let params = new HttpParams()
-  //     .set('pageNumber', page.toString())
-  //     .set('pageSize', size.toString())
-  //     .set('sortColumn', sort)
-  //     .set('sortOrder', order)
-  //     .set('searchTerm', searchTerm);
-
-  //   return this.http.get<PagedResult<Client>>(this.baseUrl, { params }).pipe(
-  //     map(result => {
-  //       // Ensure balance is always a number
-  //       result.items.forEach(item => {
-  //         item.balance = +item.balance;
-  //       });
-  //       return result;
-  //     })
-  //   );
-  // }
 
   getAllClients(
     page: number, 
@@ -56,11 +29,11 @@ export class ClientSvc {
       .set('pageSize', size.toString())
       .set('sortColumn', sort)
       .set('sortOrder', order)
-      .set('searchTerm', searchTerm); // <-- This now correctly passes the search term
+      .set('searchTerm', searchTerm); 
 
     return this.http.get<PagedResult<Client>>(this.baseUrl, { params }).pipe(
       map(result => {
-        // Ensure balance is always a number
+
         result.items.forEach(item => {
           item.balance = +item.balance;
         });
@@ -69,16 +42,9 @@ export class ClientSvc {
     );
   }
 
-  /**
-   * Deletes a client by their ID.
-   */
   deleteClient(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
-
-  
-
-  
 
   getBalance(clientId: number): Observable<{ balance: number }> {
     return this.http.get<{ balance: number }>(`${this.baseUrl}/${clientId}/balance`);

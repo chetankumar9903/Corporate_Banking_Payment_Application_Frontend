@@ -28,29 +28,11 @@ export class BeneficiaryList implements OnInit {
 
   constructor(private svc: BeneficiarySvc, private router: Router) {}
 
-  // ngOnInit(): void {
-  //   this.load();
-  // }
-
   ngOnInit(): void {
     const storedId = localStorage.getItem('clientId');
     if (storedId) this.clientId = +storedId;
     this.load();
   }
-
-  // load() {
-  //   this.loading = true;
-  //   this.svc.getAll(this.searchTerm, this.sortColumn, this.sortOrder).subscribe({
-  //     next: (data) => {
-  //       this.beneficiaries = data.items;
-  //       this.loading = false;
-  //     },
-  //     error: (err) => {
-  //       console.error(err);
-  //       this.loading = false;
-  //     },
-  //   });
-  // }
 
    load() {
     if (!this.clientId) return;

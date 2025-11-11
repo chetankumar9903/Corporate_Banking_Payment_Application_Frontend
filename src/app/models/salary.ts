@@ -29,7 +29,7 @@ export interface BatchTransactionDto {
 
 export interface CreateBatchTransactionDto {
   clientId: number;
-  employeeIds: number[]; // required
+  employeeIds: number[];
   totalAmount: number;
   description?: string;
 }

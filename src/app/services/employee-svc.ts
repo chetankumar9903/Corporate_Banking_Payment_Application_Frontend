@@ -12,23 +12,19 @@ export class EmployeeSvc {
 
   constructor(private http: HttpClient, private loginService: LoginSvc) {}
 
-  // Get employees of logged-in client
   getEmployeesByClient(): Observable<EmployeeDto[]> {
     const clientId = this.loginService.getClientId();
     return this.http.get<EmployeeDto[]>(`${this.apiUrl}/byclient/${clientId}`);
   }
 
-  // Create a new employee
   createEmployee(dto: CreateEmployeeDto): Observable<EmployeeDto> {
     return this.http.post<EmployeeDto>(this.apiUrl, dto);
   }
 
-  // Update employee
   updateEmployee(id: number, dto: UpdateEmployeeDto): Observable<EmployeeDto> {
     return this.http.put<EmployeeDto>(`${this.apiUrl}/${id}`, dto);
   }
 
-  // Delete employee
   deleteEmployee(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }

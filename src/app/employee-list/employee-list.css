@@ -6,7 +6,6 @@
   box-shadow: 0 3px 12px rgba(0,0,0,0.08);
 }
 
-/* Controls */
 .controls input.form-control {
   min-width: 200px;
 }
@@ -15,15 +14,14 @@
   white-space: nowrap;
 }
 
-/* Scrollable Table */
+
 .table-scroll {
-  max-height: 400px; /* Adjust height as needed */
+  max-height: 400px;
   overflow-y: auto;
   overflow-x: auto;
   margin-bottom: 1rem;
 }
 
-/* Optional: sticky header */
 .table-scroll thead th {
   position: sticky;
   top: 0;
@@ -32,7 +30,6 @@
   z-index: 1;
 }
 
-/* Table styling */
 .custom-table {
   width: 100%;
   border-collapse: separate;

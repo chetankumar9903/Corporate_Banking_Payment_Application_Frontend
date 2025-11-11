@@ -1,7 +1,5 @@
-<!-- 🌐 app.component.html -->
-
 <div class="app-container">
-  <!-- ✅ Navbar shown only when logged in -->
+
   <nav *ngIf="isLoggedIn()" class="navbar">
     <div class="nav-left">
       <h2>💼 Corporate Banking</h2>
@@ -14,12 +12,12 @@
     </div>
   </nav>
 
-  <!-- 🧭 Main content area for all routes -->
+
   <main>
     <router-outlet></router-outlet>
   </main>
 
-  <!-- 📌 Optional footer -->
+
   <footer>
     <p>© 2025 Corporate Banking Payment System | All rights reserved.</p>
   </footer>
