@@ -24,7 +24,7 @@ export class CustomerOnboardingComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
-  // 1. Declare the form property with '!'
+
   onboardingForm!: FormGroup; 
 
   availableUsers: UserDto[] = [];
@@ -39,14 +39,14 @@ export class CustomerOnboardingComponent implements OnInit {
   documentTypes = ['AADHAR CARD','PAN CARD','PASSPORT','DRIVING LISCENCE','VOTER ID','BIRTH CIRTIFICATE','ELECTRICITY BILL','TELEPHONE BILL','OTHERS'];
 
   constructor(
-    private fb: FormBuilder, // fb is injected here
+    private fb: FormBuilder, 
     private userSvc: UserSvc,
     private customerSvc: CustomerSvc,
     private documentSvc: DocumentSvc,
     private loginSvc: LoginSvc,
     private router: Router
   ) {
-    // 2. Initialize the form INSIDE the constructor
+
     this.onboardingForm = this.fb.group({
       userId: [null, [Validators.required]],
       documentType: [null, [Validators.required]]
@@ -54,22 +54,20 @@ export class CustomerOnboardingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // 3. Get the logged-in Bank User's bankId
+
     const id = this.loginSvc.getBankId();
-    
-    // 4. Set default form values
+
     this.onboardingForm.patchValue({
       documentType: this.documentTypes[0]
     });
 
     if (!id) {
-      // 5. If no ID, set error and disable the form
+
       this.errorMessage = 'Could not find your Bank ID. Please re-login.';
-      this.onboardingForm.disable(); // Disable the form
+      this.onboardingForm.disable(); 
       return;
     }
     
-    // 6. If we have an ID, proceed
     this.bankId = id;
     this.loadUsers();
   }
@@ -78,12 +76,10 @@ export class CustomerOnboardingComponent implements OnInit {
     this.loading = true;
     this.userSvc.getAvailableClientUsers().subscribe({
       next: (users) => {
-        // --- THIS IS THE FIX FOR THE EMPTY DROPDOWN ---
-        // Ensure you are filtering by the correct case
+
         this.availableUsers = users.filter(user => 
           user.userRole.toString().toUpperCase() === 'CLIENTUSER' && user.isActive
         );
-        // --- END OF FIX ---
         this.loading = false;
       },
       error: (err) => {

@@ -8,5 +8,5 @@ interface ClientProfile {
   isActive: boolean;
   customerName: string;
   bankName: string;
-  customerEmail?: string; // optional
+  customerEmail?: string; 
 }

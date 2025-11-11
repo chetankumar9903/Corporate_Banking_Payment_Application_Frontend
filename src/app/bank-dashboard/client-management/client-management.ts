@@ -64,7 +64,6 @@ export class ClientManagementComponent implements OnInit {
     this.loading = true;
     this.errorMessage = '';
     
-    // We get all clients for our bank (using bankName)
     this.clientSvc.getAllClients(1, 1000, this.sortColumn, this.sortOrder, this.bankName).subscribe({
       next: (result) => {
         this.allClients = result.items; 
@@ -95,25 +94,21 @@ export class ClientManagementComponent implements OnInit {
     this.applyFiltersAndPagination();
   }
 
-  /**
-   * --- THIS IS THE UPDATED FUNCTION ---
-   * It now searches across multiple fields, just like your backend.
-   */
+
   applyFiltersAndPagination(): void {
     let tempClients = [...this.allClients];
 
-    // 1. Filter by Generic Search Term
+
     const searchTerm = this.clientSearchTerm.toLowerCase();
     if (searchTerm) {
       tempClients = tempClients.filter(c => 
         (c.companyName && c.companyName.toLowerCase().includes(searchTerm)) ||
         (c.accountNumber && c.accountNumber.toLowerCase().includes(searchTerm)) ||
         (c.customerName && c.customerName.toLowerCase().includes(searchTerm))
-        // Add any other fields you want to search here
+
       );
     }
 
-    // 2. Sort the filtered list
     tempClients.sort((a, b) => {
       const aVal = (a as any)[this.sortColumn] || ''; 
       const bVal = (b as any)[this.sortColumn] || '';
@@ -129,7 +124,6 @@ export class ClientManagementComponent implements OnInit {
 
     this.filteredClients = tempClients;
 
-    // 3. Apply pagination to the filtered list
     this.updatePagedClients();
   }
 

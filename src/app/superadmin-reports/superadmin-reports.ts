@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgClass, DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-// import { ReportSvc } from '../services/report.svc';
-// import { ClientSvc } from '../services/client.svc';
 import { LoginSvc } from '../services/login-svc';
 import { Client } from '../models/Client';
 import { ReportDto, ReportType, ReportOutputFormat, GenerateReportRequestDto } from '../models/Report';
@@ -27,33 +25,29 @@ import { ClientSvc } from '../services/client-svc';
 })
 export class SuperadminReportsComponent implements OnInit {
 
-  // Form State
+
   reportForm!: FormGroup;
   formLoading = false;
   formErrorMessage = '';
   formSuccessMessage = '';
-  allClients: Client[] = []; // For the dropdown
+  allClients: Client[] = []; 
 
-  // Enums for the template
   public reportTypeEnum = ReportType;
   public reportFormatEnum = ReportOutputFormat;
   public statusEnum = Status;
   public Math = Math;
 
-  // History Table State
   historyLoading = false;
   historyErrorMessage = '';
   public generatedReports: ReportDto[] = [];
   public pagedResult: PagedResult<ReportDto> | null = null;
 
-  // History Paging & Sorting
   public currentPage = 1;
   public pageSize = 5;
   public sortColumn: string = 'generatedDate';
   public sortOrder: 'ASC' | 'DESC' = 'DESC';
   public searchTerm: string = '';
 
-  // User Info
   private userId!: number;
   private userRole!: UserRole;
 
@@ -85,17 +79,14 @@ export class SuperadminReportsComponent implements OnInit {
     this.userId = uid;
     this.userRole = role as UserRole;
 
-    // Load ALL clients for the dropdown
+
     this.loadClientsForDropdown();
-    // Load initial report history
     this.loadReportHistory();
   }
 
-  /**
-   * Fetches ALL clients (Super Admin) to populate the dropdown.
-   */
+
   loadClientsForDropdown(): void {
-    // Pass an EMPTY string as searchTerm to get ALL clients
+   
     this.clientSvc.getAllClients(1, 1000, 'companyName', 'ASC', "").subscribe({
       next: (result) => {
         this.allClients = result.items;
@@ -106,9 +97,7 @@ export class SuperadminReportsComponent implements OnInit {
     });
   }
 
-  /**
-   * Fetches the paged list of previously generated reports.
-   */
+ 
   loadReportHistory(): void {
     this.historyLoading = true;
     this.historyErrorMessage = '';
@@ -133,9 +122,7 @@ export class SuperadminReportsComponent implements OnInit {
     });
   }
 
-  /**
-   * Handles the form submission to generate a new report.
-   */
+
   onGenerateReport(): void {
     if (this.reportForm.invalid) {
       this.formErrorMessage = "Please fill out all required fields.";
@@ -168,8 +155,7 @@ export class SuperadminReportsComponent implements OnInit {
           paymentStatusFilter: null,
           clientId: null
         });
-        
-        // Add new report to the top of the history list
+
         this.generatedReports.unshift(newReport);
         if (this.generatedReports.length > this.pageSize) {
           this.generatedReports.pop();
@@ -186,7 +172,6 @@ export class SuperadminReportsComponent implements OnInit {
     });
   }
 
-  // --- History Table Functions ---
   onSearchChange(): void {
     this.currentPage = 1;
     this.loadReportHistory();

@@ -32,29 +32,12 @@ balance: number | null = null;
     });
   }
 
-  // ngOnInit(): void {
-  //   const clientId = this.loginService.getClientId();
-  //   if (clientId) {
-  //     this.loadBalance(clientId);
-  //   } else {
-  //     console.error('Client ID not found');
-  //   }
-  // }
-
-  // loadBalance(clientId: number): void {
-  //   this.clientService.getBalance(clientId).subscribe({
-  //     next: (res) => this.balance = res.balance,
-  //     error: (err) => console.error('Error fetching balance', err)
-  //   });
-  // }
 
     ngOnInit(): void {
     this.clientId = this.loginService.getClientId();
 
     if (this.clientId) {
       this.loadBalance(this.clientId);
-
-      // Auto-refresh every 20 seconds
       this.balanceInterval = setInterval(() => {
         this.loadBalance(this.clientId!);
       }, 20000);
@@ -64,7 +47,6 @@ balance: number | null = null;
   }
 
   ngOnDestroy(): void {
-    // Clear interval when component is destroyed to prevent memory leaks
     if (this.balanceInterval) {
       clearInterval(this.balanceInterval);
     }
@@ -79,25 +61,4 @@ balance: number | null = null;
     error: (err) => console.error('Error fetching balance', err)
   });
 }
-
-// onUpdateBalance(): void {
-//     if (!this.balanceForm.valid || !this.clientId) return;
-
-//     const amount = parseFloat(this.balanceForm.value.amount);
-
-//     this.clientService.updateBalance(this.clientId, { amount }).subscribe({
-//       next: (res) => {
-//         this.successMessage = 'Balance updated successfully!';
-//         this.errorMessage = '';
-//         this.balanceForm.reset();
-//         this.loadBalance(this.clientId!);
-//         setTimeout(() => (this.successMessage = ''), 3000);
-//       },
-//       error: (err) => {
-//         this.errorMessage = err.error?.message || 'Error updating balance';
-//         this.successMessage = '';
-//         setTimeout(() => (this.errorMessage = ''), 5000);
-//       },
-//     });
-//   }
 }

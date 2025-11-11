@@ -1,4 +1,4 @@
-// Based on your backend ClientDto
+
 export interface Client {
   clientId: number;
   customerId: number;
@@ -11,7 +11,6 @@ export interface Client {
   bankName?: string;
 }
 
-// Based on your backend CreateClientDto
 export interface CreateClientDto {
   customerId: number;
   bankId: number;

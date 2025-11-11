@@ -15,7 +15,4 @@ export class RegisterSvc {
     return this.http.post<UserDto>(this.apiUrl, dto);
   }
 
-  // getBankUsers(): Observable<UserDto[]> {
-  //   return this.http.get<UserDto[]>(`${this.apiUrl}/bankusers`);
-  // }
 }

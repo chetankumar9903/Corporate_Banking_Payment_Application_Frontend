@@ -4,7 +4,6 @@
     <button class="btn btn-success" (click)="add()">+ New Payment</button>
   </div>
 
-  <!-- Search -->
   <div class="mb-3 d-flex gap-2 flex-wrap">
     <input
       type="text"
@@ -17,7 +16,6 @@
     <button class="btn btn-outline-secondary" (click)="clearFilter()">Clear</button>
   </div>
 
-  <!-- Scrollable Table -->
   <div class="table-wrapper">
     <table class="table table-hover align-middle text-center">
       <thead class="table-dark">
@@ -41,7 +39,6 @@
       </thead>
       <tbody *ngIf="!loading && filteredPayments.length > 0">
         <tr *ngFor="let p of pagedPayments()">
-          <!-- <td>{{ p.beneficiaryId }}</td> -->
            <td>{{ beneficiaryMap[p.beneficiaryId] || 'Loading...' }}</td>
           <td>₹{{ p.amount | number }}</td>
           <td>{{ p.requestDate | date:'short' }}</td>
@@ -71,15 +68,9 @@
           <td colspan="6" class="text-center text-muted">No payments found.</td>
         </tr>
       </tbody>
-      <!-- <tbody *ngIf="loading">
-        <tr>
-          <td colspan="6" class="text-center text-primary">Loading...</td>
-        </tr>
-      </tbody> -->
     </table>
   </div>
 
-  <!-- Pagination -->
   <div class="d-flex justify-content-end align-items-center mt-3 gap-2">
     <button class="btn btn-outline-secondary btn-sm" [disabled]="pageNumber===1" (click)="prevPage()">Prev</button>
     <span>Page {{ pageNumber }} of {{ totalPages }}</span>

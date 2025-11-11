@@ -16,9 +16,8 @@ export class BankDashboard implements OnInit {
   isChildRouteActive = false;
   username: string | null = '';
 
-  // State flags to control the UI
-  isLoadingBankId = true; // Show loading screen by default
-  errorMessage = '';      // Show error message if fetch fails
+  isLoadingBankId = true; 
+  errorMessage = '';
 
   constructor(
     private router: Router,
@@ -30,22 +29,15 @@ export class BankDashboard implements OnInit {
   }
 
   ngOnInit(): void {
-    // This function will run when the dashboard loads
     this.findAndSaveBankId();
   }
 
-  /**
-   * This function checks if the bankId is in localStorage.
-   * If not, it fetches it using the new API endpoint.
-   */
   findAndSaveBankId(): void {
-    // 1. Check if bankId is already in localStorage. If yes, we're done.
     if (this.loginSvc.getBankId()) {
       this.isLoadingBankId = false;
       return;
     }
 
-    // 2. If not, get the logged-in username
     const currentUsername = localStorage.getItem('username');
     if (!currentUsername) {
       this.errorMessage = 'Could not find username. Please re-login.';
@@ -53,15 +45,12 @@ export class BankDashboard implements OnInit {
       return;
     }
 
-    // 3. Call our new, efficient endpoint
     this.bankSvc.getBankByUsername(currentUsername).subscribe({
       next: (bank) => {
-        // 4. SUCCESS! Save the bankId and hide the loading screen.
         this.loginSvc.saveBankId(bank.bankId);
         this.isLoadingBankId = false;
       },
       error: (err) => {
-        // 5. ERROR! Show the error message from the backend.
         this.errorMessage = err.error?.message || 'Failed to find your bank account.';
         console.error(err);
         this.isLoadingBankId = false;

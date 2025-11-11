@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-// import { ClientSvc } from '../../services/client.svc';
 import { LoginSvc } from '../../services/login-svc';
 import { CreateClientDto } from '../../models/Client';
 import { ClientSvc } from '../../services/client-svc';
@@ -36,7 +35,7 @@ export class CreateClientFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // 1. Get CustomerID from the URL (passed from verification page)
+
     const idFromRoute = this.route.snapshot.paramMap.get('id');
     if (!idFromRoute) {
       this.errorMessage = 'No Customer ID was provided.';
@@ -44,7 +43,7 @@ export class CreateClientFormComponent implements OnInit {
     }
     this.customerId = +idFromRoute;
 
-    // 2. Get BankID from the logged-in user
+
     const idFromLogin = this.loginSvc.getBankId();
     if (!idFromLogin) {
       this.errorMessage = 'Could not find your Bank ID. Please re-login.';
@@ -52,7 +51,7 @@ export class CreateClientFormComponent implements OnInit {
     }
     this.bankId = idFromLogin;
 
-    // 3. Initialize the form
+
     this.clientForm = this.fb.group({
       companyName: ['', [Validators.required, Validators.maxLength(100)]],
       initialBalance: [0, [Validators.required, Validators.min(0)]]
@@ -71,7 +70,6 @@ export class CreateClientFormComponent implements OnInit {
     
     const formValue = this.clientForm.value;
 
-    // 4. Build the DTO
     const clientDto: CreateClientDto = {
       customerId: this.customerId,
       bankId: this.bankId,
@@ -79,16 +77,14 @@ export class CreateClientFormComponent implements OnInit {
       initialBalance: +formValue.initialBalance
     };
 
-    // 5. Call the Client service
+
     this.clientSvc.createClient(clientDto).subscribe({
       next: (newClient) => {
         this.loading = false;
         this.successMessage = `Successfully created client: ${newClient.companyName} with account number: ${newClient.accountNumber}`;
-        
-        // Disable the form after successful submission
+
         this.clientForm.disable();
 
-        // Redirect back to the verification page after a short delay
         setTimeout(() => {
           this.router.navigate(['/bank-dashboard/verification']);
         }, 3000);

@@ -1,7 +1,7 @@
 <div class="bank-list-container">
   <div class="header-section">
     <h2><i class="bi bi-bank"></i> Manage Banks</h2>
-
+ 
     <div class="actions">
       <input
         type="text"
@@ -15,9 +15,9 @@
       <button class="btn btn-success" (click)="addBank()">+ Add Bank</button>
     </div>
   </div>
-
+ 
   <div *ngIf="loading" class="loader">Loading banks...</div>
-
+ 
   <div *ngIf="!loading" class="table-wrapper">
     <table class="table table-hover align-middle">
       <thead class="table-light">
@@ -31,7 +31,7 @@
           <th>Actions</th>
         </tr>
       </thead>
-
+ 
       <tbody>
         <tr *ngFor="let bank of banks">
           <td>{{ bank.bankName }}</td>
@@ -56,7 +56,7 @@
       </tbody>
     </table>
   </div>
-
+ 
   <div *ngIf="!loading" class="pagination">
     <button class="btn btn-secondary" (click)="prevPage()" [disabled]="pageNumber === 1">
       ⬅ Prev

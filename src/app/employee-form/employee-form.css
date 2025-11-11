@@ -5,7 +5,7 @@
 }
 
 .form-card {
-  width: 900px; /* wider to accommodate 2 columns */
+  width: 900px; 
   border-radius: 10px;
   background-color: #ffffff;
   padding: 30px;
@@ -19,7 +19,7 @@
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px 30px; /* row-gap column-gap */
+  gap: 20px 30px;
 }
 
 .form-group label {
@@ -41,13 +41,13 @@
   font-size: 12px;
 }
 .actions button {
-  min-width: 120px; /* ensures buttons are not too small */
+  min-width: 120px; 
   padding: 10px 20px;
   font-size: 14px;
 }
 
 .btn-success {
-  flex-shrink: 0; /* prevents shrinking if container is narrow */
+  flex-shrink: 0; 
 }
 
 .btn-outline-secondary {

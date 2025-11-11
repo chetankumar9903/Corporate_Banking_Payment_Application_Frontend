@@ -17,8 +17,6 @@ export class Salarylist implements OnInit {
   loading = false;
   clientId: number | null = null;
 
-  
-  // Pagination & sorting
   pageNumber = 1;
   pageSize = 10;
   totalCount = 0;
@@ -34,15 +32,6 @@ export class Salarylist implements OnInit {
     if (!this.clientId) return;
     this.load();
   }
-
-  // load() {
-  //   this.loading = true;
-  //   this.svc.getByClientId(this.clientId!).subscribe({
-  //     next: (res) => { this.salaries = res; this.loading = false; },
-  //     error: () => { this.loading = false; alert('Failed to load salaries'); }
-  //   });
-  // }
-
 
   load() {
     if (!this.clientId) return;
@@ -76,14 +65,14 @@ export class Salarylist implements OnInit {
     });
   }
 
-   // Pagination
+
   goToPage(page: number) {
     if (page < 1 || page > Math.ceil(this.totalCount / this.pageSize)) return;
     this.pageNumber = page;
     this.load();
   }
 
-  // Sorting
+
   setSort(column: string) {
     if (this.sortColumn === column) {
       this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
@@ -94,7 +83,7 @@ export class Salarylist implements OnInit {
     this.load();
   }
 
-  // Search
+
   onSearch(term: string) {
     this.searchTerm = term;
     this.pageNumber = 1;

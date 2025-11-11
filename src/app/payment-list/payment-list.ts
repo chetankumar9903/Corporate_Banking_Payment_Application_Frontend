@@ -79,15 +79,12 @@ export class PaymentList implements OnInit {
       this.payments = data;
       this.filteredPayments = [...data];
 
-      // Get unique beneficiary IDs
       const uniqueIds = Array.from(new Set(this.payments.map(p => p.beneficiaryId)));
 
-      // Build an array of observables
       const requests = uniqueIds.map(id =>
         this.benSvc.getById(id)
       );
 
-      // Execute all requests in parallel
       forkJoin(requests).subscribe({
         next: (beneficiaries) => {
           beneficiaries.forEach(b => {
@@ -125,7 +122,7 @@ export class PaymentList implements OnInit {
       });
     }
   }
- // --- Sorting ---
+
   sort(column: string) {
     if (this.sortColumn === column) {
       this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
@@ -146,7 +143,6 @@ export class PaymentList implements OnInit {
     });
   }
 
-  // --- Search / Filter ---
   search() {
     const term = this.searchTerm.toLowerCase();
 
@@ -166,7 +162,6 @@ export class PaymentList implements OnInit {
     this.updatePagination();
   }
 
-  // --- Pagination ---
   updatePagination() {
     this.totalPages = Math.ceil(this.filteredPayments.length / this.pageSize) || 1;
     if (this.pageNumber > this.totalPages) this.pageNumber = this.totalPages;

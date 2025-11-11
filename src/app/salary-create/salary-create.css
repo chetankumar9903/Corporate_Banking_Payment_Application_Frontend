@@ -50,7 +50,6 @@ label {
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
 }
 
-/* Buttons */
 .actions {
   display: flex;
   gap: 0.7rem;
@@ -82,7 +81,6 @@ label {
   background: #e2e6ea;
 }
 
-/* Validation & messages */
 .error {
   color: #dc3545;
   font-size: 0.85rem;

@@ -32,7 +32,6 @@ export class SalaryCreate implements OnInit {
   }
 
   ngOnInit(): void {
-    // load only employees of this client
     if (!this.clientId) return;
     this.empSvc.getByClientId(this.clientId).subscribe({
       next: (res) => this.employees = res,
@@ -51,10 +50,6 @@ export class SalaryCreate implements OnInit {
       amount: this.form.value.amount,
       description: this.form.value.description || 'Bonus'
     };
-    // this.svc.create(dto).subscribe({
-    //   next: () => { this.message = 'Paid successfully'; this.submitting = false; this.router.navigate(['/client-dashboard/salaries']); },
-    //   error: (err) => { this.message = err.error?.message || 'Failed'; this.submitting = false; }
-    // });
 
      this.svc.create(dto).subscribe({
       next: () => {
