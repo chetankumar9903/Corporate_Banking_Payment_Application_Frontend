@@ -22,7 +22,7 @@
         type="number"
         formControlName="amount"
         class="form-control"
-        [readonly]="!allowCustom"
+        
       />
       <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="error">
         Please enter a valid amount greater than 0.
