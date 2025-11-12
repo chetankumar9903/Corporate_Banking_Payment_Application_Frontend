@@ -57,10 +57,14 @@ export class SalarySvc {
     return this.http.get<BatchTransactionDto[]>(`${this.batchBase}/client/${clientId}`);
   }
 
-  createBatch(dto: CreateBatchTransactionDto) {
+  // createBatch(dto: CreateBatchTransactionDto) {
+  //   return this.http.post<BatchTransactionDto>(this.batchBase, dto);
+  // }
+
+
+   createBatch(dto: any): Observable<any> {
     return this.http.post<BatchTransactionDto>(this.batchBase, dto);
   }
-
   deleteBatch(id: number) {
     return this.http.delete(`${this.batchBase}/${id}`);
   }

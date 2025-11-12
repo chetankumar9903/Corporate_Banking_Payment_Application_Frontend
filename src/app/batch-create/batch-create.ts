@@ -97,8 +97,15 @@ onToggleAll() {
     };
  
      this.svc.createBatch(dto).subscribe({
-    next: () => {
+    next: (res) => {
       this.message = 'Batch created successfully!';
+
+
+      if (res.skippedAlreadyPaid?.length > 0) {
+    this.message += `\n\nSkipped (already paid in last 30 days):\n- ${res.skippedAlreadyPaid.join("\n- ")}`;
+  }
+
+  alert(this.message);
       this.submitting = false;
 
       
@@ -112,8 +119,13 @@ onToggleAll() {
       setTimeout(() => this.router.navigate(['/client-dashboard/salaries']), 1000);
     },
     error: (err) => {
-      this.message = err.error?.message || 'Failed to create batch';
+       console.error(err); 
+      // this.message = err.error?.message || 'Failed to create batch';
+       alert(err.error?.message ?? "Already Paid employees");
       this.submitting = false;
+      this.router.navigate(['/client-dashboard/salaries'])
+        
+
     }
   });
   }
